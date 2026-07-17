@@ -2,6 +2,8 @@
 
 React + Vite rebuild of [openmind.in](https://www.openmind.in), replacing the existing WordPress site.
 
+Live at: https://inder20216.github.io/openmind360/
+
 ## Stack
 
 - React 19 + Vite
@@ -17,6 +19,10 @@ npm run dev      # local dev server
 npm run build    # production build + prerender
 npm run preview  # preview the production build
 ```
+
+## Deployment
+
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages. Requires **Settings → Pages → Build and deployment → Source** to be set to **GitHub Actions**.
 
 ## SEO / AEO
 
