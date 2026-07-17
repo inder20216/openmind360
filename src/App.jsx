@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from './components/Navbar'
 import ChatVoiceWidget from './components/ChatVoiceWidget'
-import aiImage from './assets/ai-image3.png'
+import ServicesOrbit from './components/ServicesOrbit'
 import workflowImg from './assets/workflow.png'
 import callcenterVideo from './assets/Callcenter.mp4'
 import voicebotsVideo from './assets/Voicebots.mp4'
@@ -104,15 +104,15 @@ function HeroSection() {
           </div>
         </motion.div>
 
-        {/* Mobile: contained image above the text */}
-        <motion.img
-          src={aiImage}
-          alt="Open Mind AI intelligence engine connecting voice bots, chatbots, automation, CRM and analytics"
+        {/* Mobile: orbit graphic above the text */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="md:hidden w-full max-w-md mx-auto mb-8"
-        />
+          className="md:hidden mb-8"
+        >
+          <ServicesOrbit className="mx-auto" />
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
         <div className="max-w-2xl">
@@ -177,11 +177,7 @@ function HeroSection() {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="hidden md:flex items-start justify-center"
           >
-            <img
-              src={aiImage}
-              alt="Open Mind AI intelligence engine connecting voice bots, chatbots, automation, CRM and analytics"
-              className="w-full h-auto max-h-[416px] object-contain"
-            />
+            <ServicesOrbit />
           </motion.div>
         </div>
       </div>
