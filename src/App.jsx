@@ -184,7 +184,7 @@ function HeroSection() {
             initial={{ opacity: 0, scale: 0.95, x: 24 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden md:flex items-start justify-center"
+            className="hidden md:flex items-start justify-center -mt-8"
           >
             <ServicesOrbit />
           </motion.div>
