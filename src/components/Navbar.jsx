@@ -1,13 +1,29 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const links = [
   { label: 'Services', href: '#services' },
-  { label: 'Case Studies', href: '#case-studies' },
+  { label: 'Case Studies', href: '/case-studies' },
   { label: 'Technology', href: '#technology' },
   { label: 'Impact', href: '#impact' },
   { label: 'Contact', href: '#contact' },
 ]
+
+function NavLink({ href, className, onClick, children }) {
+  if (href.startsWith('/')) {
+    return (
+      <Link to={href} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    )
+  }
+  return (
+    <a href={href} className={className} onClick={onClick}>
+      {children}
+    </a>
+  )
+}
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -25,15 +41,15 @@ export default function Navbar() {
         scrolled ? 'bg-white/80 backdrop-blur-2xl border-b border-slate-200/60' : 'bg-transparent'
       }`}
     >
-      <a href="#" className="flex items-center gap-3">
+      <Link to="/" className="flex items-center gap-3">
         <img src="https://raw.githubusercontent.com/inder20216/openmind-assets/main/logo.png" alt="OpenMind Logo" className="h-12 w-auto -my-2" />
-      </a>
+      </Link>
 
       <div className="hidden md:flex items-center gap-10">
         {links.map((l) => (
-          <a key={l.href} href={l.href} className="text-sm font-medium text-slate-400 hover:text-slate-700 transition-colors duration-300">
+          <NavLink key={l.href} href={l.href} className="text-sm font-medium text-slate-400 hover:text-slate-700 transition-colors duration-300">
             {l.label}
-          </a>
+          </NavLink>
         ))}
         <a
           href="#contact"
@@ -58,9 +74,9 @@ export default function Navbar() {
             className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-2xl border-b border-slate-200 p-6 flex flex-col gap-5 md:hidden"
           >
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
+              <NavLink key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">
                 {l.label}
-              </a>
+              </NavLink>
             ))}
             <a href="#contact" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-ox">
               Get a Demo →

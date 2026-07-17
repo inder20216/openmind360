@@ -1,8 +1,10 @@
 import { useRef } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from './components/Navbar'
 import ChatVoiceWidget from './components/ChatVoiceWidget'
 import ServicesOrbit from './components/ServicesOrbit'
+import PlaceholderPage from './pages/PlaceholderPage'
 import workflowImg from './assets/workflow.png'
 import callcenterVideo from './assets/Callcenter.mp4'
 import voicebotsVideo from './assets/Voicebots.mp4'
@@ -137,7 +139,7 @@ function HeroSection() {
           >
             <span>AI-Powered Customer Experience Solutions</span><br />
             <span className="sm:whitespace-nowrap bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">
-              That Fit Your Business
+              That Fits Your Business
             </span>
           </motion.h1>
 
@@ -169,12 +171,12 @@ function HeroSection() {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="mt-8 flex gap-4 flex-wrap"
           >
-            <a
-              href="#services"
+            <Link
+              to="/services"
               className="px-7 py-3 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 hover:scale-[1.02] transition-all duration-300"
             >
               Explore Services
-            </a>
+            </Link>
           </motion.div>
         </div>
 
@@ -196,6 +198,7 @@ function HeroSection() {
 const services = [
   {
     id: 'support',
+    path: 'omnichannel-support',
     num: '01',
     label: 'Omnichannel Support Hub',
     title: 'Every Customer\nStarts Here',
@@ -207,6 +210,7 @@ const services = [
   },
   {
     id: 'ivr',
+    path: 'generative-ai-ivr',
     num: '02',
     label: 'Generative AI IVR',
     title: 'From Voice to\nIntelligent Response',
@@ -218,6 +222,7 @@ const services = [
   },
   {
     id: 'chatbots',
+    path: 'ai-chatbots',
     num: '03',
     label: 'AI Chatbots',
     title: 'Conversations That\nConvert',
@@ -229,6 +234,7 @@ const services = [
   },
   {
     id: 'automation',
+    path: 'intelligent-automation',
     num: '04',
     label: 'Intelligent Automation',
     title: 'Workflows That\nRun Themselves',
@@ -240,6 +246,7 @@ const services = [
   },
   {
     id: 'growth',
+    path: 'revenue-impact',
     num: '05',
     label: 'Revenue Impact',
     title: 'Growth That\nCompounds',
@@ -365,15 +372,15 @@ function ServiceSection({ service, index }) {
                   {service.stat}
                 </span>
               </div>
-              <a
-                href="#contact"
+              <Link
+                to={`/services/${service.path}`}
                 className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
               >
                 Learn more
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
-              </a>
+              </Link>
             </div>
           </FadeInSection>
         </div>
@@ -512,22 +519,47 @@ function FooterSection() {
   )
 }
 
-/* ─── APP ─── */
-export default function App() {
+/* ─── HOME PAGE ─── */
+function HomePage() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-ox/20">
-      <Navbar />
+    <>
       <HeroSection />
-
-      {/* Service sections */}
       {services.map((service, i) => (
         <ServiceSection key={service.id} service={service} index={i} />
       ))}
-
       <TestimonialSection />
       <CTASection />
+    </>
+  )
+}
+
+/* ─── LAYOUT ─── */
+function Layout({ children }) {
+  return (
+    <div className="min-h-screen bg-white text-slate-900 antialiased selection:bg-ox/20">
+      <Navbar />
+      {children}
       <FooterSection />
       <ChatVoiceWidget />
     </div>
+  )
+}
+
+/* ─── APP ─── */
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout><HomePage /></Layout>} />
+      <Route path="/case-studies" element={<Layout><PlaceholderPage eyebrow="Case Studies" title="Case Studies" /></Layout>} />
+      <Route path="/services" element={<Layout><PlaceholderPage eyebrow="Services" title="Explore Services" /></Layout>} />
+      {services.map((service) => (
+        <Route
+          key={service.path}
+          path={`/services/${service.path}`}
+          element={<Layout><PlaceholderPage eyebrow="Service" title={service.label} /></Layout>}
+        />
+      ))}
+      <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
+    </Routes>
   )
 }

@@ -98,7 +98,9 @@ const services = [
 export default function ServicesOrbit({ className = '' }) {
   const [playing, setPlaying] = useState(true)
   const [speed, setSpeed] = useState(1)
+  const [hovering, setHovering] = useState(false)
   const duration = 32 / speed
+  const running = playing && !hovering
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
@@ -107,7 +109,11 @@ export default function ServicesOrbit({ className = '' }) {
         @keyframes orbitCounterSpin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
       `}</style>
 
-      <div className="relative w-[260px] h-[260px] sm:w-[360px] sm:h-[360px] lg:w-[420px] lg:h-[420px] shrink-0">
+      <div
+        className="relative w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] lg:w-[480px] lg:h-[480px] shrink-0"
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+      >
         <div className="absolute inset-[12%] rounded-full bg-gradient-to-br from-blue-50 via-violet-50 to-pink-50 blur-2xl opacity-60 pointer-events-none" />
 
         {/* Center hub */}
@@ -130,7 +136,7 @@ export default function ServicesOrbit({ className = '' }) {
         {/* Rotating ring */}
         <div
           className="absolute inset-0"
-          style={{ animation: `orbitSpin ${duration}s linear infinite`, animationPlayState: playing ? 'running' : 'paused' }}
+          style={{ animation: `orbitSpin ${duration}s linear infinite`, animationPlayState: running ? 'running' : 'paused' }}
         >
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 400" fill="none">
             <circle cx="200" cy="200" r="124" stroke="#E9E9EF" strokeWidth="1.2" strokeDasharray="7 7" strokeLinecap="round" opacity="0.9" />
@@ -165,7 +171,7 @@ export default function ServicesOrbit({ className = '' }) {
                 className="absolute"
                 style={{ left: `${left}%`, top: `${top}%`, transform: 'translate(-50%, -50%)' }}
               >
-                <div style={{ animation: `orbitCounterSpin ${duration}s linear infinite`, animationPlayState: playing ? 'running' : 'paused' }}>
+                <div style={{ animation: `orbitCounterSpin ${duration}s linear infinite`, animationPlayState: running ? 'running' : 'paused' }}>
                   <div className="flex flex-col items-center">
                     <div className={`w-[42px] h-[42px] sm:w-[52px] sm:h-[52px] rounded-full bg-gradient-to-br ${s.from} ${s.to} shadow-[0_8px_24px_-8px_rgba(0,0,0,0.25),0_4px_12px_-4px_rgba(0,0,0,0.15)] flex items-center justify-center relative ring-[3px] ring-white`}>
                       <Icon className="w-[18px] h-[18px] sm:w-[22px] sm:h-[22px] text-white drop-shadow-sm" />
