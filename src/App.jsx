@@ -24,7 +24,20 @@ function FadeInSection({ children, className = '', delay = 0 }) {
 }
 
 /* ─── MARQUEE CONTENT ─── */
-const industries = ['Healthcare', 'E-commerce', 'Banking', 'FinTech', 'Education', 'Hospitality', 'Enterprise', 'Logistics', 'Telecom', 'Manufacturing', 'Government', 'Retail']
+const industries = [
+  { icon: '🏥', text: 'Healthcare' },
+  { icon: '🛒', text: 'E-commerce' },
+  { icon: '🏦', text: 'Banking' },
+  { icon: '💳', text: 'FinTech' },
+  { icon: '🎓', text: 'Education' },
+  { icon: '🏨', text: 'Hospitality' },
+  { icon: '🏢', text: 'Enterprise' },
+  { icon: '🚚', text: 'Logistics' },
+  { icon: '📡', text: 'Telecom' },
+  { icon: '🏭', text: 'Manufacturing' },
+  { icon: '🏛️', text: 'Government' },
+  { icon: '🛍️', text: 'Retail' },
+]
 const benefits = [
   { icon: '⚡', text: 'Up to 70% Faster Response' },
   { icon: '🤖', text: 'Up to 80% Automated Queries' },
@@ -38,7 +51,7 @@ const dotColors = ['bg-ox', 'bg-ob', 'bg-purple-500']
 
 const marqueeSequence = [
   { type: 'label', icon: '🏢', text: 'Industries Served' },
-  ...industries.map((text) => ({ type: 'item', text })),
+  ...industries.map((i) => ({ type: 'item', text: i.text, icon: i.icon })),
   { type: 'divider' },
   { type: 'label', icon: '🚀', text: 'Business Benefits' },
   ...benefits.map((b) => ({ type: 'item', text: b.text, icon: b.icon })),
@@ -51,7 +64,7 @@ function HeroSection() {
   let itemIndex = 0
 
   return (
-    <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-16 pb-10 md:pt-20 md:pb-12">
+    <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-12 pb-10 md:pt-14 md:pb-12">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-[0.4]" style={{
         backgroundImage: `radial-gradient(circle at 1px 1px, #cbd5e1 1px, transparent 0)`,
@@ -161,12 +174,6 @@ function HeroSection() {
               className="px-7 py-3 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 hover:scale-[1.02] transition-all duration-300"
             >
               Explore Services
-            </a>
-            <a
-              href="#contact"
-              className="px-7 py-3 border border-slate-200 text-slate-500 text-sm font-medium rounded-full hover:border-slate-300 hover:text-slate-700 hover:-translate-y-0.5 hover:scale-[1.02] transition-all duration-300"
-            >
-              Book a Demo
             </a>
           </motion.div>
         </div>
