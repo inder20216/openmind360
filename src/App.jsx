@@ -5,25 +5,11 @@ import Navbar from './components/Navbar'
 import ChatVoiceWidget from './components/ChatVoiceWidget'
 import ServicesOrbit from './components/ServicesOrbit'
 import PlaceholderPage from './pages/PlaceholderPage'
-import workflowImg from './assets/workflow.png'
-import callcenterVideo from './assets/Callcenter.mp4'
-import voicebotsVideo from './assets/Voicebots.mp4'
-import chatVideo from './assets/Chat.mp4'
-import growthVideo from './assets/Business growth charts.mp4'
-
-function FadeInSection({ children, className = '', delay = 0 }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
-}
+import CaseStudiesPage from './pages/CaseStudiesPage'
+import ExploreServicesPage from './pages/ExploreServicesPage'
+import ServiceDetailPage from './pages/ServiceDetailPage'
+import FadeInSection from './components/FadeInSection'
+import { services } from './data/services'
 
 /* ─── MARQUEE CONTENT ─── */
 const industries = [
@@ -195,69 +181,6 @@ function HeroSection() {
 }
 
 /* ─── SERVICE SECTIONS ─── */
-const services = [
-  {
-    id: 'support',
-    path: 'omnichannel-support',
-    num: '01',
-    label: 'Omnichannel Support Hub',
-    title: 'Every Customer\nStarts Here',
-    desc: 'From the first ring to the final resolution — our expert team handles inbound calls, emails, and chats with precision, empathy, and speed. The foundation of great customer experience.',
-    stat: 'Trusted by Apollo Hospitals, Cloud Nine & Jafron Biomedical',
-    color: '#f97316',
-    accent: '#ec4899',
-    video: callcenterVideo,
-  },
-  {
-    id: 'ivr',
-    path: 'generative-ai-ivr',
-    num: '02',
-    label: 'Generative AI IVR',
-    title: 'From Voice to\nIntelligent Response',
-    desc: 'No more endless menu trees. Our AI-powered IVR understands natural language, detects sentiment, and routes intelligently — resolving queries in seconds, in multiple languages.',
-    stat: '24/7 multilingual, always-on IVR',
-    color: '#2563eb',
-    accent: '#06b6d4',
-    video: voicebotsVideo,
-  },
-  {
-    id: 'chatbots',
-    path: 'ai-chatbots',
-    num: '03',
-    label: 'AI Chatbots',
-    title: 'Conversations That\nConvert',
-    desc: 'Intelligent chatbots that handle sales, support, and scheduling across WhatsApp, web, and social. Context-aware, memory-driven, and available 24/7.',
-    stat: 'Seamless escalation to human agents',
-    color: '#7c3aed',
-    accent: '#d946ef',
-    video: chatVideo,
-  },
-  {
-    id: 'automation',
-    path: 'intelligent-automation',
-    num: '04',
-    label: 'Intelligent Automation',
-    title: 'Workflows That\nRun Themselves',
-    desc: 'CRM-integrated pipelines that route, prioritize, and resolve without human touch. Real-time dashboards, AI insights, and zero-touch lead nurturing.',
-    stat: 'Data-driven insights for smarter decisions',
-    color: '#0d9488',
-    accent: '#22c55e',
-    image: workflowImg,
-  },
-  {
-    id: 'growth',
-    path: 'revenue-impact',
-    num: '05',
-    label: 'Revenue Impact',
-    title: 'Growth That\nCompounds',
-    desc: 'Every automation, every smart interaction, every routed lead — directly contributes to your bottom line. Real-time dashboards turn support activity into decisions you can act on.',
-    stat: 'NASSCOM member · ISO certified',
-    color: '#e11d48',
-    accent: '#f59e0b',
-    video: growthVideo,
-  },
-]
-
 function ServiceSection({ service, index }) {
   const isReversed = index % 2 === 1
   const sectionRef = useRef(null)
@@ -550,15 +473,9 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout><HomePage /></Layout>} />
-      <Route path="/case-studies" element={<Layout><PlaceholderPage eyebrow="Case Studies" title="Case Studies" /></Layout>} />
-      <Route path="/services" element={<Layout><PlaceholderPage eyebrow="Services" title="Explore Services" /></Layout>} />
-      {services.map((service) => (
-        <Route
-          key={service.path}
-          path={`/services/${service.path}`}
-          element={<Layout><PlaceholderPage eyebrow="Service" title={service.label} /></Layout>}
-        />
-      ))}
+      <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
+      <Route path="/services" element={<Layout><ExploreServicesPage /></Layout>} />
+      <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
       <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
     </Routes>
   )
