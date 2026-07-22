@@ -16,6 +16,14 @@ export const services = [
     color: '#f97316',
     accent: '#ec4899',
     video: callcenterVideo,
+    pageTitle: 'One Team, Every Channel,\nNo Dropped Conversations',
+    pageIntro: "Customers don't think in channels — they call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. Open Mind's Omnichannel Support Hub keeps every conversation in one place, handled by trained agents who can pick up exactly where the last channel left off.",
+    blurb: 'Every customer channel, one connected support team.',
+    useCases: [
+      'A patient calls a hospital helpline, then follows up over WhatsApp — the same case history is visible either way.',
+      'An e-commerce customer opens a chat about a delayed order after already emailing support twice.',
+      'A complaint that starts on social media gets escalated into a tracked support ticket automatically.',
+    ],
     features: [
       'Inbound and outbound call handling by trained agents',
       'Email and live chat support in one unified queue',
@@ -41,6 +49,14 @@ export const services = [
     color: '#2563eb',
     accent: '#06b6d4',
     video: voicebotsVideo,
+    pageTitle: 'Say What You Need —\nSkip the Menu',
+    pageIntro: 'Traditional IVRs make customers punch through five menus to reach a human. Open Mind\'s Generative AI IVR listens to what\'s actually being asked, in natural language, and routes the call immediately — detecting frustration early and escalating it before it becomes a bigger problem.',
+    blurb: 'Natural-language call routing — no menu trees.',
+    useCases: [
+      'A banking customer asks about a failed transaction in their own words instead of navigating "Press 3 for..." menus.',
+      'A telecom subscriber reporting a service outage is routed straight to the right queue, in their preferred language.',
+      'A frustrated caller is detected by tone and prioritized for faster human escalation.',
+    ],
     features: [
       'Natural language understanding — no rigid menu trees',
       'Real-time sentiment detection and intelligent call routing',
@@ -66,6 +82,14 @@ export const services = [
     color: '#7c3aed',
     accent: '#d946ef',
     video: chatVideo,
+    pageTitle: 'The First Reply Is\nNever a Wait',
+    pageIntro: "Most customers give up before a human agent even sees their message. Open Mind's AI Chatbots respond instantly on WhatsApp, web, and social — remembering context across the conversation — so agents only step in for what actually needs a person.",
+    blurb: 'Instant replies on WhatsApp, web, and social — 24/7.',
+    useCases: [
+      'A shopper asks about sizing and stock on WhatsApp at 11pm and gets an instant, accurate answer.',
+      'A returning customer picks up a conversation from last week without repeating themselves.',
+      'A booking or scheduling request is handled start to finish without ever reaching a human queue.',
+    ],
     features: [
       'Deployable across WhatsApp, website, and social channels',
       'Context-aware, memory-driven conversations',
@@ -91,6 +115,14 @@ export const services = [
     color: '#0d9488',
     accent: '#22c55e',
     image: workflowImg,
+    pageTitle: 'The Busywork Behind\nEvery Good Support Team',
+    pageIntro: "Behind every fast resolution is a pile of manual work — routing tickets, updating CRM records, chasing leads that went quiet. Open Mind's Intelligent Automation handles that layer, so agents spend their time on conversations, not admin.",
+    blurb: 'The manual work behind every fast resolution, automated.',
+    useCases: [
+      'A support ticket is automatically prioritized and routed to the right team based on urgency.',
+      "A lead that's gone quiet for a few days gets a timely automatic follow-up instead of falling through the cracks.",
+      'Support and CRM data stay in sync without anyone manually updating either system.',
+    ],
     features: [
       'CRM-integrated workflow automation',
       'Automatic ticket routing and prioritization',
@@ -116,6 +148,14 @@ export const services = [
     color: '#e11d48',
     accent: '#f59e0b',
     video: growthVideo,
+    pageTitle: 'Support Data That Actually\nReaches Leadership',
+    pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Revenue Impact reporting turns that activity into dashboards leadership can actually use — connecting day-to-day support work to retention, conversion, and cost.",
+    blurb: 'Support activity, turned into decisions leadership can use.',
+    useCases: [
+      'A leadership team sees which support issues are costing the most in agent hours this month.',
+      'A spike in a specific complaint type is caught early, before it affects retention.',
+      'ROI on a support or automation investment is tracked over time instead of assumed.',
+    ],
     features: [
       'Real-time analytics dashboards',
       'Support activity tied directly to business outcomes',

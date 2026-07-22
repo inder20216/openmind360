@@ -12,10 +12,10 @@ export default function ExploreServicesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Explore Services</span>
             <h1 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">
-              <span className="text-ox">AI</span> when possible. <span className="text-ob">Humans</span> when it matters.
+              Five Ways We Handle Customer Experience
             </h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-              Whether you need experienced support teams, AI-powered automation, or a combination of both — here's everything Open Mind offers.
+              From the first ring to the dashboard leadership actually reads — pick a service below to see how it works, or talk to us about combining a few.
             </p>
           </motion.div>
         </div>
@@ -36,10 +36,10 @@ export default function ExploreServicesPage() {
                   {service.label}
                 </span>
                 <h2 className="mt-3 text-xl md:text-2xl font-bold text-slate-900 whitespace-pre-line">
-                  {service.title}
+                  {service.pageTitle}
                 </h2>
                 <p className="mt-3 text-sm md:text-base text-slate-500 leading-relaxed">
-                  {service.desc}
+                  {service.blurb}
                 </p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-slate-600 group-hover:text-slate-900 transition-colors">
                   Learn more

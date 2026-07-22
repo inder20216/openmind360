@@ -42,10 +42,10 @@ export default function ServiceDetailPage() {
               {service.label}
             </span>
             <h1 className="mt-4 text-3xl md:text-5xl font-bold leading-tight text-slate-900 whitespace-pre-line max-w-3xl">
-              {service.title}
+              {service.pageTitle}
             </h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
-              {service.desc}
+              {service.pageIntro}
             </p>
             <div className="mt-6 flex items-center gap-3">
               <span className="w-8 h-px" style={{ backgroundColor: service.color }} />
@@ -98,6 +98,31 @@ export default function ServiceDetailPage() {
                 <div className="flex items-start gap-3 p-5 rounded-2xl border border-slate-100 bg-slate-50/60">
                   <CheckIcon color={service.color} />
                   <span className="text-sm md:text-base text-slate-600 leading-relaxed">{f}</span>
+                </div>
+              </FadeInSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Where this fits — concrete use cases */}
+      <section className="py-20 md:py-28 px-6 md:px-16 bg-slate-50">
+        <div className="max-w-5xl mx-auto">
+          <FadeInSection>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: service.color }}>Where This Fits</span>
+            <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">In practice</h2>
+          </FadeInSection>
+          <div className="mt-10 space-y-4">
+            {service.useCases.map((u, i) => (
+              <FadeInSection key={u} delay={i * 0.07}>
+                <div className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-100">
+                  <span
+                    className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white mt-0.5"
+                    style={{ backgroundColor: service.color }}
+                  >
+                    {i + 1}
+                  </span>
+                  <p className="text-sm md:text-base text-slate-600 leading-relaxed">{u}</p>
                 </div>
               </FadeInSection>
             ))}
