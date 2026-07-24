@@ -141,7 +141,7 @@ export const services = [
     id: 'growth',
     path: 'revenue-impact',
     num: '05',
-    label: 'Revenue Impact',
+    label: 'Analytics & Reporting',
     title: 'Growth That\nCompounds',
     desc: 'Every automation, every smart interaction, every routed lead — directly contributes to your bottom line. Real-time dashboards turn support activity into decisions you can act on.',
     stat: 'NASSCOM member · ISO certified',
@@ -149,7 +149,7 @@ export const services = [
     accent: '#f59e0b',
     video: growthVideo,
     pageTitle: 'Support Data That Actually\nReaches Leadership',
-    pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Revenue Impact reporting turns that activity into dashboards leadership can actually use — connecting day-to-day support work to retention, conversion, and cost.",
+    pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Analytics & Reporting turns that activity into dashboards leadership can actually use — connecting day-to-day support work to retention, conversion, and cost.",
     blurb: 'Support activity, turned into decisions leadership can use.',
     useCases: [
       'A leadership team sees which support issues are costing the most in agent hours this month.',
@@ -165,7 +165,7 @@ export const services = [
       'Built on the same data as your support and automation tools',
     ],
     faqs: [
-      { q: 'What does "Revenue Impact" actually track?', a: 'Support and automation activity connected to the retention, conversion, and cost metrics your business already cares about.' },
+      { q: 'What does "Analytics & Reporting" actually track?', a: 'Support and automation activity connected to the retention, conversion, and cost metrics your business already cares about.' },
       { q: 'Is this a separate tool we need to log into?', a: 'No — it’s built on the same underlying data as your other Open Mind services.' },
       { q: 'How is data kept secure?', a: 'Open Mind’s processes are ISO certified and follow NASSCOM member standards.' },
     ],
