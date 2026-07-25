@@ -116,7 +116,7 @@ function HeroSection() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
-        <div className="max-w-2xl">
+        <div className="max-w-3xl">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-3 text-sm md:text-base text-slate-500 max-w-lg leading-relaxed"
+            className="mt-3 text-sm md:text-base text-slate-500 max-w-xl leading-relaxed"
           >
             Whether you need experienced customer support teams, AI-powered automation, or{' '}
             <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-ox to-ob">a combination of both</span>,
