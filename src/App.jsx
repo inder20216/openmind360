@@ -10,6 +10,7 @@ import ExploreServicesPage from './pages/ExploreServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import FadeInSection from './components/FadeInSection'
 import { services } from './data/services'
+import logo from './assets/Logo.png'
 
 /* ─── MARQUEE CONTENT ─── */
 const industries = [
@@ -395,7 +396,7 @@ function FooterSection() {
         <div className="grid md:grid-cols-4 gap-12">
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <img src="https://raw.githubusercontent.com/inder20216/openmind-assets/main/logo.png" alt="OpenMind Logo" className="h-7 w-auto" />
+              <img src={logo} alt="OpenMind Logo" className="h-7 w-auto" />
             </div>
             <p className="text-sm text-slate-400 leading-relaxed max-w-xs">
               AI-powered customer support outsourcing. We help enterprises deliver world-class experiences at scale.

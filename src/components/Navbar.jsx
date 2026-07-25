@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import logo from '../assets/Logo.png'
 
 const links = [
   { label: 'Services', href: '#services' },
@@ -42,7 +43,7 @@ export default function Navbar() {
       }`}
     >
       <Link to="/" className="flex items-center gap-3">
-        <img src="https://raw.githubusercontent.com/inder20216/openmind-assets/main/logo.png" alt="OpenMind Logo" className="h-12 w-auto -my-2" />
+        <img src={logo} alt="OpenMind Logo" className="h-12 w-auto -my-2" />
       </Link>
 
       <div className="hidden md:flex items-center gap-10">
