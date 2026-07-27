@@ -1,0 +1,109 @@
+{
+  "name": "02 - Analytics Agent - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "weeks", "weeksInterval": 1, "triggerAtHour": 9, "triggerAtDayOfWeek": 1 }
+          ]
+        }
+      },
+      "id": "weekly-trigger",
+      "name": "Weekly Monday 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/YOUR_GA4_PROPERTY_ID:runReport",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"dateRanges\": [{ \"startDate\": \"7daysAgo\", \"endDate\": \"today\" }],\n  \"dimensions\": [{ \"name\": \"pagePath\" }, { \"name\": \"sessionDefaultChannelGroup\" }],\n  \"metrics\": [{ \"name\": \"sessions\" }, { \"name\": \"conversions\" }, { \"name\": \"engagementRate\" }]\n}",
+        "options": {}
+      },
+      "id": "ga4-report",
+      "name": "GA4 Weekly Report",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-980, 200]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"note\": \"Paste any metrics n8n can't reach directly here each week — e.g. call/chat volume from the support platform, CRM lead numbers. Leave blank if nothing to add.\"\n}",
+        "options": {}
+      },
+      "id": "manual-notes",
+      "name": "Manual Metrics (fill in weekly)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-980, 420]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-data",
+      "name": "Merge Data Sources",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [-760, 300]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are Analytics Agent for Open Mind Services Limited. Given this week's GA4 report data and any manually-added metrics, identify what actually changed week over week — traffic or conversion movement by page/channel, and anything notable in the manual notes. Only state changes the data actually supports; do not guess at causes you can't verify from the numbers alone, and mark speculative explanations as UNCONFIRMED. Output a short list of findings, each tagged with the metric and the number that supports it, ordered by size of change."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai-analyze",
+      "name": "Find & Rank Trends (OpenAI)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.6,
+      "position": [-540, 300]
+    },
+    {
+      "parameters": {},
+      "id": "output-placeholder",
+      "name": "TODO: connect output (feeds Planning Agent's shared sheet)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [-300, 300]
+    }
+  ],
+  "connections": {
+    "Weekly Monday 9am": {
+      "main": [[
+        { "node": "GA4 Weekly Report", "type": "main", "index": 0 },
+        { "node": "Manual Metrics (fill in weekly)", "type": "main", "index": 0 }
+      ]]
+    },
+    "GA4 Weekly Report": { "main": [[{ "node": "Merge Data Sources", "type": "main", "index": 0 }]] },
+    "Manual Metrics (fill in weekly)": { "main": [[{ "node": "Merge Data Sources", "type": "main", "index": 1 }]] },
+    "Merge Data Sources": { "main": [[{ "node": "Find & Rank Trends (OpenAI)", "type": "main", "index": 0 }]] },
+    "Find & Rank Trends (OpenAI)": { "main": [[{ "node": "TODO: connect output (feeds Planning Agent's shared sheet)", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-analytics-agent-v1" }
+}

@@ -1,0 +1,104 @@
+{
+  "name": "06 - Follow-up Agent - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "hours", "hoursInterval": 4 }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every 4 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "YOUR_SHARED_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Posted Content", "mode": "name" },
+        "options": {}
+      },
+      "id": "read-posted",
+      "name": "Read List Of Posted Links (human-maintained)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-980, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "id": "split-links",
+      "name": "One Post At A Time",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [-760, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "OpenMindFollowUpAgent/1.0 (by /u/openmind360)" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-comments",
+      "name": "Fetch New Comments (public, read-only)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-540, 300]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are Follow-up Agent for Open Mind Services Limited. Given the comments/replies on a piece of posted content, identify which ones are genuine questions or engagement that deserve a human reply, versus spam or irrelevant noise. For each one worth replying to, suggest a tone/approach a human could use. You are read-only and advisory: never draft a ready-to-post reply, and never suggest posting anything automatically — platforms like Reddit prohibit automated comment posting, so every reply must be written and sent by a person."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai-flag",
+      "name": "Flag Items Needing A Reply (OpenAI)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.6,
+      "position": [-320, 300]
+    },
+    {
+      "parameters": {},
+      "id": "output-placeholder",
+      "name": "TODO: notify human (Email/Slack) of items needing a reply",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [-100, 300]
+    }
+  ],
+  "connections": {
+    "Every 4 Hours": { "main": [[{ "node": "Read List Of Posted Links (human-maintained)", "type": "main", "index": 0 }]] },
+    "Read List Of Posted Links (human-maintained)": { "main": [[{ "node": "One Post At A Time", "type": "main", "index": 0 }]] },
+    "One Post At A Time": { "main": [[{ "node": "Fetch New Comments (public, read-only)", "type": "main", "index": 0 }]] },
+    "Fetch New Comments (public, read-only)": { "main": [[{ "node": "Flag Items Needing A Reply (OpenAI)", "type": "main", "index": 0 }]] },
+    "Flag Items Needing A Reply (OpenAI)": { "main": [[{ "node": "TODO: notify human (Email/Slack) of items needing a reply", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-followup-agent-v1" }
+}

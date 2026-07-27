@@ -1,0 +1,106 @@
+{
+  "name": "03 - Planning Agent - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "weeks", "weeksInterval": 1, "triggerAtHour": 10, "triggerAtDayOfWeek": 1 }
+          ]
+        }
+      },
+      "id": "weekly-trigger",
+      "name": "Weekly Monday 10am (after Analytics Agent)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 300]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "YOUR_SHARED_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Research Log", "mode": "name" },
+        "options": {}
+      },
+      "id": "read-research-log",
+      "name": "Read Research Agent Log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-980, 180]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "YOUR_SHARED_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Analytics Log", "mode": "name" },
+        "options": {}
+      },
+      "id": "read-analytics-log",
+      "name": "Read Analytics Agent Log",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-980, 420]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-logs",
+      "name": "Merge Both Logs",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [-760, 300]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are Planning Agent for Open Mind Services Limited. Using this week's Research Agent findings and Analytics Agent trends, propose 3-5 concrete content/marketing actions for the upcoming week (a topic, the channel, and the format). Every suggestion must cite the specific research finding or analytics trend it responds to — do not propose generic advice with no traceable source. Rank suggestions by how directly they tie to a real signal. This plan is a draft only: it will be reviewed and approved by a human before any content is produced."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai-plan",
+      "name": "Draft Weekly Plan (OpenAI)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.6,
+      "position": [-540, 300]
+    },
+    {
+      "parameters": {},
+      "id": "approval-gate",
+      "name": "POKA-YOKE GATE: send plan to human, do not continue until approved",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [-300, 300]
+    }
+  ],
+  "connections": {
+    "Weekly Monday 10am (after Analytics Agent)": {
+      "main": [[
+        { "node": "Read Research Agent Log", "type": "main", "index": 0 },
+        { "node": "Read Analytics Agent Log", "type": "main", "index": 0 }
+      ]]
+    },
+    "Read Research Agent Log": { "main": [[{ "node": "Merge Both Logs", "type": "main", "index": 0 }]] },
+    "Read Analytics Agent Log": { "main": [[{ "node": "Merge Both Logs", "type": "main", "index": 1 }]] },
+    "Merge Both Logs": { "main": [[{ "node": "Draft Weekly Plan (OpenAI)", "type": "main", "index": 0 }]] },
+    "Draft Weekly Plan (OpenAI)": { "main": [[{ "node": "POKA-YOKE GATE: send plan to human, do not continue until approved", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-planning-agent-v1" }
+}

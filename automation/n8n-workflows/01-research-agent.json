@@ -1,0 +1,150 @@
+{
+  "name": "01 - Research Agent - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "days", "daysInterval": 1, "triggerAtHour": 8 }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Daily 8am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 300]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"keywords\": [\n    \"AI customer support outsourcing\",\n    \"call center outsourcing India\",\n    \"BPO for healthcare\",\n    \"AI chatbot for business\",\n    \"generative AI IVR\",\n    \"customer support automation\"\n  ]\n}",
+        "options": {}
+      },
+      "id": "set-keywords",
+      "name": "Keywords To Track",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [-980, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "keywords",
+        "options": {}
+      },
+      "id": "split-keywords",
+      "name": "One Keyword At A Time",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [-760, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/customsearch/v1",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "key", "value": "YOUR_GOOGLE_API_KEY" },
+            { "name": "cx", "value": "YOUR_CUSTOM_SEARCH_ENGINE_ID" },
+            { "name": "q", "value": "={{ $json.keywords }}" },
+            { "name": "num", "value": "5" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "google-search",
+      "name": "Google Search",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-540, 180]
+    },
+    {
+      "parameters": {
+        "url": "=https://www.reddit.com/search.json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "q", "value": "={{ $json.keywords }}" },
+            { "name": "sort", "value": "new" },
+            { "name": "limit", "value": "10" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "User-Agent", "value": "OpenMindResearchAgent/1.0 (by /u/openmind360)" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "reddit-search",
+      "name": "Reddit Search (public, read-only)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-540, 420]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "multiplex",
+        "options": {}
+      },
+      "id": "merge-results",
+      "name": "Merge Results",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [-320, 300]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are Research Agent for Open Mind Services Limited, a BPO/AI customer-experience company (omnichannel support, generative AI IVR, AI chatbots, intelligent automation). Given raw Google and Reddit search results, do three things: 1) Discard anything not genuinely relevant to BPO/customer-support/AI-chatbot topics. 2) For what remains, summarize the discussion/question in one line and note the source link. 3) List any keywords or phrasing you notice people actually using, since those are useful for future searches. Mark anything you are not confident is relevant as UNCONFIRMED rather than including it as fact — do not invent relevance."
+            },
+            {
+              "role": "user",
+              "content": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai-filter",
+      "name": "Filter & Summarize (OpenAI)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.6,
+      "position": [-100, 300]
+    },
+    {
+      "parameters": {},
+      "id": "output-placeholder",
+      "name": "TODO: connect your output (Email / Slack / Sheet)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [140, 300]
+    }
+  ],
+  "connections": {
+    "Daily 8am": { "main": [[{ "node": "Keywords To Track", "type": "main", "index": 0 }]] },
+    "Keywords To Track": { "main": [[{ "node": "One Keyword At A Time", "type": "main", "index": 0 }]] },
+    "One Keyword At A Time": {
+      "main": [[
+        { "node": "Google Search", "type": "main", "index": 0 },
+        { "node": "Reddit Search (public, read-only)", "type": "main", "index": 0 }
+      ]]
+    },
+    "Google Search": { "main": [[{ "node": "Merge Results", "type": "main", "index": 0 }]] },
+    "Reddit Search (public, read-only)": { "main": [[{ "node": "Merge Results", "type": "main", "index": 1 }]] },
+    "Merge Results": { "main": [[{ "node": "Filter & Summarize (OpenAI)", "type": "main", "index": 0 }]] },
+    "Filter & Summarize (OpenAI)": { "main": [[{ "node": "TODO: connect your output (Email / Slack / Sheet)", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-research-agent-v1" }
+}
