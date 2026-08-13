@@ -8,6 +8,9 @@ import PlaceholderPage from './pages/PlaceholderPage'
 import CaseStudiesPage from './pages/CaseStudiesPage'
 import ExploreServicesPage from './pages/ExploreServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
+import AboutPage from './pages/AboutPage'
+import AnalyticsServicePage from './pages/AnalyticsServicePage'
+import ChatbotServicePage from './pages/ChatbotServicePage'
 import FadeInSection from './components/FadeInSection'
 import { services } from './data/services'
 import logo from './assets/Logo.png'
@@ -476,7 +479,10 @@ export default function App() {
       <Route path="/" element={<Layout><HomePage /></Layout>} />
       <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
       <Route path="/services" element={<Layout><ExploreServicesPage /></Layout>} />
+      <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
+      <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
       <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
+      <Route path="/about" element={<Layout><AboutPage /></Layout>} />
       <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
     </Routes>
   )

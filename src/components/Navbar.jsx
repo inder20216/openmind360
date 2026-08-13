@@ -6,7 +6,7 @@ import logo from '../assets/Logo.png'
 const links = [
   { label: 'Services', href: '#services' },
   { label: 'Case Studies', href: '/case-studies' },
-  { label: 'Technology', href: '#technology' },
+  { label: 'About', href: '/about' },
   { label: 'Impact', href: '#impact' },
   { label: 'Contact', href: '#contact' },
 ]
