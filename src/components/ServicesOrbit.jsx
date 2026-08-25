@@ -73,17 +73,6 @@ function BrainIcon(props) {
     </svg>
   )
 }
-function PlayIcon(props) {
-  return <svg viewBox="0 0 24 24" fill="white" {...props}><polygon points="6 3 20 12 6 21 6 3" /></svg>
-}
-function PauseIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="white" {...props}>
-      <rect x="14" y="4" width="4" height="16" rx="1" /><rect x="6" y="4" width="4" height="16" rx="1" />
-    </svg>
-  )
-}
-
 const services = [
   { label: 'AI CHATBOTS', icon: BotIcon, from: 'from-blue-400', to: 'to-blue-600', dot: '#60A5FA', text: 'text-blue-600', border: 'border-blue-100' },
   { label: 'AI VOICE BOTS', icon: MicIcon, from: 'from-violet-400', to: 'to-violet-600', dot: '#A78BFA', text: 'text-violet-600', border: 'border-violet-100' },
@@ -96,11 +85,9 @@ const services = [
 ]
 
 export default function ServicesOrbit({ className = '' }) {
-  const [playing, setPlaying] = useState(true)
-  const [speed, setSpeed] = useState(1)
   const [hovering, setHovering] = useState(false)
-  const duration = 32 / speed
-  const running = playing && !hovering
+  const duration = 32
+  const running = !hovering
 
   return (
     <div className={`flex flex-col items-center ${className}`}>
@@ -125,8 +112,8 @@ export default function ServicesOrbit({ className = '' }) {
                 <BrainIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div className="text-center leading-[1.05]">
-                <div className="text-[9px] sm:text-[11px] font-extrabold tracking-tight text-zinc-900">Open Mind</div>
-                <div className="text-[7px] sm:text-[8.5px] font-bold tracking-[0.18em] text-zinc-400 mt-[2px]">- SERVICES -</div>
+                <div className="text-[11px] sm:text-[14px] font-extrabold tracking-tight text-zinc-900">Open Mind</div>
+                <div className="text-[9px] sm:text-[11px] font-bold tracking-[0.18em] text-zinc-400 mt-[2px]">-360-</div>
               </div>
             </div>
           </div>
@@ -185,30 +172,6 @@ export default function ServicesOrbit({ className = '' }) {
               </div>
             )
           })}
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div className="mt-5 flex items-center gap-3 bg-white border border-zinc-200 rounded-full p-1.5 pr-3 shadow-[0_8px_24px_-8px_rgba(0,0,0,0.12)]">
-        <button
-          onClick={() => setPlaying((p) => !p)}
-          className="w-8 h-8 rounded-full bg-zinc-900 text-white flex items-center justify-center hover:bg-black transition-colors shadow-sm"
-          aria-label={playing ? 'Pause rotation' : 'Play rotation'}
-        >
-          {playing ? <PauseIcon className="w-3.5 h-3.5" /> : <PlayIcon className="w-3.5 h-3.5 ml-0.5" />}
-        </button>
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold tracking-wide text-zinc-500 uppercase">Speed</span>
-          <input
-            type="range"
-            min={0.25}
-            max={2.5}
-            step={0.25}
-            value={speed}
-            onChange={(e) => setSpeed(parseFloat(e.target.value))}
-            className="w-20 accent-zinc-900 h-1 cursor-pointer"
-          />
-          <span className="text-[10px] font-semibold text-zinc-900 w-6 text-right tabular-nums">{speed.toFixed(2)}x</span>
         </div>
       </div>
     </div>
