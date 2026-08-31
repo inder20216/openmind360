@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import FadeInSection from '../components/FadeInSection'
+import FaqSchema from '../components/FaqSchema'
 import PlaceholderPage from './PlaceholderPage'
 import { services } from '../data/services'
 
@@ -24,6 +25,7 @@ export default function ServiceDetailPage() {
 
   return (
     <>
+      <FaqSchema faqs={service.faqs} />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-28 pb-16 md:pt-32 md:pb-20 px-6 md:px-16">
         <div

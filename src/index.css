@@ -31,12 +31,3 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
-
-@keyframes marquee-half {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.animate-marquee-half {
-  animation: marquee-half 55s linear infinite;
-}

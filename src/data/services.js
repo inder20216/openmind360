@@ -17,8 +17,8 @@ export const services = [
     accent: '#ec4899',
     video: callcenterVideo,
     pageTitle: 'One Team, Every Channel,\nNo Dropped Conversations',
-    pageIntro: "Customers don't think in channels — they call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. Open Mind's Omnichannel Support Hub keeps every conversation in one place, handled by trained agents who can pick up exactly where the last channel left off.",
-    blurb: 'Every customer channel, one connected support team.',
+    pageIntro: "Customers don't think in channels — they call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. We don't hand you separate tools for separate channels. Open Mind's Omnichannel Support Hub keeps every conversation in one place, run by agents who pick up exactly where the last channel left off.",
+    blurb: 'One team, every channel, nothing repeated twice.',
     useCases: [
       'A patient calls a hospital helpline, then follows up over WhatsApp — the same case history is visible either way.',
       'An e-commerce customer opens a chat about a delayed order after already emailing support twice.',
@@ -50,8 +50,8 @@ export const services = [
     accent: '#06b6d4',
     video: voicebotsVideo,
     pageTitle: 'Say What You Need —\nSkip the Menu',
-    pageIntro: 'Traditional IVRs make customers punch through five menus to reach a human. Open Mind\'s Generative AI IVR listens to what\'s actually being asked, in natural language, and routes the call immediately — detecting frustration early and escalating it before it becomes a bigger problem.',
-    blurb: 'Natural-language call routing — no menu trees.',
+    pageIntro: "Traditional IVRs make customers punch through five menus to reach a human. We don't build more menus — Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.",
+    blurb: 'Say what you need. Skip the menu, every time.',
     useCases: [
       'A banking customer asks about a failed transaction in their own words instead of navigating "Press 3 for..." menus.',
       'A telecom subscriber reporting a service outage is routed straight to the right queue, in their preferred language.',
@@ -83,8 +83,8 @@ export const services = [
     accent: '#d946ef',
     video: chatVideo,
     pageTitle: 'The First Reply Is\nNever a Wait',
-    pageIntro: "Most customers give up before a human agent even sees their message. Open Mind's AI Chatbots respond instantly on WhatsApp, web, and social — remembering context across the conversation — so agents only step in for what actually needs a person.",
-    blurb: 'Instant replies on WhatsApp, web, and social — 24/7.',
+    pageIntro: "Most customers give up before a human agent even sees their message. We don't make them wait for a reply — Open Mind's AI Chatbots respond instantly on WhatsApp, web, and social, remembering context across the conversation, so agents only step in for what actually needs a person.",
+    blurb: 'The first reply is never a wait — day or night.',
     useCases: [
       'A shopper asks about sizing and stock on WhatsApp at 11pm and gets an instant, accurate answer.',
       'A returning customer picks up a conversation from last week without repeating themselves.',
@@ -116,8 +116,8 @@ export const services = [
     accent: '#22c55e',
     image: workflowImg,
     pageTitle: 'The Busywork Behind\nEvery Good Support Team',
-    pageIntro: "Behind every fast resolution is a pile of manual work — routing tickets, updating CRM records, chasing leads that went quiet. Open Mind's Intelligent Automation handles that layer, so agents spend their time on conversations, not admin.",
-    blurb: 'The manual work behind every fast resolution, automated.',
+    pageIntro: "Behind every fast resolution is a pile of manual work — routing tickets, updating CRM records, chasing leads that went quiet. We don't leave that to your agents. Open Mind's Intelligent Automation handles that layer, permanently, so agents spend their time on conversations, not admin.",
+    blurb: 'The busywork behind every fast resolution — automated, permanently.',
     useCases: [
       'A support ticket is automatically prioritized and routed to the right team based on urgency.',
       "A lead that's gone quiet for a few days gets a timely automatic follow-up instead of falling through the cracks.",
@@ -150,7 +150,7 @@ export const services = [
     video: growthVideo,
     pageTitle: 'Support Data That Actually\nReaches Leadership',
     pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Analytics & Reporting turns that activity into dashboards leadership can actually use — connecting day-to-day support work to retention, conversion, and cost.",
-    blurb: 'Support activity, turned into decisions leadership can use.',
+    blurb: 'Support activity, turned into decisions leadership actually uses.',
     useCases: [
       'A leadership team sees which support issues are costing the most in agent hours this month.',
       'A spike in a specific complaint type is caught early, before it affects retention.',

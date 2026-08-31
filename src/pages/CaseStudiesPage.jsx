@@ -89,7 +89,7 @@ export default function CaseStudiesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">Real Partners, Real Results</h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-              A look at how organizations work with Open Mind to deliver better customer experiences.
+              We don't publish a case study until the results are real. Here's how organizations actually work with Open Mind.
             </p>
           </motion.div>
         </div>

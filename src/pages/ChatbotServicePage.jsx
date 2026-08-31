@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import FaqSchema from '../components/FaqSchema'
 import robotMascot from '../assets/chatbot/robot-mascot.png'
 import channelIcons from '../assets/chatbot/channel-icons.png'
 
@@ -70,6 +71,7 @@ export default function ChatbotServicePage() {
 
   return (
     <div className="relative bg-white text-[#0F0F12] selection:bg-[#FF7A00]/20" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+      <FaqSchema faqs={faqs} />
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute rounded-full" style={{ width: 400, height: 400, left: -80, top: -60, background: '#FF7A00', filter: 'blur(100px)', opacity: 0.1 }} />
         <div className="absolute rounded-full" style={{ width: 500, height: 500, right: -100, top: -40, background: '#7C3AED', filter: 'blur(120px)', opacity: 0.08 }} />

@@ -15,48 +15,12 @@ import FadeInSection from './components/FadeInSection'
 import { services } from './data/services'
 import logo from './assets/Logo.png'
 
-/* ─── MARQUEE CONTENT ─── */
-const industries = [
-  { icon: '🏥', text: 'Healthcare' },
-  { icon: '🛒', text: 'E-commerce' },
-  { icon: '🏦', text: 'Banking' },
-  { icon: '💳', text: 'FinTech' },
-  { icon: '🎓', text: 'Education' },
-  { icon: '🏨', text: 'Hospitality' },
-  { icon: '🏢', text: 'Enterprise' },
-  { icon: '🚚', text: 'Logistics' },
-  { icon: '📡', text: 'Telecom' },
-  { icon: '🏭', text: 'Manufacturing' },
-  { icon: '🏛️', text: 'Government' },
-  { icon: '🛍️', text: 'Retail' },
-]
-const benefits = [
-  { icon: '⚡', text: 'Up to 70% Faster Response' },
-  { icon: '🤖', text: 'Up to 80% Automated Queries' },
-  { icon: '📈', text: 'Higher Customer Satisfaction' },
-  { icon: '🎯', text: 'Improved First Contact Resolution' },
-  { icon: '👨‍💼', text: 'Increased Agent Productivity' },
-  { icon: '🌐', text: 'Enhanced Customer Experience' },
-]
-
-const dotColors = ['bg-ox', 'bg-ob', 'bg-purple-500']
-
-const marqueeSequence = [
-  { type: 'label', icon: '🏢', text: 'Industries Served' },
-  ...industries.map((i) => ({ type: 'item', text: i.text, icon: i.icon })),
-  { type: 'divider' },
-  { type: 'label', icon: '🚀', text: 'Business Benefits' },
-  ...benefits.map((b) => ({ type: 'item', text: b.text, icon: b.icon })),
-]
-const marqueeRow = [...marqueeSequence, ...marqueeSequence]
-
 /* ─── HERO ─── */
 function HeroSection() {
   const heroRef = useRef(null)
-  let itemIndex = 0
 
   return (
-    <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-12 pb-10 md:pt-14 md:pb-12">
+    <section ref={heroRef} className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-24 pb-10 md:pt-28 md:pb-12">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-[0.4]" style={{
         backgroundImage: `radial-gradient(circle at 1px 1px, #cbd5e1 1px, transparent 0)`,
@@ -67,48 +31,6 @@ function HeroSection() {
       <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[40vw] h-[40vw] max-w-[30rem] max-h-[30rem] bg-gradient-to-br from-ox/15 via-ob/10 to-transparent rounded-full blur-[100px]" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-16">
-        {/* Industries + Outcomes marquee, flush against the navbar, continuous loop */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mb-4 md:mb-5 -mx-6 md:-mx-16 overflow-hidden py-1.5"
-        >
-          <div className="flex items-center w-max gap-4 md:gap-5 animate-marquee-half motion-reduce:animate-none hover:[animation-play-state:paused]">
-            {marqueeRow.map((entry, i) => {
-              if (entry.type === 'divider') {
-                return <span key={i} className="flex-shrink-0 w-px h-5 bg-gradient-to-b from-transparent via-slate-300 to-transparent" />
-              }
-              if (entry.type === 'label') {
-                return (
-                  <span
-                    key={i}
-                    className="flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-ob via-purple-600 to-ox text-white text-xs md:text-sm font-bold tracking-wide shadow-[0_4px_16px_-2px_rgba(124,58,237,0.4)] whitespace-nowrap"
-                  >
-                    <span aria-hidden="true">{entry.icon}</span>
-                    {entry.text}
-                  </span>
-                )
-              }
-              const dot = dotColors[itemIndex % dotColors.length]
-              itemIndex += 1
-              return (
-                <span
-                  key={i}
-                  className="flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-blue-100/80 via-purple-100/80 to-orange-100/80 backdrop-blur-md border border-white/70 shadow-[0_1px_2px_rgba(15,23,42,0.04),0_6px_18px_-6px_rgba(59,130,246,0.18),0_6px_18px_-6px_rgba(249,115,22,0.12)] text-xs md:text-sm font-semibold text-slate-700 whitespace-nowrap transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_2px_4px_rgba(15,23,42,0.06),0_10px_28px_-6px_rgba(124,58,237,0.35)]"
-                >
-                  {entry.icon ? (
-                    <span aria-hidden="true">{entry.icon}</span>
-                  ) : (
-                    <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
-                  )}
-                  {entry.text}
-                </span>
-              )
-            })}
-          </div>
-        </motion.div>
-
         {/* Mobile: orbit graphic above the text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
