@@ -15,6 +15,10 @@ dist-ssr
 # Reference/planning material, not website assets
 *.pdf
 
+# n8n workflow exports - local-only, shared directly between team members
+# (not through git); the README explaining them stays tracked.
+automation/n8n-workflows/*.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

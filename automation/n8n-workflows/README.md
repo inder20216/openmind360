@@ -1,5 +1,11 @@
 # Open Mind AI Marketing Agent System — n8n Workflows
 
+**The `.json` files in this folder are not in git** (this `README.md` is —
+just not the workflows themselves). They're local files, gitignored on
+purpose, shared directly between team members some other way rather than
+through the repo. If you're looking for the latest version of a workflow
+someone else edited, ask them for the file directly.
+
 Thirteen workflows, imported into n8n in this order. Each is a starting skeleton
 with `TODO` nodes marking where you need to plug in a credential, a shared
 data source, or a notification channel — nothing here auto-publishes anything.

@@ -37,6 +37,13 @@ first; it's short and everything else assumes you already know it.
    site and emails the actual status — nobody has to self-report anything.
    The checkboxes here are just a rough at-a-glance list; the email is the
    source of truth.
+6. **`automation/n8n-workflows/*.json` are local-only — not in git.** They're
+   gitignored on purpose. The folder's `README.md` (which explains what each
+   one does and how to set it up) is still tracked, but the actual workflow
+   files themselves are shared directly between team members some other way
+   (export/import in n8n, sharing the file directly, etc.), not through the
+   repo. If you're editing one, you're editing a local file that nobody else
+   automatically gets.
 
 ---
 
