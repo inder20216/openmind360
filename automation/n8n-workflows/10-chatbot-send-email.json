@@ -1,5 +1,5 @@
 {
-  "name": "11 - Chatbot Send Email (Internal Team) - Open Mind",
+  "name": "10 - Chatbot Send Email (Internal Team) - Open Mind",
   "nodes": [
     {
       "parameters": {
@@ -51,17 +51,20 @@
     },
     {
       "parameters": {
-        "fromEmail": "noreply@openmind.in",
-        "toEmail": "={{ $json.toEmail }}",
+        "sendTo": "={{ $json.toEmail }}",
         "subject": "={{ $json.subject }}",
-        "text": "=New inquiry via Suhani (website chatbot)\n\nName: {{ $json.name }}\nEmail: {{ $json.email }}\nContact: {{ $json.contactNumber }}\nOrganization: {{ $json.organization }}\nDesignation: {{ $json.designation }}\n\nRequirement / Agenda:\n{{ $json.requirement }}",
+        "emailType": "text",
+        "message": "=New inquiry via Suhani (website chatbot)\n\nName: {{ $json.name }}\nEmail: {{ $json.email }}\nContact: {{ $json.contactNumber }}\nOrganization: {{ $json.organization }}\nDesignation: {{ $json.designation }}\n\nRequirement / Agenda:\n{{ $json.requirement }}",
         "options": {}
       },
       "id": "send-email",
-      "name": "TODO: send email (configure SMTP/Gmail credential)",
-      "type": "n8n-nodes-base.emailSend",
+      "name": "TODO: send email (configure Gmail credential)",
+      "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-360, 220]
+      "position": [-360, 220],
+      "credentials": {
+        "gmailOAuth2": { "id": "TODO_GMAIL_OAUTH2_CREDENTIAL", "name": "Gmail account" }
+      }
     },
     {
       "parameters": {
@@ -89,11 +92,11 @@
     "Map Team & Validate Required Fields": { "main": [[{ "node": "All Required Fields Present?", "type": "main", "index": 0 }]] },
     "All Required Fields Present?": {
       "main": [
-        [{ "node": "TODO: send email (configure SMTP/Gmail credential)", "type": "main", "index": 0 }],
+        [{ "node": "TODO: send email (configure Gmail credential)", "type": "main", "index": 0 }],
         [{ "node": "Ask For Missing Info", "type": "main", "index": 0 }]
       ]
     },
-    "TODO: send email (configure SMTP/Gmail credential)": { "main": [[{ "node": "Confirm Sent", "type": "main", "index": 0 }]] }
+    "TODO: send email (configure Gmail credential)": { "main": [[{ "node": "Confirm Sent", "type": "main", "index": 0 }]] }
   },
   "pinData": {},
   "meta": { "instanceId": "openmind-chatbot-send-email-v1" }

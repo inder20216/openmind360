@@ -4,7 +4,11 @@ Twelve workflows, imported into n8n in this order. Each is a starting skeleton
 with `TODO` nodes marking where you need to plug in a credential, a shared
 data source, or a notification channel — nothing here auto-publishes anything.
 
-Workflows 09–12 (the live chatbot) use n8n's **LangChain** node package
+Every email-sending workflow uses n8n's **Gmail** node (not generic SMTP) —
+that needs a Gmail account connected via OAuth2 in n8n's Credentials manager,
+not just a username/password.
+
+Workflows 09–11 (the live chatbot) use n8n's **LangChain** node package
 (`@n8n/n8n-nodes-langchain.*`). This ships with n8n's default Docker image from
 a recent-enough version — if your instance doesn't show an "AI Agent" node
 type when searching, it needs enabling (n8n settings → Community/Verified
@@ -46,42 +50,80 @@ version).
    "X visitors, Y countries" trust block, which stays hidden until traffic
    is high enough to be worth showing.
 
-### The live chatbot (Suhani) — import 09, 10, 11, then 12
+### The live chatbot (Suhani) — import 09, 10, then 11
 
-These four replace the placeholder chat widget with a real, generative,
-knowledge-base-grounded assistant. Import them **in this order** — 12 (the
-agent) calls the other three as tools, so they need to already exist in n8n
-first so you can pick them from the workflow-selector dropdown.
+These three replace the placeholder chat widget with a real, generative,
+knowledge-base-grounded assistant. There is no calendar/booking tool — if a
+visitor wants to schedule something, Suhani takes their details and emails
+the right team, same as any other lead. Import them **in this order** — 11
+(the agent) calls the other two as tools, so they need to already exist in
+n8n first so you can pick them from the workflow-selector dropdown.
 
 9. **09-chatbot-knowledge-base.json** — a tool workflow. Called by the agent
    every time it needs to answer a question about Open Mind. Returns the
    full verified knowledge base as text (services, real clients, contacts,
    page links) — the agent only answers from what this returns, never from
-   its own assumptions. Keep this in sync with the real site content.
-10. **10-chatbot-calendar-booking.json** — a tool workflow. Books an
-    appointment once the agent has all required details. Re-validates the
-    booking window **server-side** (Tue–Fri, 11am–4pm IST, 30-minute slots)
-    — never trust the agent alone to have gotten this right.
-11. **11-chatbot-send-email.json** — a tool workflow. Notifies the right
+   its own assumptions. Keep this in sync with the real site content. See
+   "How the knowledge base actually works" below.
+10. **10-chatbot-send-email.json** — a tool workflow. Notifies the right
     internal team (Sales / IT-Support / HR / Admin) by email once the agent
     has all required fields; asks for whatever's missing instead of sending
-    an incomplete lead.
-12. **12-chatbot-agent.json** — the main workflow, and the only one of the
-    four the public website talks to directly. A LangChain AI Agent
+    an incomplete lead. Uses the Gmail node.
+11. **11-chatbot-agent.json** — the main workflow, and the only one of the
+    three the public website talks to directly. A LangChain AI Agent
     ("Suhani") with session memory, a Think tool for internal reasoning, and
-    the three tools above. Requires a public HTTPS URL — see "Going live"
-    below. After importing, open the KB / Calendar / Send Email tool nodes
-    and re-point each `workflowId` at the real imported workflow (the
+    the two tools above. Requires a public HTTPS URL — see "Going live"
+    below. After importing, open the KB / Send Email tool nodes and
+    re-point each `workflowId` at the real imported workflow (the
     `REPLACE_WITH_..._WORKFLOW_ID` placeholders won't resolve on their own).
 
 **How lead capture actually works here:** the website's chat widget asks for
 phone + email in a small pre-chat step *before* the conversation opens (not
 inside the LLM conversation) — see `PreCaptureStep` in
 `src/components/ChatVoiceWidget.jsx`. That contact info rides along with
-every message sent to workflow 12, so Suhani never has to ask for it again;
+every message sent to workflow 11, so Suhani never has to ask for it again;
 she asks for the visitor's name conversationally instead, then uses the
-pre-captured phone/email automatically when calling Send Email or Calendar,
+pre-captured phone/email automatically when calling the Send Email tool,
 unless the visitor gives different details.
+
+### How the knowledge base actually works
+
+Workflow 09 is not a search engine or a vector database — it's much simpler
+than that. It's one Code node holding a block of plain text (company facts,
+all 5 services with real URLs, real client list, contact/escalation
+routing, legal links — see the file itself for the exact wording) that gets
+returned **in full, every single time** the agent calls it. The agent then
+reads that whole block and answers only from what's actually in it — it
+never makes something up, and if the visitor asks something the text
+doesn't cover, the system prompt tells Suhani to say so and offer to
+connect them with the team instead.
+
+This works because the KB is small enough to hand over in full each time —
+there's no need for anything fancier (embeddings, semantic search) at this
+size. **The one thing that keeps it accurate is keeping it in sync** — if a
+service page, a client, or a contact changes on the real site, that same
+change needs to be copied into workflow 09's text block, or the bot will
+keep repeating the old version.
+
+### Team status reporting — checks the real code, not a checklist
+
+12. **12-project-status-report.json** — schedule trigger, every Monday 9am
+    IST. Not called by the website or by any other workflow — this is purely
+    for the team. Nobody reports status into anything; it just looks:
+    - Fetches a handful of real files from GitHub (`vite.config.js`,
+      `ContactForm.jsx`, `CaseStudiesPage.jsx`, etc.) and checks for
+      concrete evidence — e.g. is the `YOUR-N8N-DOMAIN` placeholder gone
+      from `ContactForm.jsx` yet?
+    - Calls n8n's own REST API (`/api/v1/workflows`) to count how many of
+      the 12 workflows are actually imported.
+    - Requests `https://openmind.in/` and checks whether it's really
+      serving this site (looks for our GA4 ID in the response).
+    - Emails a plain checklist (✅/⬜ per item) to
+      `inder@openmindserviceslimited.in`. That's it — no file gets edited,
+      no PR gets opened, nothing to merge or review. Just 5 nodes: schedule
+      → check the code → check n8n → build the email → send it.
+    Run it manually in n8n any time you want an on-demand check instead of
+    waiting for Monday.
 
 ## Credentials you'll need to fill in
 
@@ -98,8 +140,11 @@ unless the visitor gives different details.
 - **Notification channel** (Email/Slack) — every `TODO: connect output` /
   `TODO: notify human` node needs to be replaced with a real
   Email/Gmail/Slack node once you decide which channel to use.
-- **SMTP/Gmail** (Contact Form Router) — configure a credential on the
-  `TODO: send Sales email` node.
+- **Gmail (OAuth2)** (Contact Form Router) — in n8n's Credentials manager,
+  add a **Gmail account** credential (OAuth2 — connect the actual Gmail
+  inbox that should send these, e.g. `noreply@openmind.in` if that's a real
+  Google Workspace mailbox). Assign it to the `TODO: send Sales email`
+  node.
 - **Sales targets** (Contact Form Router) — inside the "Validate Submission"
   code node, replace the placeholder `sales@openmind.in` address with the
   real one, and `TODO_SALES_TEAMS_WEBHOOK_URL` with a real Microsoft Teams
@@ -113,21 +158,29 @@ unless the visitor gives different details.
   `YOUR_SHARED_SHEET_ID` with the same shared sheet, tab `Public Stats`
   (columns: `activeUsers30d`, `countries30d`, `updatedAt`).
 - **OpenAI** (Chatbot Agent) — same OpenAI credential as everything else,
-  assigned to the "OpenAI Chat Model" node in workflow 12 (model:
+  assigned to the "OpenAI Chat Model" node in workflow 11 (model:
   `gpt-4.1-mini`, or whichever model your account has access to).
-- **Google Calendar OAuth2** (Chatbot Calendar Booking) — replace
-  `YOUR_GOOGLE_CALENDAR_ID` and connect a credential on the
-  `TODO: create Google Calendar event` node.
-- **SMTP/Gmail** (Chatbot Send Email) — configure a credential on the
-  `TODO: send email` node.
+- **Gmail (OAuth2)** (Chatbot Send Email) — same Gmail credential as the
+  Contact Form Router, assigned to workflow 10's `TODO: send email` node.
 - **Team contacts** (Chatbot Send Email) — inside the "Map Team & Validate
   Required Fields" code node, confirm/correct the `TEAM_CONTACTS` addresses
   (Sales, IT/Support, Admin, HR).
+- **n8n API Key** (Weekly Project Status Report) — n8n Settings → n8n API →
+  create an API key, then add an **HTTP Header Auth** credential in n8n
+  named `n8n API Key` with header name `X-N8N-API-Key` and that key as the
+  value. Assign it to the "Check n8n Workflows" node, and replace
+  `YOUR-N8N-DOMAIN` in that node's URL with the real instance URL. This is
+  what lets the workflow verify *which workflows are actually imported*
+  instead of trusting anyone's word for it.
+- **Gmail (OAuth2)** (Weekly Project Status Report) — same Gmail credential
+  as the other email-sending workflows, assigned to workflow 12's
+  `TODO: send report` node. Change the `sendTo` there if the report should
+  go to more than one address.
 
 ## Going live: three workflows need a public n8n URL
 
-Workflows 07, 08, and 12 are the only ones the public website calls directly
-(the rest are scheduled/manual, or only called internally by workflow 12 as
+Workflows 07, 08, and 11 are the only ones the public website calls directly
+(the rest are scheduled/manual, or only called internally by workflow 11 as
 tools — n8n reaching itself doesn't need a public URL). For the site to
 reach them, this n8n instance needs a stable HTTPS URL reachable from the
 internet — a reverse proxy with a real domain, or a tunnel (Cloudflare
@@ -137,7 +190,7 @@ Tunnel, ngrok, etc.) if it's staying on the Mac. Once that's set up:
   `WEBHOOK_URL` in `src/components/ContactForm.jsx`.
 - Activate workflow 08, copy its production webhook URL, paste it into
   `STATS_URL` in `src/components/TrustStats.jsx`.
-- Activate workflow 12, copy its production **chat** webhook URL (the
+- Activate workflow 11, copy its production **chat** webhook URL (the
   LangChain Chat Trigger's URL ends in `/chat`), paste it into
   `CHAT_WEBHOOK_URL` in `src/components/ChatVoiceWidget.jsx`.
 
