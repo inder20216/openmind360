@@ -236,17 +236,23 @@ self-hosted rebuild above — chosen as the fastest path to a working
 chatbot on the new site. The pre-chat step now also asks what the visitor
 is looking for (a dropdown: Call outsourcing services, Inbound Call
 center, Lead Management support, Helpdesk, Voice Bots, Chatbots, Dynamic
-MIS Dashboards, Advance automations, Custom CRMs, Job, Other). "Other" and
-"Job" get a fixed scripted reply (Job currently points to hr@openmind.in,
-since there's no careers page yet — see the pending item below); every
-other choice gets sent to the bot as context so its first reply actually
-addresses it. Since the old bot's workflow was never built to expect any
-of this, it wouldn't otherwise go anywhere — so workflow **13 (Chatbot
+MIS Dashboards, Advance automations, Custom CRMs, Job, Other) — every
+choice, including Job and Other, is sent to the bot as context so it
+answers generatively; there are **no fixed/scripted frontend replies for
+anything**, by explicit choice. One real consequence of that for "Job": the
+bot answers from whatever its own knowledge base already says (which we
+don't control, since it's the old bot's own n8n Cloud setup) — it may or
+may not correctly say there's no careers page live yet.
+
+Since the old bot's workflow was never built to expect any of this pre-chat
+data, it wouldn't otherwise go anywhere — so workflow **13 (Chatbot
 Pre-Chat Lead Capture)** was added as a separate webhook the widget calls
 the instant that form is submitted, independent of the chat backend: it
-appends a row to a shared Google Sheet and emails Sales. Known gap: the old
-bot's own prompt doesn't know about the pre-chat step, so it may ask the
-visitor for phone/email again inside the conversation.
+appends a row to a shared Google Sheet and emails Sales. **Live and
+tested** — `LEAD_CAPTURE_URL` points at the real production webhook
+(`automation.openmindhelpline.com`). Known gap: the old bot's own prompt
+doesn't know about the pre-chat step, so it may ask the visitor for
+phone/email again inside the conversation.
 
 **Team status reporting (12):** Weekly Project Status Report — every Monday
 9am IST, emails `inder@openmindserviceslimited.in` a plain checklist of
@@ -302,16 +308,14 @@ Two things were deliberately ruled out, not overlooked:
       bot, not the self-hosted rebuild.
 - [ ] Import workflow 12 (weekly status email) and connect the Gmail and
       n8n-API-key credentials — no public URL needed, it's schedule-only.
-- [ ] Import workflow 13 (chatbot lead capture) — connect it to the
-      existing leads Google Sheet (set `TODO_LEAD_SHEET_ID` /
-      `TODO_SHEET_TAB_NAME`) and the Gmail credential, give n8n a public
-      HTTPS URL, then paste the real webhook URL into `LEAD_CAPTURE_URL`
-      in `ChatVoiceWidget.jsx` — this is what makes the pre-chat
-      phone/email/requirement actually go somewhere.
-- [ ] Build the careers page (copying content from the old site) — once
-      live, update `JOB_RESPONSE_TEXT` in `ChatVoiceWidget.jsx` to link to
-      it instead of the current hr@openmind.in fallback, and update the
-      matching note in workflow 09's knowledge base text.
+- [x] Workflow 13 (chatbot lead capture) is imported and live —
+      `LEAD_CAPTURE_URL` in `ChatVoiceWidget.jsx` points at the real
+      production webhook, tested and confirmed working.
+- [ ] Build the careers page (copying content from the old site). There's no
+      fixed frontend text to update once it's live (all replies are
+      generative now) — instead, make sure whatever answers "Job" queries
+      (the old bot's own knowledge base right now) gets pointed at the real
+      page once it exists.
 - [ ] Decide whether to eventually switch the widget over to the
       self-hosted rebuild (workflows 9–11) — if so: import them in order,
       connect OpenAI + Gmail credentials, re-point the Agent's 2 tool nodes

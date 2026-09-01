@@ -93,12 +93,12 @@ for it again; she asks for the visitor's name conversationally instead,
 then uses the pre-captured phone/email automatically when calling the Send
 Email tool, unless the visitor gives different details.
 
-**"Other" and "Job" get a fixed, scripted first reply** instead of a
-generative one — handled entirely on the frontend, before the chat backend
-is even called (see `OTHER_RESPONSE_TEXT` / `JOB_RESPONSE_TEXT` in
-`ChatVoiceWidget.jsx`). Everything else sends the visitor's requirement to
-the bot as context on the first message, so its reply actually addresses
-what they picked instead of a generic greeting.
+**Every requirement, including "Other" and "Job", is sent to the bot as
+context on the first message** — there are no fixed/scripted frontend
+replies for anything, by explicit choice, so its reply always addresses
+what the visitor picked instead of a generic greeting. One consequence:
+for "Job," the bot answers from whatever its own knowledge base already
+knows — which for the currently-live old bot, we don't control.
 
 **But the widget is currently pointed at the old, already-live n8n Cloud
 bot** instead of this self-hosted rebuild (see `CHAT_WEBHOOK_URL` in
@@ -239,10 +239,11 @@ up:
   you switch the chatbot over to this self-hosted version.** As of now the
   widget is pointed at the old n8n Cloud bot instead (see the note above),
   so this step is on hold.
-- Activate workflow 13, copy its production webhook URL, paste it into
-  `LEAD_CAPTURE_URL` in `src/components/ChatVoiceWidget.jsx`. This one's
-  needed regardless of which chat backend is active, since it's what
-  actually captures the pre-chat phone/email.
+- Workflow 13 is **done** — `LEAD_CAPTURE_URL` in `ChatVoiceWidget.jsx`
+  points at its real production webhook (`automation.openmindhelpline.com`),
+  tested and confirmed working. This one's needed regardless of which chat
+  backend is active, since it's what actually captures the pre-chat
+  phone/email/requirement.
 
 ## Why every workflow ends in a TODO or a gate
 
