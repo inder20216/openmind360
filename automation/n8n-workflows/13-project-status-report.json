@@ -1,0 +1,75 @@
+{
+  "name": "13 - Weekly Project Status Report - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 9 * * 1" }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every Monday 9am IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/inder20216/openmind360/main/PROJECT-STATUS.md",
+        "options": {
+          "response": { "response": { "responseFormat": "text" } }
+        }
+      },
+      "id": "fetch-status-doc",
+      "name": "Fetch PROJECT-STATUS.md",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-980, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ 'https://api.github.com/repos/inder20216/openmind360/commits?since=' + $now.minus({ days: 7 }).toISO() }}",
+        "options": {}
+      },
+      "id": "fetch-recent-commits",
+      "name": "Fetch Recent Commits",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-760, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reads PROJECT-STATUS.md's \"- [ ]\" / \"- [x]\" checklist items (grouped by\n// the nearest ## or ### heading) plus the last 7 days of commits, and\n// builds a plain-language weekly status email. No fabricated content \u2014\n// everything here is pulled directly from the doc and the commit log.\n\nconst mdRaw = $('Fetch PROJECT-STATUS.md').first().json;\nconst md = typeof mdRaw === 'string' ? mdRaw : (mdRaw.data || JSON.stringify(mdRaw));\n\nlet commits = [];\nfor (const it of $('Fetch Recent Commits').all()) {\n  if (Array.isArray(it.json)) commits.push(...it.json);\n  else if (it.json && it.json.commit) commits.push(it.json);\n}\n\nfunction escapeHtml(s) {\n  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n}\n\n// Parse checklist items, joining indented continuation lines onto the\n// previous bullet so multi-line items don't get truncated.\nconst lines = md.split('\\n');\nlet currentSection = '';\nlet current = null;\nconst items = [];\nfor (const rawLine of lines) {\n  const heading = rawLine.match(/^#{2,3}\\s+(.*)/);\n  if (heading) { currentSection = heading[1].trim(); current = null; continue; }\n  const check = rawLine.match(/^-\\s\\[( |x)\\]\\s+(.*)/i);\n  if (check) {\n    current = { done: check[1].toLowerCase() === 'x', section: currentSection, text: check[2].trim() };\n    items.push(current);\n    continue;\n  }\n  const cont = rawLine.match(/^\\s{4,}(\\S.*)/);\n  if (cont && current) current.text += ' ' + cont[1].trim();\n  else current = null;\n}\n\nconst pending = items.filter((i) => !i.done);\nconst done = items.filter((i) => i.done);\n\nconst pendingBySection = {};\nfor (const p of pending) (pendingBySection[p.section] = pendingBySection[p.section] || []).push(p.text);\n\nlet pendingHtml = '';\nfor (const [section, texts] of Object.entries(pendingBySection)) {\n  pendingHtml += `<h3>${escapeHtml(section)}</h3><ul>${texts.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul>`;\n}\nif (!pendingHtml) pendingHtml = '<p>Nothing pending \u2014 every tracked item is checked off.</p>';\n\nconst doneHtml = done.length\n  ? `<ul>${done.map((d) => `<li>${escapeHtml(d.text)}</li>`).join('')}</ul>`\n  : '<p>None checked off yet.</p>';\n\nconst commitLines = commits.slice(0, 20).map((c) => {\n  const msg = ((c.commit && c.commit.message) || '').split('\\n')[0];\n  const author = (c.commit && c.commit.author && c.commit.author.name) || 'unknown';\n  const dateStr = (c.commit && c.commit.author && c.commit.author.date) || '';\n  const shortDate = dateStr ? new Date(dateStr).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '';\n  return `${shortDate} \u2014 ${msg} (${author})`;\n});\nconst commitsHtml = commitLines.length\n  ? `<ul>${commitLines.map((c) => `<li>${escapeHtml(c)}</li>`).join('')}</ul>`\n  : '<p>No commits pushed to main in the last 7 days.</p>';\n\nconst html = `\n<h2>Openmind Project \u2014 Weekly Status</h2>\n<p>${done.length} of ${done.length + pending.length} tracked items done. Full doc: <a href=\"https://github.com/inder20216/openmind360/blob/main/PROJECT-STATUS.md\">PROJECT-STATUS.md</a></p>\n<h2>Still Pending</h2>\n${pendingHtml}\n<h2>Completed</h2>\n${doneHtml}\n<h2>Commits in the Last 7 Days</h2>\n${commitsHtml}\n`;\n\nreturn [{ json: { html, subject: `Openmind Project \u2014 Weekly Status (${new Date().toLocaleDateString('en-IN')})` } }];"
+      },
+      "id": "build-report",
+      "name": "Build Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-540, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@openmind.in",
+        "toEmail": "inder@openmindserviceslimited.in",
+        "subject": "={{ $json.subject }}",
+        "html": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "send-report",
+      "name": "TODO: send report (configure SMTP/Gmail credential)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [-320, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 9am IST": { "main": [[{ "node": "Fetch PROJECT-STATUS.md", "type": "main", "index": 0 }]] },
+    "Fetch PROJECT-STATUS.md": { "main": [[{ "node": "Fetch Recent Commits", "type": "main", "index": 0 }]] },
+    "Fetch Recent Commits": { "main": [[{ "node": "Build Report", "type": "main", "index": 0 }]] },
+    "Build Report": { "main": [[{ "node": "TODO: send report (configure SMTP/Gmail credential)", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-project-status-report-v1" }
+}

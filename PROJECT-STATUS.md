@@ -187,7 +187,7 @@ moment — it doesn't "catch up" on missed runs). **Setup is in progress and
 not yet confirmed complete** — see `automation/n8n-workflows/README.md` for
 the exact import order and what each workflow needs.
 
-### The 12 workflows
+### The 13 workflows
 
 All JSON files live in `automation/n8n-workflows/`, imported in numeric
 order — **see that folder's own `README.md` for full setup detail**,
@@ -214,6 +214,14 @@ captures phone + email in a small pre-chat step *before* the conversation
 opens (see `src/components/ChatVoiceWidget.jsx`), so Suhani never has to
 ask for them — she asks for the visitor's name conversationally and uses
 the pre-captured contact info automatically.
+
+**Team status reporting (13):** Weekly Project Status Report — every Monday
+9am IST, fetches this doc straight from GitHub, parses its `- [ ]` / `- [x]`
+checklists, pulls the last 7 days of commits, and emails a summary to
+`inder@openmindserviceslimited.in`. This is *why* the pending-items lists in
+this file use real checkboxes and get checked off as work lands — the
+report is only as useful as this doc is current. Can also be run on demand
+in n8n instead of waiting for Monday.
 
 ### Why no LinkedIn / no raw Google scraping (Research Agent)
 
@@ -258,6 +266,8 @@ Two things were deliberately ruled out, not overlooked:
       Google Calendar / SMTP credentials, re-point the Agent's 3 tool nodes
       at the real imported workflow IDs, activate it, then paste its chat
       webhook URL into `ChatVoiceWidget.jsx`.
+- [ ] Import workflow 13 (weekly project status report) and connect the
+      SMTP/Gmail credential — no public URL needed, it's schedule-only.
 - [ ] Python was discussed as a possible second runtime alongside n8n for
       anything n8n's nodes can't handle. Not started — revisit only when a
       concrete task actually needs it.

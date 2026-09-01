@@ -1,6 +1,6 @@
 # Open Mind AI Marketing Agent System — n8n Workflows
 
-Twelve workflows, imported into n8n in this order. Each is a starting skeleton
+Thirteen workflows, imported into n8n in this order. Each is a starting skeleton
 with `TODO` nodes marking where you need to plug in a credential, a shared
 data source, or a notification channel — nothing here auto-publishes anything.
 
@@ -83,6 +83,22 @@ she asks for the visitor's name conversationally instead, then uses the
 pre-captured phone/email automatically when calling Send Email or Calendar,
 unless the visitor gives different details.
 
+### Team status reporting
+
+13. **13-project-status-report.json** — schedule trigger, every Monday 9am
+    IST. Not called by the website or by any other workflow — this is purely
+    for the team. It fetches `PROJECT-STATUS.md` straight from `main` on
+    GitHub, parses its `- [ ]` / `- [x]` checklist items (grouped by
+    section), pulls the last 7 days of commits from the GitHub API, and
+    emails a plain-language summary to `inder@openmindserviceslimited.in`.
+    No fabricated content — it only ever reports what's actually written in
+    the doc and the real commit log, so **keeping this useful means keeping
+    PROJECT-STATUS.md's checklists current** as items get done. No GitHub
+    auth needed (public repo, read-only, well under the unauthenticated rate
+    limit for a weekly run) — the only credential this one needs is the same
+    SMTP/Gmail one used elsewhere. Run it manually in n8n any time you want
+    an on-demand report instead of waiting for Monday.
+
 ## Credentials you'll need to fill in
 
 - **OpenAI** — used by every workflow's `n8n-nodes-base.openAi` nodes. Set up
@@ -123,6 +139,10 @@ unless the visitor gives different details.
 - **Team contacts** (Chatbot Send Email) — inside the "Map Team & Validate
   Required Fields" code node, confirm/correct the `TEAM_CONTACTS` addresses
   (Sales, IT/Support, Admin, HR).
+- **SMTP/Gmail** (Weekly Project Status Report) — same credential as the
+  other email-sending workflows, assigned to workflow 13's
+  `TODO: send report` node. Change the `toEmail` there if the report should
+  go to more than one address.
 
 ## Going live: three workflows need a public n8n URL
 
