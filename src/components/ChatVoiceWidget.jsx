@@ -210,13 +210,18 @@ function ChatPanel({ onClose }) {
       body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: info.requirement }),
     }).catch(() => {})
 
-    // "Other" and "Job" get a fixed, scripted first reply instead of a
-    // generative one — everything else goes to the bot with the visitor's
-    // requirement as context, so its answer actually addresses it.
+    // "Other" and "Job" get a fixed, scripted reply shown immediately —
+    // but we still open the bot session right away in every case (not just
+    // the generative path). The backend always starts a new session with
+    // its own intro + consent request, whatever the first message says; if
+    // we skip this for Job/Other, that intro ambushes the visitor's *next*
+    // message instead, looking like the bot ignored them.
     if (info.requirement === 'Other') {
       setMessages((m) => [...m, { from: 'bot', text: OTHER_RESPONSE_TEXT }])
+      sendToBot('Hi', info)
     } else if (info.requirement === 'Job') {
       setMessages((m) => [...m, { from: 'bot', text: JOB_RESPONSE_TEXT }])
+      sendToBot('Hi', info)
     } else {
       sendToBot(`Hi, I'm looking for: ${info.requirement}`, info)
     }
