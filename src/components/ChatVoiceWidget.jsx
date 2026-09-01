@@ -10,7 +10,7 @@ const CHAT_WEBHOOK_URL = 'https://inder20216.app.n8n.cloud/webhook/dbffbebc-7366
 // Fires the instant the pre-chat form is submitted, independent of whatever
 // happens in the conversation after — this is what actually captures the
 // lead. See automation/n8n-workflows/13-chatbot-lead-capture.json.
-const LEAD_CAPTURE_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-chatbot-lead-capture'
+const LEAD_CAPTURE_URL = 'https://automation.openmindhelpline.com/webhook/openmind-chatbot-lead-capture'
 
 const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
 
@@ -27,14 +27,6 @@ const requirementOptions = [
   'Job',
   'Other',
 ]
-
-// Fixed, non-generative replies for the two special-case requirements —
-// scripted exactly as specified, not left to the LLM to phrase.
-const OTHER_RESPONSE_TEXT = 'Thank you for sharing the details. Let me know how may I assist you.'
-// TODO: there's no careers/job-application page on the site yet (it's being
-// built from the old site's content — see PROJECT-STATUS.md). Once that page
-// is live, replace this with a real link instead of the HR email fallback.
-const JOB_RESPONSE_TEXT = "Thanks for your interest! We don't have our careers page live just yet, so for now please share your CV and a bit about the role you're looking for at hr@openmind.in — our HR team will get back to you."
 
 // Renders bot replies as HTML (the backend converts links to real <a> tags),
 // but only after stripping anything outside a small safe allowlist — LLM
@@ -210,21 +202,9 @@ function ChatPanel({ onClose }) {
       body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: info.requirement }),
     }).catch(() => {})
 
-    // "Other" and "Job" get a fixed, scripted reply shown immediately —
-    // but we still open the bot session right away in every case (not just
-    // the generative path). The backend always starts a new session with
-    // its own intro + consent request, whatever the first message says; if
-    // we skip this for Job/Other, that intro ambushes the visitor's *next*
-    // message instead, looking like the bot ignored them.
-    if (info.requirement === 'Other') {
-      setMessages((m) => [...m, { from: 'bot', text: OTHER_RESPONSE_TEXT }])
-      sendToBot('Hi', info)
-    } else if (info.requirement === 'Job') {
-      setMessages((m) => [...m, { from: 'bot', text: JOB_RESPONSE_TEXT }])
-      sendToBot('Hi', info)
-    } else {
-      sendToBot(`Hi, I'm looking for: ${info.requirement}`, info)
-    }
+    // Every requirement, including Other/Job, goes to the bot as context —
+    // no fixed/scripted replies. It always answers generatively.
+    sendToBot(`Hi, I'm looking for: ${info.requirement}`, info)
   }
 
   function send() {
