@@ -32,6 +32,11 @@ first; it's short and everything else assumes you already know it.
    secret (API key, Teams webhook URL, SMTP password) in the website's own
    code — it ships to every visitor's browser in plain text. Secrets live in
    n8n only.
+5. **Don't worry about keeping the checkboxes below perfectly up to date.**
+   Every Monday, n8n workflow 12 checks the real code and the real live
+   site and emails the actual status — nobody has to self-report anything.
+   The checkboxes here are just a rough at-a-glance list; the email is the
+   source of truth.
 
 ---
 
@@ -159,6 +164,8 @@ below), which turned into most of the rest of this session's work.
       `vite.svg` boilerplate).
 - [ ] Favicon doesn't match the brand (generic abstract shape, not the
       circuit/brain mark used in the navbar logo).
+- [ ] `vite.config.js` base path changed from `/openmind360/` to `/`, and
+      DNS pointed so openmind.in actually resolves to this site.
 
 ---
 
@@ -203,13 +210,18 @@ Follow-up Agent (every 4h, flags only, never auto-replies).
 bot re-validation, emails+Teams-notifies Sales) → Public Visitor Stats
 (daily GA4 pull cached in Sheets, served to the homepage trust block).
 
-**Live chatbot "Suhani" (9–12, self-hosted rebuild):** Knowledge Base (tool,
-returns only verified facts) → Calendar Booking (tool, re-validates the
-booking window server-side) → Send Email (tool, routes to
-Sales/IT-Support/HR/Admin) → Agent (the main LangChain conversational
-agent). Rebuilt from an existing, already-working bot on the old WordPress
-site; kept the same persona, security rules, and escalation logic. **Not
-what's actually live right now** — see below.
+**Live chatbot "Suhani" (9–11, self-hosted rebuild):** Knowledge Base
+(tool — one Code node returning the full verified fact block as plain text
+every time it's called, no vector search or database, kept accurate by
+hand) → Send Email (tool, routes to Sales/IT-Support/HR/Admin) → Agent (the
+main LangChain conversational agent). No calendar/booking tool — if a
+visitor wants to schedule something, Suhani takes their details and routes
+it to the right team by email like any other lead, same as the old
+WordPress bot's flow before this rebuild. Rebuilt from an existing,
+already-working bot on the old WordPress site; kept the same persona,
+security rules, and escalation logic. **Not what's actually live right
+now** — see below. All email sends across these workflows use n8n's
+**Gmail node** specifically, not generic SMTP.
 
 **What's actually live right now:** the chat widget (`ChatVoiceWidget.jsx`)
 is pointed at the **old bot's existing n8n Cloud webhook**, not the
@@ -222,6 +234,17 @@ as a separate webhook the widget calls the instant that form is submitted,
 independent of the chat backend, and emails Sales. Known gap: the old
 bot's own prompt doesn't know about the pre-chat step, so it may ask the
 visitor for phone/email again inside the conversation.
+
+**Team status reporting (12):** Weekly Project Status Report — every Monday
+9am IST, emails `inder@openmindserviceslimited.in` a plain checklist of
+what's actually done. It doesn't ask anyone or read this doc's checkboxes —
+it looks at the real code on GitHub (e.g. is the `YOUR-N8N-DOMAIN`
+placeholder still in `ContactForm.jsx`? does `vite.config.js` still say
+`/openmind360/`?), pings n8n's own API to see which workflows are really
+imported, and checks whether openmind.in actually loads this site. Nobody
+edits anything for this to work — just do the actual work, and next
+Monday's email reflects it. Can also be run on demand in n8n instead of
+waiting.
 
 ### Why no LinkedIn / no raw Google scraping (Research Agent)
 
@@ -264,15 +287,17 @@ Two things were deliberately ruled out, not overlooked:
       paste the real webhook URLs into `ContactForm.jsx` / `TrustStats.jsx`.
 - [x] Chatbot is live on openmind.in — but pointed at the **old** n8n Cloud
       bot, not the self-hosted rebuild.
+- [ ] Import workflow 12 (weekly status email) and connect the Gmail and
+      n8n-API-key credentials — no public URL needed, it's schedule-only.
 - [ ] Import workflow 13 (chatbot lead capture) and give n8n a public
       HTTPS URL, then paste the real webhook URL into `LEAD_CAPTURE_URL`
       in `ChatVoiceWidget.jsx` — this is what makes the pre-chat
       phone/email actually go somewhere.
 - [ ] Decide whether to eventually switch the widget over to the
-      self-hosted rebuild (workflows 9–12) — if so: import them in order,
-      connect OpenAI / Google Calendar / Gmail credentials, re-point the
-      Agent's 3 tool nodes at the real imported workflow IDs, activate it,
-      then paste its chat webhook URL into `CHAT_WEBHOOK_URL`.
+      self-hosted rebuild (workflows 9–11) — if so: import them in order,
+      connect OpenAI + Gmail credentials, re-point the Agent's 2 tool nodes
+      at the real imported workflow IDs, activate it, then paste its chat
+      webhook URL into `CHAT_WEBHOOK_URL`.
 - [ ] Python was discussed as a possible second runtime alongside n8n for
       anything n8n's nodes can't handle. Not started — revisit only when a
       concrete task actually needs it.

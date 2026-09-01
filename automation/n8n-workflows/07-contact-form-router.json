@@ -52,17 +52,20 @@
     },
     {
       "parameters": {
-        "fromEmail": "noreply@openmind.in",
-        "toEmail": "={{ $json.toEmail }}",
+        "sendTo": "={{ $json.toEmail }}",
         "subject": "=New sales inquiry from openmind.in — {{ $json.name }} ({{ $json.companyName }})",
-        "text": "=Name: {{ $json.name }}\nEmail: {{ $json.email }}\nPhone: {{ $json.phone }}\nCompany: {{ $json.companyName }}\nWebsite: {{ $json.companyWebsite }}\n\nLooking for: {{ $json.requirements }}\n\nComments:\n{{ $json.comments }}",
+        "emailType": "text",
+        "message": "=Name: {{ $json.name }}\nEmail: {{ $json.email }}\nPhone: {{ $json.phone }}\nCompany: {{ $json.companyName }}\nWebsite: {{ $json.companyWebsite }}\n\nLooking for: {{ $json.requirements }}\n\nComments:\n{{ $json.comments }}",
         "options": {}
       },
       "id": "send-email",
-      "name": "TODO: send Sales email (configure SMTP/Gmail credential)",
-      "type": "n8n-nodes-base.emailSend",
+      "name": "TODO: send Sales email (configure Gmail credential)",
+      "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-540, 380]
+      "position": [-540, 380],
+      "credentials": {
+        "gmailOAuth2": { "id": "TODO_GMAIL_OAUTH2_CREDENTIAL", "name": "Gmail account" }
+      }
     },
     {
       "parameters": {
@@ -116,11 +119,11 @@
     "Looks Like A Bot?": {
       "main": [
         [{ "node": "Silently Drop (bot detected)", "type": "main", "index": 0 }],
-        [{ "node": "TODO: send Sales email (configure SMTP/Gmail credential)", "type": "main", "index": 0 }]
+        [{ "node": "TODO: send Sales email (configure Gmail credential)", "type": "main", "index": 0 }]
       ]
     },
     "Silently Drop (bot detected)": { "main": [[{ "node": "Respond: Fake Success (don't tip off the bot)", "type": "main", "index": 0 }]] },
-    "TODO: send Sales email (configure SMTP/Gmail credential)": { "main": [[{ "node": "Post To Sales Teams Channel", "type": "main", "index": 0 }]] },
+    "TODO: send Sales email (configure Gmail credential)": { "main": [[{ "node": "Post To Sales Teams Channel", "type": "main", "index": 0 }]] },
     "Post To Sales Teams Channel": { "main": [[{ "node": "Respond: Success", "type": "main", "index": 0 }]] }
   },
   "pinData": {},

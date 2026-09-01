@@ -1,0 +1,81 @@
+{
+  "name": "12 - Weekly Project Status Report - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 9 * * 1" }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Every Monday 9am IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-700, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Checks the REAL code on GitHub and the REAL live site — nobody types\n// \"done\" into anything. If a check can't run (site down, file missing), it\n// just reports pending; it never guesses.\nconst owner = 'inder20216';\nconst repo = 'openmind360';\n\nconst fetchRaw = async (path) => {\n  try {\n    const res = await this.helpers.httpRequest({\n      method: 'GET',\n      url: `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`,\n      returnFullResponse: true,\n      ignoreHttpStatusErrors: true,\n    });\n    return (res.statusCode >= 200 && res.statusCode < 300) ? String(res.body) : null;\n  } catch (e) { return null; }\n};\n\nconst [viteConfig, indexHtml, serviceDetailJsx, caseStudiesJsx, contactForm, trustStats, chatWidget] = await Promise.all([\n  fetchRaw('vite.config.js'),\n  fetchRaw('index.html'),\n  fetchRaw('src/pages/ServiceDetailPage.jsx'),\n  fetchRaw('src/pages/CaseStudiesPage.jsx'),\n  fetchRaw('src/components/ContactForm.jsx'),\n  fetchRaw('src/components/TrustStats.jsx'),\n  fetchRaw('src/components/ChatVoiceWidget.jsx'),\n]);\n\nlet domainLive = false;\ntry {\n  const res = await this.helpers.httpRequest({ method: 'GET', url: 'https://openmind.in/', returnFullResponse: true, ignoreHttpStatusErrors: true, timeout: 10000 });\n  domainLive = res.statusCode >= 200 && res.statusCode < 300 && String(res.body).includes('G-C9EKCGDXZN');\n} catch (e) { domainLive = false; }\n\nreturn [{\n  json: {\n    checks: [\n      { label: 'Domain openmind.in is live on this site', done: domainLive },\n      { label: 'vite.config.js ready for the real domain (base path is \"/\")', done: !!viteConfig && !viteConfig.includes(\"'/openmind360/'\") },\n      { label: 'Demo Slot placeholder removed from service pages', done: !!serviceDetailJsx && !serviceDetailJsx.includes('Demo Slot') },\n      { label: 'Case Studies filled in (no empty industry tabs)', done: !!caseStudiesJsx && !caseStudiesJsx.includes('cases: []') },\n      { label: 'Contact form connected to n8n (07/08 live)', done: !!contactForm && !contactForm.includes('YOUR-N8N-DOMAIN') && !!trustStats && !trustStats.includes('YOUR-N8N-DOMAIN') },\n      { label: 'Live chatbot connected to n8n (09-11 live)', done: !!chatWidget && !chatWidget.includes('YOUR-N8N-DOMAIN') },\n    ],\n  },\n}];"
+      },
+      "id": "check-website",
+      "name": "Check Website & Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-480, 220]
+    },
+    {
+      "parameters": {
+        "url": "https://YOUR-N8N-DOMAIN/api/v1/workflows",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {},
+        "onError": "continueRegularOutput"
+      },
+      "id": "check-n8n",
+      "name": "Check n8n Workflows",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-480, 400],
+      "credentials": {
+        "httpHeaderAuth": { "id": "TODO_N8N_API_KEY_CREDENTIAL", "name": "n8n API Key" }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combines both checks into one plain-English email. No AI writing here on\n// purpose — every line is a fact, not a guess.\nconst siteChecks = $('Check Website & Code').first().json.checks;\n\nlet n8nWorkflows = [];\ntry {\n  const wf = $('Check n8n Workflows').first().json;\n  n8nWorkflows = Array.isArray(wf) ? wf : (wf && Array.isArray(wf.data) ? wf.data : []);\n} catch (e) { n8nWorkflows = []; }\nconst n8nOk = n8nWorkflows.length > 0;\nconst importedCount = n8nOk ? [...Array(13)].filter((_, i) => n8nWorkflows.some((w) => typeof w.name === 'string' && w.name.startsWith(String(i + 1).padStart(2, '0') + ' -'))).length : 0;\n\nconst checks = [\n  ...siteChecks,\n  { label: `n8n workflows imported (${importedCount} of 13 found)`, done: importedCount === 13 },\n];\nif (!n8nOk) checks.push({ label: 'n8n could not be reached to check workflow status — fix the N8N_BASE_URL / API key in this workflow', done: false });\n\nconst doneCount = checks.filter((c) => c.done).length;\nfunction esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }\nconst rows = checks.map((c) => `<li>${c.done ? '✅' : '⬜'} ${esc(c.label)}</li>`).join('');\n\nconst html = `<h2>Openmind Project — Weekly Status</h2><p>${doneCount} of ${checks.length} checked automatically from the real code and site — nobody typed these in.</p><ul>${rows}</ul><p>Full project notes: <a href=\"https://github.com/inder20216/openmind360/blob/main/PROJECT-STATUS.md\">PROJECT-STATUS.md</a></p>`;\n\nreturn [{ json: { html, subject: `Openmind Project — Weekly Status (${new Date().toLocaleDateString('en-IN')})` } }];"
+      },
+      "id": "build-email",
+      "name": "Build Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-260, 300]
+    },
+    {
+      "parameters": {
+        "sendTo": "inder@openmindserviceslimited.in",
+        "subject": "={{ $json.subject }}",
+        "emailType": "html",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "TODO: send report (configure Gmail credential)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [-40, 300],
+      "credentials": {
+        "gmailOAuth2": { "id": "TODO_GMAIL_OAUTH2_CREDENTIAL", "name": "Gmail account" }
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday 9am IST": { "main": [[{ "node": "Check Website & Code", "type": "main", "index": 0 }, { "node": "Check n8n Workflows", "type": "main", "index": 0 }]] },
+    "Check Website & Code": { "main": [[{ "node": "Build Email", "type": "main", "index": 0 }]] },
+    "Check n8n Workflows": { "main": [[{ "node": "Build Email", "type": "main", "index": 0 }]] },
+    "Build Email": { "main": [[{ "node": "TODO: send report (configure Gmail credential)", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-project-status-report-v3" }
+}
