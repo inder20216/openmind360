@@ -1,6 +1,6 @@
 # Open Mind AI Marketing Agent System — n8n Workflows
 
-Twelve workflows, imported into n8n in this order. Each is a starting skeleton
+Thirteen workflows, imported into n8n in this order. Each is a starting skeleton
 with `TODO` nodes marking where you need to plug in a credential, a shared
 data source, or a notification channel — nothing here auto-publishes anything.
 
@@ -86,6 +86,13 @@ she asks for the visitor's name conversationally instead, then uses the
 pre-captured phone/email automatically when calling the Send Email tool,
 unless the visitor gives different details.
 
+**But the widget is currently pointed at the old, already-live n8n Cloud
+bot** instead of this self-hosted rebuild (see `CHAT_WEBHOOK_URL` in
+`ChatVoiceWidget.jsx`), whose own workflow was never built to expect a
+`contactNumber`/`email` field — so that data would otherwise go nowhere.
+See workflow 13 below for how that's handled regardless of which backend
+the chat itself is pointed at.
+
 ### How the knowledge base actually works
 
 Workflow 09 is not a search engine or a vector database — it's much simpler
@@ -115,7 +122,7 @@ keep repeating the old version.
       concrete evidence — e.g. is the `YOUR-N8N-DOMAIN` placeholder gone
       from `ContactForm.jsx` yet?
     - Calls n8n's own REST API (`/api/v1/workflows`) to count how many of
-      the 12 workflows are actually imported.
+      the 13 workflows are actually imported.
     - Requests `https://openmind.in/` and checks whether it's really
       serving this site (looks for our GA4 ID in the response).
     - Emails a plain checklist (✅/⬜ per item) to
@@ -124,6 +131,17 @@ keep repeating the old version.
       → check the code → check n8n → build the email → send it.
     Run it manually in n8n any time you want an on-demand check instead of
     waiting for Monday.
+
+### Chatbot lead capture — works no matter which bot is live
+
+13. **13-chatbot-lead-capture.json** — a separate webhook, called directly
+    by the widget the instant the pre-chat form is submitted (before "Hi"
+    is even sent to whichever chat backend is active). Validates the
+    phone/email server-side and emails Sales — same "new lead" signal as
+    the main contact form, just triggered earlier in the funnel. Needs its
+    own public webhook URL — see "Going live" below. This is what actually
+    captures the pre-chat data right now, since the old bot currently in
+    use for the chat itself was never built to look for it.
 
 ## Credentials you'll need to fill in
 
@@ -157,6 +175,9 @@ keep repeating the old version.
 - **Google Sheets OAuth2** (Public Visitor Stats) — replace
   `YOUR_SHARED_SHEET_ID` with the same shared sheet, tab `Public Stats`
   (columns: `activeUsers30d`, `countries30d`, `updatedAt`).
+- **Gmail (OAuth2)** (Chatbot Pre-Chat Lead Capture) — same Gmail credential
+  as the Contact Form Router, assigned to workflow 13's
+  `TODO: notify Sales` node.
 - **OpenAI** (Chatbot Agent) — same OpenAI credential as everything else,
   assigned to the "OpenAI Chat Model" node in workflow 11 (model:
   `gpt-4.1-mini`, or whichever model your account has access to).
@@ -177,14 +198,15 @@ keep repeating the old version.
   `TODO: send report` node. Change the `sendTo` there if the report should
   go to more than one address.
 
-## Going live: three workflows need a public n8n URL
+## Going live: four workflows need a public n8n URL
 
-Workflows 07, 08, and 11 are the only ones the public website calls directly
-(the rest are scheduled/manual, or only called internally by workflow 11 as
-tools — n8n reaching itself doesn't need a public URL). For the site to
-reach them, this n8n instance needs a stable HTTPS URL reachable from the
-internet — a reverse proxy with a real domain, or a tunnel (Cloudflare
-Tunnel, ngrok, etc.) if it's staying on the Mac. Once that's set up:
+Workflows 07, 08, 11, and 13 are the only ones the public website calls
+directly (the rest are scheduled/manual, or only called internally by
+workflow 11 as tools — n8n reaching itself doesn't need a public URL). For
+the site to reach them, this n8n instance needs a stable HTTPS URL reachable
+from the internet — a reverse proxy with a real domain, or a tunnel
+(Cloudflare Tunnel, ngrok, etc.) if it's staying on the Mac. Once that's set
+up:
 
 - Activate workflow 07, copy its production webhook URL, paste it into
   `WEBHOOK_URL` in `src/components/ContactForm.jsx`.
@@ -192,7 +214,14 @@ Tunnel, ngrok, etc.) if it's staying on the Mac. Once that's set up:
   `STATS_URL` in `src/components/TrustStats.jsx`.
 - Activate workflow 11, copy its production **chat** webhook URL (the
   LangChain Chat Trigger's URL ends in `/chat`), paste it into
-  `CHAT_WEBHOOK_URL` in `src/components/ChatVoiceWidget.jsx`.
+  `CHAT_WEBHOOK_URL` in `src/components/ChatVoiceWidget.jsx` — **only if
+  you switch the chatbot over to this self-hosted version.** As of now the
+  widget is pointed at the old n8n Cloud bot instead (see the note above),
+  so this step is on hold.
+- Activate workflow 13, copy its production webhook URL, paste it into
+  `LEAD_CAPTURE_URL` in `src/components/ChatVoiceWidget.jsx`. This one's
+  needed regardless of which chat backend is active, since it's what
+  actually captures the pre-chat phone/email.
 
 ## Why every workflow ends in a TODO or a gate
 
