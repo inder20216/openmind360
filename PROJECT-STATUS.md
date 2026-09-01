@@ -32,12 +32,11 @@ first; it's short and everything else assumes you already know it.
    secret (API key, Teams webhook URL, SMTP password) in the website's own
    code — it ships to every visitor's browser in plain text. Secrets live in
    n8n only.
-5. **Don't hand-edit the `<!-- STATUS:id=... -->`-tagged checkboxes below.**
-   They're maintained automatically by n8n workflow 13, which checks real
-   repo/n8n/DNS evidence instead of trusting anyone's self-report — the
-   whole point is to avoid mistakes and biased "yeah it's done" updates. Do
-   the actual work; the next automated run (or a manual trigger in n8n)
-   will detect it and open a PR updating the checkbox.
+5. **Don't worry about keeping the checkboxes below perfectly up to date.**
+   Every Monday, n8n workflow 13 checks the real code and the real live
+   site and emails the actual status — nobody has to self-report anything.
+   The checkboxes here are just a rough at-a-glance list; the email is the
+   source of truth.
 
 ---
 
@@ -142,55 +141,31 @@ the first one ships:
 **Not started yet** — was paused to do a full punch-list audit first (see
 below), which turned into most of the rest of this session's work.
 
-<!-- STATUS:id=domain-cutover-code -->
-- [ ] `vite.config.js` base path changed from `/openmind360/` to `/`.
-<!-- STATUS:id=domain-cutover-dns -->
-- [ ] openmind.in actually resolves to and serves this site (DNS + Pages
-      custom domain configured).
-
 ### Other pending items (from the full-site audit)
 
-**These checkboxes are maintained automatically by n8n workflow 13 — see
-"Team status reporting" below. Don't hand-edit them; edits get overwritten
-by the next automated run based on what it actually finds in the repo. Each
-`<!-- STATUS:id=... -->` marker is what the workflow matches on — don't
-remove or rename one unless you're also updating the workflow.**
-
-<!-- STATUS:id=footer-links -->
 - [x] Dead footer links (Careers/Blog/Management/etc., mismatched service
       names) → fixed, now links to real pages or is dropped if nothing real
       exists yet.
-<!-- STATUS:id=legal-pages -->
 - [x] No Privacy Policy / Terms pages → built from real old-site content.
-<!-- STATUS:id=contact-form -->
 - [x] No real contact form → built (`ContactForm.jsx`), routes through n8n
       (see Part 2).
-<!-- STATUS:id=ga4-analytics -->
 - [x] No analytics installed → GA4 wired in.
-<!-- STATUS:id=demo-slot -->
 - [ ] 3 service pages still show a literal "Demo Slot — coming soon"
       section (Omnichannel Support, Generative AI IVR, Intelligent
       Automation — the 3 on the generic template).
-<!-- STATUS:id=case-studies -->
 - [ ] Case Studies' 4 industry tabs are still empty, waiting on real
       client case study content.
-<!-- STATUS:id=automations-voicebots-pages -->
 - [ ] `Automations.html` and `Voicebots.html` are sitting in
       `Page content/`, same pattern as the Analytics/Chatbot pages —
-      presumably for Intelligent Automation and Generative AI IVR. Auto-check
-      looks for `src/pages/AutomationsServicePage.jsx` and
-      `VoicebotsServicePage.jsx`; rename if the real build uses different
-      file names.
-<!-- STATUS:id=orphaned-images -->
-- [ ] ~10MB of orphaned unused images in `src/assets` never got cleaned up.
-      Auto-check looks for `react.svg`/`vite.svg` boilerplate specifically as
-      a proxy signal.
-<!-- STATUS:id=favicon-brand -->
+      presumably for Intelligent Automation and Generative AI IVR. Not
+      started.
+- [ ] ~10MB of orphaned unused images in `src/assets` never got cleaned up
+      (`AI-image*.png`, `headset*`, `hero.png`, default `react.svg`/
+      `vite.svg` boilerplate).
 - [ ] Favicon doesn't match the brand (generic abstract shape, not the
-      circuit/brain mark used in the navbar logo). Auto-check only detects
-      *that the file changed at all* from its current baseline — it can't
-      judge whether the new one actually matches the brand, so glance at it
-      once it flips to done.
+      circuit/brain mark used in the navbar logo).
+- [ ] `vite.config.js` base path changed from `/openmind360/` to `/`, and
+      DNS pointed so openmind.in actually resolves to this site.
 
 ---
 
@@ -248,20 +223,15 @@ ask for them — she asks for the visitor's name conversationally and uses
 the pre-captured contact info automatically.
 
 **Team status reporting (13):** Weekly Project Status Report — every Monday
-9am IST. This one does **not** trust anyone's self-reported checkbox. It
-inspects the actual evidence — repo file contents (does `vite.config.js`
-really say `base: '/'`? does `ContactForm.jsx` still contain the
-`YOUR-N8N-DOMAIN` placeholder? does `CaseStudiesPage.jsx` still have empty
-`cases: []` arrays?), queries n8n's own API for which workflows are really
-imported, and checks whether openmind.in actually resolves to this site —
-then computes each `<!-- STATUS:id=... -->`-tagged checkbox from that
-evidence and opens a PR updating this file only if something changed. A
-human still clicks merge (branch protection requires it), but that's a
-1-second "does this look right" glance at real evidence, not someone
-self-certifying their own work. **Don't hand-edit the tagged checkboxes
-below** — the next run overwrites them based on what it actually finds.
-Emails the result to `inder@openmindserviceslimited.in` either way. Can
-also be run on demand in n8n instead of waiting for Monday.
+9am IST, emails `inder@openmindserviceslimited.in` a plain checklist of
+what's actually done. It doesn't ask anyone or read this doc's checkboxes —
+it looks at the real code on GitHub (e.g. is the `YOUR-N8N-DOMAIN`
+placeholder still in `ContactForm.jsx`? does `vite.config.js` still say
+`/openmind360/`?), pings n8n's own API to see which workflows are really
+imported, and checks whether openmind.in actually loads this site. Nobody
+edits anything for this to work — just do the actual work, and next
+Monday's email reflects it. Can also be run on demand in n8n instead of
+waiting.
 
 ### Why no LinkedIn / no raw Google scraping (Research Agent)
 
@@ -293,39 +263,25 @@ Two things were deliberately ruled out, not overlooked:
 
 ### Pending / next steps for the agent system
 
-Same rule as the checklist above: these are maintained by workflow 13, not
-hand-edited. One real exception — `google-sheet` has no discoverable signal
-anywhere in the repo (no ID recorded), so automation can never confirm it
-either way; it'll keep showing as needing manual confirmation until someone
-actually creates the sheet. That one's unavoidable — there's no proxy
-evidence for "does this external resource exist" without an ID to check.
-
-<!-- STATUS:id=n8n-reachable -->
 - [ ] Confirm self-hosted n8n is actually running and reachable.
-<!-- STATUS:id=workflows-1-6 -->
 - [ ] Import workflows 1–6 (marketing pipeline) — only Research Agent's
       Google Search node has real `key`/`cx` values so far.
-<!-- STATUS:id=google-sheet UNVERIFIABLE -->
 - [ ] Create the shared Google Sheet (tabs: `Research Log`, `Analytics
       Log`, `Posted Content`, `Public Stats`) that several workflows read
-      from/write to. **Not auto-checkable** — see note above.
-<!-- STATUS:id=workflows-7-8-live -->
+      from/write to.
 - [ ] Import workflows 7–8 (contact form + visitor stats) and give n8n a
       **public HTTPS URL** — required for the website to reach them. Then
       paste the real webhook URLs into `ContactForm.jsx` / `TrustStats.jsx`.
-<!-- STATUS:id=workflows-9-12-live -->
 - [ ] Import workflows 9–12 (chatbot) in that order, connect OpenAI /
       Google Calendar / SMTP credentials, re-point the Agent's 3 tool nodes
       at the real imported workflow IDs, activate it, then paste its chat
       webhook URL into `ChatVoiceWidget.jsx`.
-<!-- STATUS:id=workflow-13-imported -->
-- [ ] Import workflow 13 (weekly project status report) and connect the
-      SMTP/Gmail, GitHub (repo contents + PR write), and n8n-API-key
-      credentials — no public URL needed, it's schedule-only.
+- [ ] Import workflow 13 (weekly status email) and connect the SMTP/Gmail
+      and n8n-API-key credentials — no public URL needed, it's
+      schedule-only.
 - [ ] Python was discussed as a possible second runtime alongside n8n for
       anything n8n's nodes can't handle. Not started — revisit only when a
-      concrete task actually needs it. (Not tracked by the automated report
-      — too open-ended a decision to check for.)
+      concrete task actually needs it.
 
 ---
 

@@ -83,34 +83,23 @@ she asks for the visitor's name conversationally instead, then uses the
 pre-captured phone/email automatically when calling Send Email or Calendar,
 unless the visitor gives different details.
 
-### Team status reporting — AI/evidence-verified, not self-reported
+### Team status reporting — checks the real code, not a checklist
 
 13. **13-project-status-report.json** — schedule trigger, every Monday 9am
     IST. Not called by the website or by any other workflow — this is purely
-    for the team, and its whole point is to **never trust a human's
-    self-reported "yeah it's done."** Instead it:
-    - Fetches real files from GitHub (`vite.config.js`, `index.html`,
-      `ContactForm.jsx`, `CaseStudiesPage.jsx`, etc.) and checks them for
-      concrete evidence — e.g. does `ContactForm.jsx` still contain the
-      `YOUR-N8N-DOMAIN` placeholder? Does `CaseStudiesPage.jsx` still have
-      empty `cases: []` arrays?
-    - Calls n8n's own REST API (`/api/v1/workflows`) to see which of the 13
-      workflows are actually imported — not whether someone said they were.
-    - Requests `https://openmind.in/` directly and checks the response for
-      our real GA4 ID, to know whether the domain cutover has actually
-      happened.
-    - Computes each `<!-- STATUS:id=... -->`-tagged checkbox in
-      `PROJECT-STATUS.md` from that evidence (deterministic code, no LLM —
-      nothing here can hallucinate a status), and if anything changed,
-      opens a **PR** with the patched checkboxes (never edits `main`
-      directly — branch protection wouldn't allow it anyway). A human still
-      clicks merge, but that's a glance at real evidence, not writing the
-      status themselves.
-    - Emails a summary either way to `inder@openmindserviceslimited.in`.
-    - One deliberate exception: the shared Google Sheet's existence has no
-      discoverable signal in the repo (no ID recorded anywhere), so that one
-      checkbox is tagged `UNVERIFIABLE` and the workflow never touches it —
-      it stays whatever a human last set it to.
+    for the team. Nobody reports status into anything; it just looks:
+    - Fetches a handful of real files from GitHub (`vite.config.js`,
+      `ContactForm.jsx`, `CaseStudiesPage.jsx`, etc.) and checks for
+      concrete evidence — e.g. is the `YOUR-N8N-DOMAIN` placeholder gone
+      from `ContactForm.jsx` yet?
+    - Calls n8n's own REST API (`/api/v1/workflows`) to count how many of
+      the 13 workflows are actually imported.
+    - Requests `https://openmind.in/` and checks whether it's really
+      serving this site (looks for our GA4 ID in the response).
+    - Emails a plain checklist (✅/⬜ per item) to
+      `inder@openmindserviceslimited.in`. That's it — no file gets edited,
+      no PR gets opened, nothing to merge or review. Just 5 nodes: schedule
+      → check the code → check n8n → build the email → send it.
     Run it manually in n8n any time you want an on-demand check instead of
     waiting for Monday.
 
@@ -161,20 +150,10 @@ unless the visitor gives different details.
   `YOUR-N8N-DOMAIN` in that node's URL with the real instance URL. This is
   what lets the workflow verify *which workflows are actually imported*
   instead of trusting anyone's word for it.
-- **GitHub API** (Weekly Project Status Report) — create a fine-grained
-  Personal Access Token scoped to just the `openmind360` repo with
-  **Contents: Read and write** and **Pull requests: Read and write**
-  permissions (Settings → Developer settings → Personal access tokens on
-  GitHub). Add it as a **GitHub API** credential in n8n, assign it to the
-  "Get main Branch SHA", "Create Branch", "Update PROJECT-STATUS.md On
-  Branch", and "Create Pull Request" nodes. This is what lets the workflow
-  open a PR with the real, computed status instead of a human hand-editing
-  checkboxes.
 - **SMTP/Gmail** (Weekly Project Status Report) — same credential as the
-  other email-sending workflows, assigned to both of workflow 13's
-  `TODO: send report...` nodes (one for "changes found," one for "nothing
-  changed"). Change the `toEmail` in both if the report should go to more
-  than one address.
+  other email-sending workflows, assigned to workflow 13's
+  `TODO: send report` node. Change the `toEmail` there if the report should
+  go to more than one address.
 
 ## Going live: three workflows need a public n8n URL
 
