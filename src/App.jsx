@@ -11,7 +11,11 @@ import ServiceDetailPage from './pages/ServiceDetailPage'
 import AboutPage from './pages/AboutPage'
 import AnalyticsServicePage from './pages/AnalyticsServicePage'
 import ChatbotServicePage from './pages/ChatbotServicePage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
+import TermsPage from './pages/TermsPage'
 import FadeInSection from './components/FadeInSection'
+import ContactForm from './components/ContactForm'
+import TrustStats from './components/TrustStats'
 import { services } from './data/services'
 import logo from './assets/Logo.png'
 
@@ -280,34 +284,72 @@ function TestimonialSection() {
 function CTASection() {
   return (
     <section id="contact" className="py-20 md:py-28 px-6 md:px-16 bg-white">
-      <div className="max-w-3xl mx-auto text-center">
-        <FadeInSection>
-          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Get Started</span>
-        </FadeInSection>
-        <FadeInSection delay={0.1}>
-          <h2 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">
-            Ready to Transform Your<br />Customer Experience?
-          </h2>
-          <p className="mt-4 text-base md:text-lg text-slate-400 max-w-lg mx-auto leading-relaxed">
-            Schedule a live demo with our team and see how Open Mind can help you scale support without compromising quality.
-          </p>
-        </FadeInSection>
-        <FadeInSection delay={0.2}>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:+919811331600"
-              className="px-8 py-3.5 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-            >
-              Call +91 9811331600
-            </a>
-            <a
-              href="mailto:connect@openmind.in"
-              className="px-8 py-3.5 border border-slate-200 text-slate-500 text-sm font-medium rounded-full hover:border-slate-300 hover:text-slate-700 transition-all duration-300"
-            >
-              Email connect@openmind.in
-            </a>
-          </div>
-        </FadeInSection>
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center">
+          <FadeInSection>
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Get Started</span>
+          </FadeInSection>
+          <FadeInSection delay={0.1}>
+            <h2 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">
+              Ready to Transform Your<br />Customer Experience?
+            </h2>
+            <p className="mt-4 text-base md:text-lg text-slate-400 max-w-lg mx-auto leading-relaxed">
+              Schedule a live demo with our team and see how Open Mind can help you scale support without compromising quality.
+            </p>
+          </FadeInSection>
+          <FadeInSection delay={0.2}>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="tel:+919811331600"
+                className="px-8 py-3.5 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
+              >
+                Call +91 9811331600
+              </a>
+              <a
+                href="mailto:connect@openmind.in"
+                className="px-8 py-3.5 border border-slate-200 text-slate-500 text-sm font-medium rounded-full hover:border-slate-300 hover:text-slate-700 transition-all duration-300"
+              >
+                Email connect@openmind.in
+              </a>
+            </div>
+          </FadeInSection>
+        </div>
+
+        <div className="mt-16 grid lg:grid-cols-2 gap-10 items-start">
+          <FadeInSection delay={0.2}>
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-300 text-center lg:text-left">Or send us a message</p>
+            <ContactForm />
+          </FadeInSection>
+
+          <FadeInSection delay={0.3}>
+            <div className="p-6 rounded-2xl bg-slate-50/60 border border-slate-100">
+              <p className="font-semibold text-slate-800">Open Mind Services Limited</p>
+              <p className="mt-1 text-sm text-slate-500 leading-relaxed">
+                B3-943, 9th Floor, Spaze IT-Tech Park,<br />Sohna Road, Gurgaon
+              </p>
+              <a href="tel:+919811331600" className="mt-3 block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+                +91 9811331600
+              </a>
+              <a
+                href="https://www.google.com/maps?q=28.412598,77.0438633"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-ox hover:underline"
+              >
+                Open in Maps →
+              </a>
+            </div>
+            <div className="mt-6 rounded-3xl overflow-hidden border border-slate-100 shadow-lg shadow-slate-200/50">
+              <iframe
+                title="Open Mind Services Limited — location"
+                src="https://www.google.com/maps?q=28.412598,77.0438633(Open+Mind+Services+Limited)&z=16&output=embed"
+                className="w-full h-[320px] border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </FadeInSection>
+        </div>
       </div>
     </section>
   )
@@ -330,17 +372,18 @@ function FooterSection() {
           <div>
             <h4 className="text-xs font-semibold tracking-widest uppercase text-slate-400 mb-5">Services</h4>
             <div className="space-y-3">
-              {['Inbound Call Center', 'Customer Support', 'Lead Management', 'AI Chatbots', 'IVR Solutions'].map((s) => (
-                <a key={s} href="#" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">{s}</a>
+              {services.map((s) => (
+                <Link key={s.path} to={`/services/${s.path}`} className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">{s.label}</Link>
               ))}
             </div>
           </div>
           <div>
             <h4 className="text-xs font-semibold tracking-widest uppercase text-slate-400 mb-5">Company</h4>
             <div className="space-y-3">
-              {['Overview', 'Our Mission', 'Management', 'Careers', 'Blog'].map((s) => (
-                <a key={s} href="#" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">{s}</a>
-              ))}
+              <Link to="/about" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">About Us</Link>
+              <Link to="/case-studies" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Case Studies</Link>
+              <a href="https://www.facebook.com/openmindserviceslimited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Facebook</a>
+              <a href="https://www.linkedin.com/company/open-mind-services-limited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">LinkedIn</a>
             </div>
           </div>
           <div>
@@ -358,9 +401,8 @@ function FooterSection() {
         <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-300">
           <p>&copy; 2026 Open Mind Services Limited. All rights reserved.</p>
           <div className="flex gap-6">
-            {['Privacy Policy', 'Terms & Conditions'].map((s) => (
-              <a key={s} href="#" className="hover:text-slate-500 transition-colors">{s}</a>
-            ))}
+            <Link to="/privacy-policy" className="hover:text-slate-500 transition-colors">Privacy Policy</Link>
+            <Link to="/terms-conditions" className="hover:text-slate-500 transition-colors">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>
@@ -377,6 +419,7 @@ function HomePage() {
         <ServiceSection key={service.id} service={service} index={i} />
       ))}
       <TestimonialSection />
+      <TrustStats />
       <CTASection />
     </>
   )
@@ -405,6 +448,8 @@ export default function App() {
       <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
       <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
       <Route path="/about" element={<Layout><AboutPage /></Layout>} />
+      <Route path="/privacy-policy" element={<Layout><PrivacyPolicyPage /></Layout>} />
+      <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
       <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
     </Routes>
   )

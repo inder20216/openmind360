@@ -1,0 +1,115 @@
+{
+  "name": "08 - Public Visitor Stats - Open Mind",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "days", "daysInterval": 1, "triggerAtHour": 6 }
+          ]
+        }
+      },
+      "id": "daily-refresh-trigger",
+      "name": "Daily 6am — Refresh Stats",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1200, 200]
+    },
+    {
+      "parameters": {
+        "url": "=https://analyticsdata.googleapis.com/v1beta/properties/YOUR_GA4_PROPERTY_ID:runReport",
+        "method": "POST",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "googleAnalyticsOAuth2Api",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"dateRanges\": [{ \"startDate\": \"30daysAgo\", \"endDate\": \"today\" }],\n  \"dimensions\": [{ \"name\": \"country\" }],\n  \"metrics\": [{ \"name\": \"activeUsers\" }]\n}",
+        "options": {}
+      },
+      "id": "ga4-report",
+      "name": "GA4: Active Users By Country (30d)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-980, 200]
+    },
+    {
+      "parameters": {
+        "jsCode": "// GA4 returns one row per country. Reduce to the two numbers the site shows.\nconst rows = $input.first().json.rows || [];\nconst countries = rows.length;\nconst activeUsers = rows.reduce((sum, r) => sum + Number(r.metricValues?.[0]?.value || 0), 0);\n\nreturn [{ json: { activeUsers30d: activeUsers, countries30d: countries, updatedAt: new Date().toISOString() } }];"
+      },
+      "id": "shape-stats",
+      "name": "Shape Stats",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-760, 200]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": { "__rl": true, "value": "YOUR_SHARED_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Public Stats", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "matchingColumns": ["row"],
+          "value": { "row": 1, "activeUsers30d": "={{ $json.activeUsers30d }}", "countries30d": "={{ $json.countries30d }}", "updatedAt": "={{ $json.updatedAt }}" }
+        },
+        "options": {}
+      },
+      "id": "cache-to-sheet",
+      "name": "Cache Latest Stats (single row)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-540, 200]
+    },
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "openmind-public-stats",
+        "responseMode": "responseNode",
+        "options": { "allowedOrigins": "*" }
+      },
+      "id": "webhook-serve",
+      "name": "Webhook — GET /openmind-public-stats",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-1200, 420],
+      "webhookId": "openmind-public-stats"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": { "__rl": true, "value": "YOUR_SHARED_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Public Stats", "mode": "name" },
+        "options": {}
+      },
+      "id": "read-cached-stats",
+      "name": "Read Cached Stats",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-980, 420]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { activeUsers30d: $json.activeUsers30d, countries30d: $json.countries30d, updatedAt: $json.updatedAt } }}",
+        "options": {
+          "responseCode": 200,
+          "responseHeaders": { "entries": [{ "name": "Access-Control-Allow-Origin", "value": "*" }] }
+        }
+      },
+      "id": "respond-stats",
+      "name": "Respond: Cached Stats",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [-760, 420]
+    }
+  ],
+  "connections": {
+    "Daily 6am — Refresh Stats": { "main": [[{ "node": "GA4: Active Users By Country (30d)", "type": "main", "index": 0 }]] },
+    "GA4: Active Users By Country (30d)": { "main": [[{ "node": "Shape Stats", "type": "main", "index": 0 }]] },
+    "Shape Stats": { "main": [[{ "node": "Cache Latest Stats (single row)", "type": "main", "index": 0 }]] },
+    "Webhook — GET /openmind-public-stats": { "main": [[{ "node": "Read Cached Stats", "type": "main", "index": 0 }]] },
+    "Read Cached Stats": { "main": [[{ "node": "Respond: Cached Stats", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "meta": { "instanceId": "openmind-public-visitor-stats-v1" }
+}

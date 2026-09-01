@@ -66,6 +66,20 @@ export const routes = [
     changefreq: 'monthly',
     priority: '0.7',
   },
+  {
+    path: '/privacy-policy',
+    title: 'Privacy Policy · Open Mind',
+    description: 'How Open Mind Services Limited collects, uses, stores, and protects your personal data.',
+    changefreq: 'yearly',
+    priority: '0.3',
+  },
+  {
+    path: '/terms-conditions',
+    title: 'Terms & Conditions · Open Mind',
+    description: "Open Mind Services Limited's terms of service.",
+    changefreq: 'yearly',
+    priority: '0.3',
+  },
 ]
 
 export const siteUrl = 'https://www.openmind.in'

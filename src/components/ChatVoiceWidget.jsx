@@ -1,37 +1,178 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const SCRIPTED_REPLIES = [
-  "Thanks for reaching out! One of our specialists can walk you through Open Mind's support, IVR, or automation solutions.",
-  "Got it — I've noted that. Would you like to book a live demo with our team?",
-  "Happy to help. For account-specific queries, our human agents pick up right where I leave off.",
-]
+// TODO: replace with the real production chat webhook URL from n8n workflow
+// 12-chatbot-agent.json once it's activated and n8n has a public URL.
+// See automation/n8n-workflows/README.md — "Going live" section.
+const CHAT_WEBHOOK_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-suhani-chat/chat'
+
+const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
+
+// Renders bot replies as HTML (the backend converts links to real <a> tags),
+// but only after stripping anything outside a small safe allowlist — LLM
+// output is never fully trusted, even with the model's own instructions.
+function sanitizeBotHtml(html) {
+  const template = document.createElement('template')
+  template.innerHTML = html
+  const allowedTags = new Set(['A', 'STRONG', 'EM', 'B', 'I', 'BR', 'P'])
+
+  function clean(node) {
+    ;[...node.childNodes].forEach((child) => {
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        if (!allowedTags.has(child.tagName)) {
+          child.replaceWith(...child.childNodes)
+          return
+        }
+        ;[...child.attributes].forEach((attr) => {
+          const isSafeHref = attr.name === 'href' && /^(https?:|mailto:|tel:)/i.test(attr.value)
+          const isAllowedAttr = attr.name === 'href' ? isSafeHref : ['target', 'rel'].includes(attr.name)
+          if (!isAllowedAttr) child.removeAttribute(attr.name)
+        })
+        if (child.tagName === 'A') {
+          child.setAttribute('target', '_blank')
+          child.setAttribute('rel', 'noopener noreferrer')
+        }
+        clean(child)
+      } else if (child.nodeType !== Node.TEXT_NODE) {
+        child.remove()
+      }
+    })
+  }
+  clean(template.content)
+  return template.innerHTML
+}
+
+function formatBotText(text) {
+  let out = String(text)
+  const hasLinks = /<a\s+[^>]*href/i.test(out)
+  if (!hasLinks) {
+    out = out.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  }
+  out = out.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+  out = out.replace(/\*(.*?)\*/g, '<em>$1</em>')
+  out = out.replace(/\n/g, '<br>')
+  return sanitizeBotHtml(out)
+}
+
+function useChatSession() {
+  const [sessionId] = useState(() => {
+    const existing = sessionStorage.getItem('om_chat_session_id')
+    if (existing) return existing
+    const fresh = 'om_session_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11)
+    sessionStorage.setItem('om_chat_session_id', fresh)
+    return fresh
+  })
+  const [chatId] = useState('om_chat_' + Date.now() + '_' + Math.random().toString(36).slice(2, 11))
+  return { sessionId, chatId }
+}
+
+function PreCaptureStep({ onSubmit }) {
+  const [countryCode, setCountryCode] = useState('+91')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const isValid = phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email)
+
+  return (
+    <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50 flex flex-col justify-end gap-3">
+      <div className="flex justify-start">
+        <div className="max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-bl-sm bg-white text-slate-700 border border-slate-100 shadow-sm text-sm leading-relaxed">
+          Hi! I'm Suhani from Open Mind. Before we start — what's the best number and email to reach you at?
+        </div>
+      </div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          if (isValid) onSubmit({ countryCode, phone: phone.trim(), email: email.trim() })
+        }}
+        className="flex flex-col gap-2 max-w-[85%]"
+      >
+        <div className="flex gap-2">
+          <select
+            value={countryCode}
+            onChange={(e) => setCountryCode(e.target.value)}
+            className="px-2.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-ob/30"
+          >
+            {countryCodes.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Contact number"
+            className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
+          />
+        </div>
+        <div className="flex gap-2">
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email address"
+            className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
+          />
+          <button
+            type="submit"
+            disabled={!isValid}
+            aria-label="Continue"
+            className="flex-shrink-0 w-10 h-10 rounded-full bg-ox text-white flex items-center justify-center hover:shadow-lg hover:shadow-ox/30 transition-shadow disabled:opacity-40 disabled:hover:shadow-none"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  )
+}
 
 function ChatPanel({ onClose }) {
-  const [messages, setMessages] = useState([
-    { from: 'bot', text: "Hi! I'm the Open Mind Assistant. Ask me anything about our services, or say hello 👋" },
-  ])
+  const { sessionId, chatId } = useChatSession()
+  const [contact, setContact] = useState(null)
+  const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
-  const replyIndex = useRef(0)
   const listRef = useRef(null)
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages, typing])
 
+  async function sendToBot(text, contactInfo) {
+    setTyping(true)
+    try {
+      const res = await fetch(CHAT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          chatInput: text,
+          chatId,
+          sessionId,
+          route: 'general',
+          contactNumber: contactInfo ? `${contactInfo.countryCode} ${contactInfo.phone}` : '',
+          email: contactInfo ? contactInfo.email : '',
+        }),
+      })
+      const data = await res.json().catch(() => null)
+      const botText = data?.output || data?.message || data?.response || data?.text || data?.chatOutput
+        || "I'm having trouble reaching our team right now — please try again in a moment, or call +91 9811331600."
+      setTyping(false)
+      setMessages((m) => [...m, { from: 'bot', text: botText }])
+    } catch {
+      setTyping(false)
+      setMessages((m) => [...m, { from: 'bot', text: "Unable to connect right now — please try again shortly, or call +91 9811331600." }])
+    }
+  }
+
+  function handlePreCaptureSubmit(info) {
+    setContact(info)
+    sendToBot('Hi', info)
+  }
+
   function send() {
     const text = input.trim()
     if (!text) return
     setMessages((m) => [...m, { from: 'user', text }])
     setInput('')
-    setTyping(true)
-    setTimeout(() => {
-      const reply = SCRIPTED_REPLIES[replyIndex.current % SCRIPTED_REPLIES.length]
-      replyIndex.current += 1
-      setTyping(false)
-      setMessages((m) => [...m, { from: 'bot', text: reply }])
-    }, 1100)
+    sendToBot(text, contact)
   }
 
   return (
@@ -49,7 +190,7 @@ function ChatPanel({ onClose }) {
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
           </span>
           <div>
-            <p className="text-sm font-semibold leading-none">Open Mind Assistant</p>
+            <p className="text-sm font-semibold leading-none">Suhani · Open Mind Assistant</p>
             <p className="text-[11px] text-white/70 mt-1">Usually replies instantly</p>
           </div>
         </div>
@@ -58,52 +199,60 @@ function ChatPanel({ onClose }) {
         </button>
       </div>
 
-      <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-slate-50">
-        {messages.map((m, i) => (
-          <div key={i} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div
-              className={`max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
-                m.from === 'user'
-                  ? 'bg-ox text-white rounded-br-sm'
-                  : 'bg-white text-slate-700 border border-slate-100 shadow-sm rounded-bl-sm'
-              }`}
-            >
-              {m.text}
-            </div>
+      {!contact ? (
+        <PreCaptureStep onSubmit={handlePreCaptureSubmit} />
+      ) : (
+        <>
+          <div ref={listRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-slate-50">
+            {messages.map((m, i) => (
+              <div key={i} className={`flex ${m.from === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div
+                  className={`max-w-[78%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
+                    m.from === 'user'
+                      ? 'bg-ox text-white rounded-br-sm'
+                      : 'bg-white text-slate-700 border border-slate-100 shadow-sm rounded-bl-sm'
+                  }`}
+                >
+                  {m.from === 'bot'
+                    ? <span dangerouslySetInnerHTML={{ __html: formatBotText(m.text) }} />
+                    : m.text}
+                </div>
+              </div>
+            ))}
+            {typing && (
+              <div className="flex justify-start">
+                <div className="bg-white border border-slate-100 shadow-sm rounded-2xl rounded-bl-sm px-4 py-3 flex gap-1">
+                  {[0, 1, 2].map((d) => (
+                    <motion.span
+                      key={d}
+                      className="w-1.5 h-1.5 rounded-full bg-slate-300"
+                      animate={{ opacity: [0.3, 1, 0.3] }}
+                      transition={{ duration: 1, repeat: Infinity, delay: d * 0.15 }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        ))}
-        {typing && (
-          <div className="flex justify-start">
-            <div className="bg-white border border-slate-100 shadow-sm rounded-2xl rounded-bl-sm px-4 py-3 flex gap-1">
-              {[0, 1, 2].map((d) => (
-                <motion.span
-                  key={d}
-                  className="w-1.5 h-1.5 rounded-full bg-slate-300"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 1, repeat: Infinity, delay: d * 0.15 }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
 
-      <div className="flex-shrink-0 p-3 border-t border-slate-100 bg-white flex items-center gap-2">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && send()}
-          placeholder="Type a message…"
-          className="flex-1 px-3.5 py-2.5 rounded-full bg-slate-100 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
-        />
-        <button
-          onClick={send}
-          aria-label="Send"
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-ox text-white flex items-center justify-center hover:shadow-lg hover:shadow-ox/30 transition-shadow"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-        </button>
-      </div>
+          <div className="flex-shrink-0 p-3 border-t border-slate-100 bg-white flex items-center gap-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && send()}
+              placeholder="Type a message…"
+              className="flex-1 px-3.5 py-2.5 rounded-full bg-slate-100 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
+            />
+            <button
+              onClick={send}
+              aria-label="Send"
+              className="flex-shrink-0 w-10 h-10 rounded-full bg-ox text-white flex items-center justify-center hover:shadow-lg hover:shadow-ox/30 transition-shadow"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </button>
+          </div>
+        </>
+      )}
     </motion.div>
   )
 }
