@@ -233,16 +233,17 @@ now** — see below. All email sends across these workflows use n8n's
 **What's actually live right now:** the chat widget (`ChatVoiceWidget.jsx`)
 is pointed at the **old bot's existing n8n Cloud webhook**, not the
 self-hosted rebuild above — chosen as the fastest path to a working
-chatbot on the new site. The pre-chat step now also asks what the visitor
-is looking for (a dropdown: Call outsourcing services, Inbound Call
-center, Lead Management support, Helpdesk, Voice Bots, Chatbots, Dynamic
-MIS Dashboards, Advance automations, Custom CRMs, Job, Other) — every
-choice, including Job and Other, is sent to the bot as context so it
-answers generatively; there are **no fixed/scripted frontend replies for
-anything**, by explicit choice. One real consequence of that for "Job": the
-bot answers from whatever its own knowledge base already says (which we
-don't control, since it's the old bot's own n8n Cloud setup) — it may or
-may not correctly say there's no careers page live yet.
+chatbot on the new site. The pre-chat step now asks for **name, phone,
+email, and what the visitor is looking for** (a dropdown: Call outsourcing
+services, Inbound Call center, Lead Management support, Helpdesk, Voice
+Bots, Chatbots, Dynamic MIS Dashboards, Advance automations, Custom CRMs,
+Job, Other) — all of it is sent to the bot as context on the first
+message, so it answers generatively without re-asking; there are **no
+fixed/scripted frontend replies for anything**, by explicit choice. One
+real consequence of that for "Job": the bot answers from whatever its own
+knowledge base already says (which we don't control, since it's the old
+bot's own n8n Cloud setup) — it may or may not correctly say there's no
+careers page live yet.
 
 Since the old bot's workflow was never built to expect any of this pre-chat
 data, it wouldn't otherwise go anywhere — so workflow **13 (Chatbot
@@ -252,7 +253,8 @@ appends a row to a shared Google Sheet and emails Sales. **Live and
 tested** — `LEAD_CAPTURE_URL` points at the real production webhook
 (`automation.openmindhelpline.com`). Known gap: the old bot's own prompt
 doesn't know about the pre-chat step, so it may ask the visitor for
-phone/email again inside the conversation.
+name/phone/email again inside the conversation regardless of what was
+already captured.
 
 **Team status reporting (12):** Weekly Project Status Report — every Monday
 9am IST, emails `inder@openmindserviceslimited.in` a plain checklist of
