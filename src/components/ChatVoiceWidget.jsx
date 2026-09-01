@@ -7,6 +7,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 // phone/email again inside the conversation; that's a known gap, not a bug.
 const CHAT_WEBHOOK_URL = 'https://inder20216.app.n8n.cloud/webhook/dbffbebc-7366-4bb8-89aa-190c9e39f050/chat'
 
+// Fires the instant the pre-chat form is submitted, independent of whatever
+// happens in the conversation after — this is what actually captures the
+// lead. See automation/n8n-workflows/13-chatbot-lead-capture.json.
+const LEAD_CAPTURE_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-chatbot-lead-capture'
+
 const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
 
 // Renders bot replies as HTML (the backend converts links to real <a> tags),
@@ -165,6 +170,13 @@ function ChatPanel({ onClose }) {
 
   function handlePreCaptureSubmit(info) {
     setContact(info)
+    // Fire-and-forget: capture the lead immediately, don't let a slow or
+    // failed capture request delay or block the chat itself starting.
+    fetch(LEAD_CAPTURE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email }),
+    }).catch(() => {})
     sendToBot('Hi', info)
   }
 

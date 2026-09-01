@@ -187,7 +187,7 @@ moment — it doesn't "catch up" on missed runs). **Setup is in progress and
 not yet confirmed complete** — see `automation/n8n-workflows/README.md` for
 the exact import order and what each workflow needs.
 
-### The 12 workflows
+### The 13 workflows
 
 All JSON files live in `automation/n8n-workflows/`, imported in numeric
 order — **see that folder's own `README.md` for full setup detail**,
@@ -203,17 +203,25 @@ Follow-up Agent (every 4h, flags only, never auto-replies).
 bot re-validation, emails+Teams-notifies Sales) → Public Visitor Stats
 (daily GA4 pull cached in Sheets, served to the homepage trust block).
 
-**Live chatbot "Suhani" (9–12):** Knowledge Base (tool, returns only
-verified facts) → Calendar Booking (tool, re-validates the booking window
-server-side) → Send Email (tool, routes to Sales/IT-Support/HR/Admin) →
-Agent (the main LangChain conversational agent — this is what the
-website's chat widget actually talks to). Rebuilt from an existing,
-already-working bot on the old WordPress site; kept the same persona,
-security rules, and escalation logic. The one real change: the website
-captures phone + email in a small pre-chat step *before* the conversation
-opens (see `src/components/ChatVoiceWidget.jsx`), so Suhani never has to
-ask for them — she asks for the visitor's name conversationally and uses
-the pre-captured contact info automatically.
+**Live chatbot "Suhani" (9–12, self-hosted rebuild):** Knowledge Base (tool,
+returns only verified facts) → Calendar Booking (tool, re-validates the
+booking window server-side) → Send Email (tool, routes to
+Sales/IT-Support/HR/Admin) → Agent (the main LangChain conversational
+agent). Rebuilt from an existing, already-working bot on the old WordPress
+site; kept the same persona, security rules, and escalation logic. **Not
+what's actually live right now** — see below.
+
+**What's actually live right now:** the chat widget (`ChatVoiceWidget.jsx`)
+is pointed at the **old bot's existing n8n Cloud webhook**, not the
+self-hosted rebuild above — chosen as the fastest path to a working
+chatbot on the new site. The website still captures phone + email in a
+small pre-chat step *before* the conversation opens, but since the old
+bot's workflow was never built to expect that data, it wouldn't otherwise
+go anywhere — so workflow **13 (Chatbot Pre-Chat Lead Capture)** was added
+as a separate webhook the widget calls the instant that form is submitted,
+independent of the chat backend, and emails Sales. Known gap: the old
+bot's own prompt doesn't know about the pre-chat step, so it may ask the
+visitor for phone/email again inside the conversation.
 
 ### Why no LinkedIn / no raw Google scraping (Research Agent)
 
@@ -254,10 +262,17 @@ Two things were deliberately ruled out, not overlooked:
 - [ ] Import workflows 7–8 (contact form + visitor stats) and give n8n a
       **public HTTPS URL** — required for the website to reach them. Then
       paste the real webhook URLs into `ContactForm.jsx` / `TrustStats.jsx`.
-- [ ] Import workflows 9–12 (chatbot) in that order, connect OpenAI /
-      Google Calendar / SMTP credentials, re-point the Agent's 3 tool nodes
-      at the real imported workflow IDs, activate it, then paste its chat
-      webhook URL into `ChatVoiceWidget.jsx`.
+- [x] Chatbot is live on openmind.in — but pointed at the **old** n8n Cloud
+      bot, not the self-hosted rebuild.
+- [ ] Import workflow 13 (chatbot lead capture) and give n8n a public
+      HTTPS URL, then paste the real webhook URL into `LEAD_CAPTURE_URL`
+      in `ChatVoiceWidget.jsx` — this is what makes the pre-chat
+      phone/email actually go somewhere.
+- [ ] Decide whether to eventually switch the widget over to the
+      self-hosted rebuild (workflows 9–12) — if so: import them in order,
+      connect OpenAI / Google Calendar / Gmail credentials, re-point the
+      Agent's 3 tool nodes at the real imported workflow IDs, activate it,
+      then paste its chat webhook URL into `CHAT_WEBHOOK_URL`.
 - [ ] Python was discussed as a possible second runtime alongside n8n for
       anything n8n's nodes can't handle. Not started — revisit only when a
       concrete task actually needs it.
