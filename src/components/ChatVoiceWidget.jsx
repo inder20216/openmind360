@@ -14,6 +14,28 @@ const LEAD_CAPTURE_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-chatbot-lead-
 
 const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
 
+const requirementOptions = [
+  'Call outsourcing services',
+  'Inbound Call center',
+  'Lead Management support',
+  'Helpdesk',
+  'Voice Bots',
+  'Chatbots',
+  'Dynamic MIS Dashboards',
+  'Advance automations',
+  'Custom CRMs',
+  'Job',
+  'Other',
+]
+
+// Fixed, non-generative replies for the two special-case requirements —
+// scripted exactly as specified, not left to the LLM to phrase.
+const OTHER_RESPONSE_TEXT = 'Thank you for sharing the details. Let me know how may I assist you.'
+// TODO: there's no careers/job-application page on the site yet (it's being
+// built from the old site's content — see PROJECT-STATUS.md). Once that page
+// is live, replace this with a real link instead of the HR email fallback.
+const JOB_RESPONSE_TEXT = "Thanks for your interest! We don't have our careers page live just yet, so for now please share your CV and a bit about the role you're looking for at hr@openmind.in — our HR team will get back to you."
+
 // Renders bot replies as HTML (the backend converts links to real <a> tags),
 // but only after stripping anything outside a small safe allowlist — LLM
 // output is never fully trusted, even with the model's own instructions.
@@ -76,19 +98,20 @@ function PreCaptureStep({ onSubmit }) {
   const [countryCode, setCountryCode] = useState('+91')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
-  const isValid = phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email)
+  const [requirement, setRequirement] = useState('')
+  const isValid = phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email) && requirement !== ''
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50 flex flex-col justify-end gap-3">
       <div className="flex justify-start">
         <div className="max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-bl-sm bg-white text-slate-700 border border-slate-100 shadow-sm text-sm leading-relaxed">
-          Hi! I'm Suhani from Open Mind. Before we start — what's the best number and email to reach you at?
+          Hi! I'm Suhani from Open Mind. Before we start — what's the best number and email to reach you at, and what are you looking for?
         </div>
       </div>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          if (isValid) onSubmit({ countryCode, phone: phone.trim(), email: email.trim() })
+          if (isValid) onSubmit({ countryCode, phone: phone.trim(), email: email.trim(), requirement })
         }}
         className="flex flex-col gap-2 max-w-[85%]"
       >
@@ -108,14 +131,22 @@ function PreCaptureStep({ onSubmit }) {
             className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
           />
         </div>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email address"
+          className="px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
+        />
         <div className="flex gap-2">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email address"
-            className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
-          />
+          <select
+            value={requirement}
+            onChange={(e) => setRequirement(e.target.value)}
+            className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-ob/30"
+          >
+            <option value="" disabled>Looking for...</option>
+            {requirementOptions.map((r) => <option key={r} value={r}>{r}</option>)}
+          </select>
           <button
             type="submit"
             disabled={!isValid}
@@ -155,6 +186,7 @@ function ChatPanel({ onClose }) {
           route: 'general',
           contactNumber: contactInfo ? `${contactInfo.countryCode} ${contactInfo.phone}` : '',
           email: contactInfo ? contactInfo.email : '',
+          requirement: contactInfo ? contactInfo.requirement || '' : '',
         }),
       })
       const data = await res.json().catch(() => null)
@@ -175,9 +207,19 @@ function ChatPanel({ onClose }) {
     fetch(LEAD_CAPTURE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email }),
+      body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: info.requirement }),
     }).catch(() => {})
-    sendToBot('Hi', info)
+
+    // "Other" and "Job" get a fixed, scripted first reply instead of a
+    // generative one — everything else goes to the bot with the visitor's
+    // requirement as context, so its answer actually addresses it.
+    if (info.requirement === 'Other') {
+      setMessages((m) => [...m, { from: 'bot', text: OTHER_RESPONSE_TEXT }])
+    } else if (info.requirement === 'Job') {
+      setMessages((m) => [...m, { from: 'bot', text: JOB_RESPONSE_TEXT }])
+    } else {
+      sendToBot(`Hi, I'm looking for: ${info.requirement}`, info)
+    }
   }
 
   function send() {

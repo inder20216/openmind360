@@ -1,5 +1,11 @@
 # Open Mind AI Marketing Agent System — n8n Workflows
 
+**The `.json` files in this folder are not in git** (this `README.md` is —
+just not the workflows themselves). They're local files, gitignored on
+purpose, shared directly between team members some other way rather than
+through the repo. If you're looking for the latest version of a workflow
+someone else edited, ask them for the file directly.
+
 Thirteen workflows, imported into n8n in this order. Each is a starting skeleton
 with `TODO` nodes marking where you need to plug in a credential, a shared
 data source, or a notification channel — nothing here auto-publishes anything.
@@ -78,13 +84,21 @@ n8n first so you can pick them from the workflow-selector dropdown.
     `REPLACE_WITH_..._WORKFLOW_ID` placeholders won't resolve on their own).
 
 **How lead capture actually works here:** the website's chat widget asks for
-phone + email in a small pre-chat step *before* the conversation opens (not
-inside the LLM conversation) — see `PreCaptureStep` in
-`src/components/ChatVoiceWidget.jsx`. That contact info rides along with
-every message sent to workflow 11, so Suhani never has to ask for it again;
-she asks for the visitor's name conversationally instead, then uses the
-pre-captured phone/email automatically when calling the Send Email tool,
-unless the visitor gives different details.
+phone, email, **and what they're looking for** (a dropdown — one of the real
+service categories, or "Job", or "Other") in a small pre-chat step *before*
+the conversation opens (not inside the LLM conversation) — see
+`PreCaptureStep` in `src/components/ChatVoiceWidget.jsx`. That info rides
+along with every message sent to workflow 11, so Suhani never has to ask
+for it again; she asks for the visitor's name conversationally instead,
+then uses the pre-captured phone/email automatically when calling the Send
+Email tool, unless the visitor gives different details.
+
+**"Other" and "Job" get a fixed, scripted first reply** instead of a
+generative one — handled entirely on the frontend, before the chat backend
+is even called (see `OTHER_RESPONSE_TEXT` / `JOB_RESPONSE_TEXT` in
+`ChatVoiceWidget.jsx`). Everything else sends the visitor's requirement to
+the bot as context on the first message, so its reply actually addresses
+what they picked instead of a generic greeting.
 
 **But the widget is currently pointed at the old, already-live n8n Cloud
 bot** instead of this self-hosted rebuild (see `CHAT_WEBHOOK_URL` in
@@ -137,9 +151,10 @@ keep repeating the old version.
 13. **13-chatbot-lead-capture.json** — a separate webhook, called directly
     by the widget the instant the pre-chat form is submitted (before "Hi"
     is even sent to whichever chat backend is active). Validates the
-    phone/email server-side and emails Sales — same "new lead" signal as
-    the main contact form, just triggered earlier in the funnel. Needs its
-    own public webhook URL — see "Going live" below. This is what actually
+    phone/email/requirement server-side, **appends a row to the shared
+    leads Google Sheet**, then emails Sales — same "new lead" signal as the
+    main contact form, just triggered earlier in the funnel. Needs its own
+    public webhook URL — see "Going live" below. This is what actually
     captures the pre-chat data right now, since the old bot currently in
     use for the chat itself was never built to look for it.
 
@@ -175,6 +190,12 @@ keep repeating the old version.
 - **Google Sheets OAuth2** (Public Visitor Stats) — replace
   `YOUR_SHARED_SHEET_ID` with the same shared sheet, tab `Public Stats`
   (columns: `activeUsers30d`, `countries30d`, `updatedAt`).
+- **Google Sheets OAuth2** (Chatbot Pre-Chat Lead Capture) — connect your
+  own leads sheet: replace `TODO_LEAD_SHEET_ID` (the sheet's ID, from its
+  URL) and `TODO_SHEET_TAB_NAME` (the exact tab name) on the
+  `TODO: append to Leads Sheet` node, and assign a Google Sheets credential.
+  The row written is `Timestamp / Phone / Email / Requirement` — rename the
+  columns in the node if your sheet uses different headers.
 - **Gmail (OAuth2)** (Chatbot Pre-Chat Lead Capture) — same Gmail credential
   as the Contact Form Router, assigned to workflow 13's
   `TODO: notify Sales` node.
