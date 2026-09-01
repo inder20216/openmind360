@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// TODO: replace with the real production chat webhook URL from n8n workflow
-// 12-chatbot-agent.json once it's activated and n8n has a public URL.
-// See automation/n8n-workflows/README.md — "Going live" section.
-const CHAT_WEBHOOK_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-suhani-chat/chat'
+// Points at the existing Suhani bot already running on the old site's n8n
+// Cloud instance — not the rebuilt self-hosted workflow. Its prompt doesn't
+// know about the pre-chat contact capture step below, so it may ask for
+// phone/email again inside the conversation; that's a known gap, not a bug.
+const CHAT_WEBHOOK_URL = 'https://inder20216.app.n8n.cloud/webhook/dbffbebc-7366-4bb8-89aa-190c9e39f050/chat'
 
 const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
 
