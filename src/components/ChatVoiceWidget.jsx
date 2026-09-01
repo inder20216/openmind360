@@ -86,13 +86,55 @@ function useChatSession() {
   return { sessionId, chatId }
 }
 
+// Real validation, not just "is it non-empty" — a visitor who types garbage
+// here can't be reached later even if they ask for a callback mid-chat, so
+// catching that up front matters more than it would on a normal form.
+const isValidName = (v) => /[a-zA-Z]/.test(v) && v.trim().length >= 2
+const isValidPhone = (v) => /^\d{7,15}$/.test(v.trim())
+const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
+
 function PreCaptureStep({ onSubmit }) {
+  const [step, setStep] = useState('form')
   const [name, setName] = useState('')
   const [countryCode, setCountryCode] = useState('+91')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [requirement, setRequirement] = useState('')
-  const isValid = name.trim().length >= 2 && phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email) && requirement !== ''
+  const isValid = isValidName(name) && isValidPhone(phone) && isValidEmail(email) && requirement !== ''
+
+  if (step === 'confirm') {
+    return (
+      <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50 flex flex-col justify-end gap-3">
+        <div className="flex justify-start">
+          <div className="max-w-[90%] px-3.5 py-2.5 rounded-2xl rounded-bl-sm bg-white text-slate-700 border border-slate-100 shadow-sm text-sm leading-relaxed">
+            Just to make sure we can reach you if you ask for a callback later — please confirm these are correct:
+            <div className="mt-2 space-y-0.5 text-slate-600">
+              <p><span className="text-slate-400">Name:</span> {name.trim()}</p>
+              <p><span className="text-slate-400">Phone:</span> {countryCode} {phone.trim()}</p>
+              <p><span className="text-slate-400">Email:</span> {email.trim()}</p>
+              <p><span className="text-slate-400">Looking for:</span> {requirement}</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-2 max-w-[85%]">
+          <button
+            type="button"
+            onClick={() => setStep('form')}
+            className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-600 hover:bg-slate-100 transition-colors"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => onSubmit({ name: name.trim(), countryCode, phone: phone.trim(), email: email.trim(), requirement })}
+            className="flex-1 px-3.5 py-2.5 rounded-full bg-ox text-white text-sm font-medium hover:shadow-lg hover:shadow-ox/30 transition-shadow"
+          >
+            Yes, that's right
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50 flex flex-col justify-end gap-3">
@@ -104,7 +146,7 @@ function PreCaptureStep({ onSubmit }) {
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          if (isValid) onSubmit({ name: name.trim(), countryCode, phone: phone.trim(), email: email.trim(), requirement })
+          if (isValid) setStep('confirm')
         }}
         className="flex flex-col gap-2 max-w-[85%]"
       >
@@ -126,7 +168,7 @@ function PreCaptureStep({ onSubmit }) {
           <input
             type="tel"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/[^\d]/g, ''))}
             placeholder="Contact number"
             className="flex-1 px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
           />
