@@ -87,26 +87,34 @@ function useChatSession() {
 }
 
 function PreCaptureStep({ onSubmit }) {
+  const [name, setName] = useState('')
   const [countryCode, setCountryCode] = useState('+91')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
   const [requirement, setRequirement] = useState('')
-  const isValid = phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email) && requirement !== ''
+  const isValid = name.trim().length >= 2 && phone.trim().length >= 6 && /\S+@\S+\.\S+/.test(email) && requirement !== ''
 
   return (
     <div className="flex-1 overflow-y-auto px-4 py-4 bg-slate-50 flex flex-col justify-end gap-3">
       <div className="flex justify-start">
         <div className="max-w-[85%] px-3.5 py-2.5 rounded-2xl rounded-bl-sm bg-white text-slate-700 border border-slate-100 shadow-sm text-sm leading-relaxed">
-          Hi! I'm Suhani from Open Mind. Before we start — what's the best number and email to reach you at, and what are you looking for?
+          Hi! I'm Suhani from Open Mind. Before we start — what's your name, the best number and email to reach you at, and what are you looking for?
         </div>
       </div>
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          if (isValid) onSubmit({ countryCode, phone: phone.trim(), email: email.trim(), requirement })
+          if (isValid) onSubmit({ name: name.trim(), countryCode, phone: phone.trim(), email: email.trim(), requirement })
         }}
         className="flex flex-col gap-2 max-w-[85%]"
       >
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Your name"
+          className="px-3.5 py-2.5 rounded-full bg-white border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-ob/30"
+        />
         <div className="flex gap-2">
           <select
             value={countryCode}
@@ -176,6 +184,7 @@ function ChatPanel({ onClose }) {
           chatId,
           sessionId,
           route: 'general',
+          name: contactInfo ? contactInfo.name || '' : '',
           contactNumber: contactInfo ? `${contactInfo.countryCode} ${contactInfo.phone}` : '',
           email: contactInfo ? contactInfo.email : '',
           requirement: contactInfo ? contactInfo.requirement || '' : '',
@@ -199,12 +208,12 @@ function ChatPanel({ onClose }) {
     fetch(LEAD_CAPTURE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: info.requirement }),
+      body: JSON.stringify({ name: info.name, countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: info.requirement }),
     }).catch(() => {})
 
     // Every requirement, including Other/Job, goes to the bot as context —
     // no fixed/scripted replies. It always answers generatively.
-    sendToBot(`Hi, I'm looking for: ${info.requirement}`, info)
+    sendToBot(`Hi, my name is ${info.name}, I'm looking for: ${info.requirement}`, info)
   }
 
   function send() {
