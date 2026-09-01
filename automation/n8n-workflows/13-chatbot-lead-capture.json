@@ -17,7 +17,7 @@
     },
     {
       "parameters": {
-        "jsCode": "// Fires the moment a visitor submits the pre-chat phone+email step, before\n// the conversation even starts. Independent of whatever the chat itself\n// does afterward — this is what actually captures the lead.\nconst body = $input.first().json.body || {};\n\nconst countryCode = String(body.countryCode || '').trim();\nconst phone = String(body.phone || '').trim();\nconst email = String(body.email || '').trim();\n\nconst validPhone = phone.length >= 6;\nconst validEmail = /\\S+@\\S+\\.\\S+/.test(email);\nconst isValid = validPhone && validEmail;\n\nreturn [{\n  json: {\n    isValid,\n    countryCode,\n    phone,\n    email,\n    capturedAt: new Date().toISOString(),\n    toEmail: 'sales@openmind.in',\n  },\n}];"
+        "jsCode": "// Fires the moment a visitor submits the pre-chat step (phone, email, and\n// what they're looking for), before the conversation even starts.\n// Independent of whatever the chat itself does afterward — this is what\n// actually captures the lead.\nconst body = $input.first().json.body || {};\n\nconst countryCode = String(body.countryCode || '').trim();\nconst phone = String(body.phone || '').trim();\nconst email = String(body.email || '').trim();\nconst requirement = String(body.requirement || '').trim();\n\nconst validPhone = phone.length >= 6;\nconst validEmail = /\\S+@\\S+\\.\\S+/.test(email);\nconst validRequirement = requirement.length > 0;\nconst isValid = validPhone && validEmail && validRequirement;\n\nreturn [{\n  json: {\n    isValid,\n    countryCode,\n    phone,\n    email,\n    requirement,\n    capturedAt: new Date().toISOString(),\n    toEmail: 'sales@openmind.in',\n  },\n}];"
       },
       "id": "validate-shape",
       "name": "Validate Submission",
@@ -44,17 +44,44 @@
     },
     {
       "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "TODO_LEAD_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "TODO_SHEET_TAB_NAME", "mode": "list", "cachedResultName": "Sheet1" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Timestamp": "={{ $json.capturedAt }}",
+            "Phone": "={{ $json.countryCode }} {{ $json.phone }}",
+            "Email": "={{ $json.email }}",
+            "Requirement": "={{ $json.requirement }}"
+          },
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "append-sheet",
+      "name": "TODO: append to Leads Sheet (set Sheet ID + Google Sheets credential)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [-240, 140],
+      "credentials": {
+        "googleSheetsOAuth2Api": { "id": "TODO_GOOGLE_SHEETS_CREDENTIAL", "name": "Google Sheets account" }
+      }
+    },
+    {
+      "parameters": {
         "sendTo": "={{ $json.toEmail }}",
         "subject": "=New chat visitor on openmind.in — {{ $json.countryCode }} {{ $json.phone }}",
         "emailType": "text",
-        "message": "=A visitor opened the website chatbot and shared their contact details before the conversation started.\n\nPhone: {{ $json.countryCode }} {{ $json.phone }}\nEmail: {{ $json.email }}\nCaptured at: {{ $json.capturedAt }}\n\nThis is a separate signal from anything Suhani discusses with them in the chat itself — treat it as a lead worth following up even if the conversation doesn't go anywhere.",
+        "message": "=A visitor opened the website chatbot and shared their contact details before the conversation started.\n\nPhone: {{ $json.countryCode }} {{ $json.phone }}\nEmail: {{ $json.email }}\nLooking for: {{ $json.requirement }}\nCaptured at: {{ $json.capturedAt }}\n\nThis is a separate signal from anything Suhani discusses with them in the chat itself — treat it as a lead worth following up even if the conversation doesn't go anywhere. Already logged in the leads sheet.",
         "options": {}
       },
       "id": "send-email",
       "name": "TODO: notify Sales (configure Gmail credential)",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "position": [-240, 220],
+      "position": [-20, 140],
       "credentials": {
         "gmailOAuth2": { "id": "TODO_GMAIL_OAUTH2_CREDENTIAL", "name": "Gmail account" }
       }
@@ -72,7 +99,7 @@
       "name": "Respond: Success",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.1,
-      "position": [-20, 220]
+      "position": [200, 140]
     },
     {
       "parameters": {
@@ -95,10 +122,11 @@
     "Validate Submission": { "main": [[{ "node": "Looks Real?", "type": "main", "index": 0 }]] },
     "Looks Real?": {
       "main": [
-        [{ "node": "TODO: notify Sales (configure Gmail credential)", "type": "main", "index": 0 }],
+        [{ "node": "TODO: append to Leads Sheet (set Sheet ID + Google Sheets credential)", "type": "main", "index": 0 }],
         [{ "node": "Respond: Fake Success (don't tip off bad data)", "type": "main", "index": 0 }]
       ]
     },
+    "TODO: append to Leads Sheet (set Sheet ID + Google Sheets credential)": { "main": [[{ "node": "TODO: notify Sales (configure Gmail credential)", "type": "main", "index": 0 }]] },
     "TODO: notify Sales (configure Gmail credential)": { "main": [[{ "node": "Respond: Success", "type": "main", "index": 0 }]] }
   },
   "pinData": {},

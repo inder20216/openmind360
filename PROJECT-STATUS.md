@@ -226,12 +226,18 @@ now** — see below. All email sends across these workflows use n8n's
 **What's actually live right now:** the chat widget (`ChatVoiceWidget.jsx`)
 is pointed at the **old bot's existing n8n Cloud webhook**, not the
 self-hosted rebuild above — chosen as the fastest path to a working
-chatbot on the new site. The website still captures phone + email in a
-small pre-chat step *before* the conversation opens, but since the old
-bot's workflow was never built to expect that data, it wouldn't otherwise
-go anywhere — so workflow **13 (Chatbot Pre-Chat Lead Capture)** was added
-as a separate webhook the widget calls the instant that form is submitted,
-independent of the chat backend, and emails Sales. Known gap: the old
+chatbot on the new site. The pre-chat step now also asks what the visitor
+is looking for (a dropdown: Call outsourcing services, Inbound Call
+center, Lead Management support, Helpdesk, Voice Bots, Chatbots, Dynamic
+MIS Dashboards, Advance automations, Custom CRMs, Job, Other). "Other" and
+"Job" get a fixed scripted reply (Job currently points to hr@openmind.in,
+since there's no careers page yet — see the pending item below); every
+other choice gets sent to the bot as context so its first reply actually
+addresses it. Since the old bot's workflow was never built to expect any
+of this, it wouldn't otherwise go anywhere — so workflow **13 (Chatbot
+Pre-Chat Lead Capture)** was added as a separate webhook the widget calls
+the instant that form is submitted, independent of the chat backend: it
+appends a row to a shared Google Sheet and emails Sales. Known gap: the old
 bot's own prompt doesn't know about the pre-chat step, so it may ask the
 visitor for phone/email again inside the conversation.
 
@@ -289,10 +295,16 @@ Two things were deliberately ruled out, not overlooked:
       bot, not the self-hosted rebuild.
 - [ ] Import workflow 12 (weekly status email) and connect the Gmail and
       n8n-API-key credentials — no public URL needed, it's schedule-only.
-- [ ] Import workflow 13 (chatbot lead capture) and give n8n a public
+- [ ] Import workflow 13 (chatbot lead capture) — connect it to the
+      existing leads Google Sheet (set `TODO_LEAD_SHEET_ID` /
+      `TODO_SHEET_TAB_NAME`) and the Gmail credential, give n8n a public
       HTTPS URL, then paste the real webhook URL into `LEAD_CAPTURE_URL`
       in `ChatVoiceWidget.jsx` — this is what makes the pre-chat
-      phone/email actually go somewhere.
+      phone/email/requirement actually go somewhere.
+- [ ] Build the careers page (copying content from the old site) — once
+      live, update `JOB_RESPONSE_TEXT` in `ChatVoiceWidget.jsx` to link to
+      it instead of the current hr@openmind.in fallback, and update the
+      matching note in workflow 09's knowledge base text.
 - [ ] Decide whether to eventually switch the widget over to the
       self-hosted rebuild (workflows 9–11) — if so: import them in order,
       connect OpenAI + Gmail credentials, re-point the Agent's 2 tool nodes
