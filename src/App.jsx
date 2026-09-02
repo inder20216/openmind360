@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
+import { useRef, useEffect } from 'react'
+import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from './components/Navbar'
 import ChatVoiceWidget from './components/ChatVoiceWidget'
@@ -176,7 +176,7 @@ function ServiceSection({ service, index }) {
             whileInView={{ opacity: 1, rotate: isReversed ? -4 : 4 }}
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className={`hidden md:block pointer-events-none absolute top-1/2 -translate-y-1/2 w-[62vw] max-w-3xl ${
+            className={`hidden md:block pointer-events-none absolute top-1/2 -translate-y-1/2 w-[48vw] max-w-2xl ${
               isReversed ? 'left-[2%]' : 'right-[2%]'
             }`}
           >
@@ -203,7 +203,7 @@ function ServiceSection({ service, index }) {
         </div>
       )}
 
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className={`flex ${isReversed ? 'md:justify-end' : 'md:justify-start'}`}>
           <FadeInSection>
             <div className="space-y-5 max-w-lg">
@@ -286,14 +286,11 @@ function CTASection() {
     <section id="contact" className="py-20 md:py-28 px-6 md:px-16 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center">
-          <FadeInSection>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Get Started</span>
-          </FadeInSection>
           <FadeInSection delay={0.1}>
-            <h2 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">
-              Ready to Transform Your<br />Customer Experience?
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">
+              Ready to Transform Your Customer Experience?
             </h2>
-            <p className="mt-4 text-base md:text-lg text-slate-400 max-w-lg mx-auto leading-relaxed">
+            <p className="mt-6 text-base md:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
               Schedule a live demo with our team and see how Open Mind can help you scale support without compromising quality.
             </p>
           </FadeInSection>
@@ -438,8 +435,25 @@ function Layout({ children }) {
 }
 
 /* ─── APP ─── */
+function ScrollHandler() {
+  const { hash, pathname } = useLocation()
+  useEffect(() => {
+    const id = hash.replace('#', '')
+    if (id) {
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      })
+    } else {
+      window.scrollTo({ top: 0 })
+    }
+  }, [hash, pathname])
+  return null
+}
+
 export default function App() {
   return (
+<<<<<<< Updated upstream
     <Routes>
       <Route path="/" element={<Layout><HomePage /></Layout>} />
       <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
@@ -452,5 +466,23 @@ export default function App() {
       <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
       <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
     </Routes>
+=======
+    <>
+      <ScrollHandler />
+      <Routes>
+        <Route path="/" element={<Layout><HomePage /></Layout>} />
+        <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
+        <Route path="/services" element={<Layout><ExploreServicesPage /></Layout>} />
+        <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
+        <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
+        <Route path="/services/custom-crms" element={<Layout><CustomCrmServicePage /></Layout>} />
+        <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
+        <Route path="/about" element={<Layout><AboutPage /></Layout>} />
+        <Route path="/privacy-policy" element={<Layout><PrivacyPolicyPage /></Layout>} />
+        <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
+        <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
+      </Routes>
+    </>
+>>>>>>> Stashed changes
   )
 }
