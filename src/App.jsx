@@ -11,6 +11,7 @@ import ServiceDetailPage from './pages/ServiceDetailPage'
 import AboutPage from './pages/AboutPage'
 import AnalyticsServicePage from './pages/AnalyticsServicePage'
 import ChatbotServicePage from './pages/ChatbotServicePage'
+import CustomCrmServicePage from './pages/CustomCrmServicePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsPage from './pages/TermsPage'
 import FadeInSection from './components/FadeInSection'
@@ -453,20 +454,6 @@ function ScrollHandler() {
 
 export default function App() {
   return (
-<<<<<<< Updated upstream
-    <Routes>
-      <Route path="/" element={<Layout><HomePage /></Layout>} />
-      <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
-      <Route path="/services" element={<Layout><ExploreServicesPage /></Layout>} />
-      <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
-      <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
-      <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
-      <Route path="/about" element={<Layout><AboutPage /></Layout>} />
-      <Route path="/privacy-policy" element={<Layout><PrivacyPolicyPage /></Layout>} />
-      <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
-      <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
-    </Routes>
-=======
     <>
       <ScrollHandler />
       <Routes>
@@ -483,6 +470,5 @@ export default function App() {
         <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
       </Routes>
     </>
->>>>>>> Stashed changes
   )
 }
