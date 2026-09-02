@@ -29,6 +29,7 @@ function NavLink({ href, className, onClick, children }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const closeEverything = () => setMenuOpen(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
