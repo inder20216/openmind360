@@ -1,20 +1,37 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../assets/Logo.png'
 
 const links = [
   { label: 'Home', href: '/' },
-  { label: 'Services', href: '#services' },
+  { label: 'Services', href: '#services', dropdown: true },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
+  { label: 'Impact', href: '#impact' },
   { label: 'Contact', href: '#contact' },
+]
+
+const serviceLinks = [
+  { label: 'Omnichannel Support Hub', path: 'omnichannel-support' },
+  { label: 'Generative AI IVR', path: 'generative-ai-ivr' },
+  { label: 'AI Chatbots', path: 'ai-chatbots' },
+  { label: 'Intelligent Automation', path: 'intelligent-automation' },
+  { label: 'Analytics & Reporting', path: 'revenue-impact' },
+  { label: "Custom CRM's", path: 'custom-crms' },
 ]
 
 function NavLink({ href, className, onClick, children }) {
   if (href.startsWith('/')) {
     return (
       <Link to={href} className={className} onClick={onClick}>
+        {children}
+      </Link>
+    )
+  }
+  if (href.startsWith('#')) {
+    return (
+      <Link to={'/' + href} replace className={className} onClick={onClick}>
         {children}
       </Link>
     )
@@ -29,13 +46,31 @@ function NavLink({ href, className, onClick, children }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const closeEverything = () => setMenuOpen(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const servicesRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  useEffect(() => {
+    const onClickOutside = (e) => {
+      if (servicesRef.current && !servicesRef.current.contains(e.target)) {
+        setServicesOpen(false)
+      }
+    }
+    document.addEventListener('click', onClickOutside)
+    return () => document.removeEventListener('click', onClickOutside)
+  }, [])
+
+  const closeEverything = () => {
+    setMenuOpen(false)
+    setServicesOpen(false)
+    setMobileServicesOpen(false)
+  }
 
   return (
     <nav
@@ -74,10 +109,10 @@ export default function Navbar() {
                     className="absolute left-1/2 -translate-x-1/2 top-full mt-3 w-64 rounded-2xl bg-white border border-slate-100 shadow-xl shadow-slate-200/60 py-2"
                     onMouseLeave={() => setServicesOpen(false)}
                   >
-                    {serviceLinks.map((s, i) => (
+                    {serviceLinks.map((s) => (
                       <NavLink
                         key={s.label}
-                        href={s.href || `/services/${s.path}`}
+                        href={`/services/${s.path}`}
                         onClick={closeEverything}
                         className="block w-full text-left px-5 py-2.5 text-sm text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors"
                       >
@@ -136,7 +171,7 @@ export default function Navbar() {
                           {serviceLinks.map((s) => (
                             <NavLink
                               key={s.label}
-                              href={s.href || `/services/${s.path}`}
+                              href={`/services/${s.path}`}
                               onClick={closeEverything}
                               className="text-sm text-slate-500 hover:text-slate-800 transition-colors"
                             >

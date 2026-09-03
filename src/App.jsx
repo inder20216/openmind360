@@ -64,7 +64,7 @@ function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.45 }}
-            className="mt-4 text-base md:text-lg font-semibold text-slate-700"
+            className="mt-6 text-lg md:text-xl font-semibold text-slate-700"
           >
             <span className="text-ox">Traditional Contact Centers</span> •{' '}
             <span className="text-ob">AI Automation</span> •{' '}
@@ -75,11 +75,11 @@ function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-3 text-sm md:text-base text-slate-500 max-w-xl leading-relaxed"
+            className="mt-4 text-base md:text-lg text-slate-500 max-w-xl leading-relaxed"
           >
-            Whether you need experienced customer support teams, AI-powered automation, or{' '}
-            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-ox to-ob">a combination of both</span>,
-            {' '}Open Mind helps you deliver exceptional customer experiences at every stage.
+            Whether you're looking to outsource your entire customer support operation, streamline workflows with intelligent AI-driven automation, or{' '}
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-ox to-ob">build a tailored hybrid model that blends both</span>,
+            {' '}Open Mind has the expertise, technology, and people to help you deliver seamless, exceptional customer experiences at every stage of the journey.
           </motion.p>
 
           <motion.div
