@@ -3,6 +3,7 @@ import callcenterVideo from '../assets/Callcenter.mp4'
 import voicebotsVideo from '../assets/Voicebots.mp4'
 import chatVideo from '../assets/Chat.mp4'
 import growthVideo from '../assets/Business growth charts.mp4'
+import crmEcosystemVideo from '../assets/crm-ecosystem.mp4'
 
 export const services = [
   {
@@ -168,6 +169,39 @@ export const services = [
       { q: 'What does "Analytics & Reporting" actually track?', a: 'Support and automation activity connected to the retention, conversion, and cost metrics your business already cares about.' },
       { q: 'Is this a separate tool we need to log into?', a: 'No — it’s built on the same underlying data as your other Open Mind services.' },
       { q: 'How is data kept secure?', a: 'Open Mind’s processes are ISO certified and follow NASSCOM member standards.' },
+    ],
+  },
+  {
+    id: 'custom-crm',
+    path: 'custom-crms',
+    num: '06',
+    label: 'Custom CRMs',
+    title: 'Built Around\nYour Workflows',
+    desc: 'Off-the-shelf CRMs make you bend to a template. We build bespoke systems around your exact sales, support and field processes — with native automation, reporting and integrations.',
+    stat: 'Tailored to your processes · You own the data',
+    color: '#3b82f6',
+    accent: '#7c3aed',
+    video: crmEcosystemVideo,
+    pageTitle: 'A CRM That Fits\nYour Business, Not a Template',
+    pageIntro: "Off-the-shelf CRMs make you bend your workflow to fit their screens. Open Mind builds bespoke CRM systems around your exact sales, support and field processes — with native automation, reporting and integrations — so your team works the way your business actually runs.",
+    blurb: 'A CRM shaped around your workflows, not the other way around.',
+    useCases: [
+      'A sales team tracks deals, follow-ups and approvals in one pipeline instead of across spreadsheets and inboxes.',
+      'A support desk routes, prioritises and resolves tickets with history carried across channels automatically.',
+      'Field teams log visits and territory data that syncs straight into management dashboards.',
+    ],
+    features: [
+      'Custom sales pipelines and lead management',
+      'Ticketing & support desk in one system',
+      'Field force and territory tracking',
+      'Native workflows, approvals and notifications',
+      'Custom reports and MIS dashboards',
+      'API & third-party integrations — you own the data',
+    ],
+    faqs: [
+      { q: 'Why build a custom CRM instead of buying one off the shelf?', a: "Off-the-shelf CRMs fit their vendor's idea of your business. A custom CRM is shaped around your actual workflows, avoids paying for modules you'll never use, and you own the result." },
+      { q: 'Can it integrate with our existing tools?', a: 'Yes — telephony, email, AI chatbots, payment gateways and third-party APIs connect via REST, so sales and support data stay in one place.' },
+      { q: 'Do we own the data and the system?', a: 'Yes. Your data stays yours, built with role-based access and full control over hosting and security.' },
     ],
   },
 ]
