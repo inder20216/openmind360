@@ -1,7 +1,9 @@
-User-agent: *
+User-agent: Googlebot
 Allow: /
 
-# AI / LLM crawlers — explicitly allowed for answer-engine visibility
+User-agent: Bingbot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -19,5 +21,13 @@ Allow: /
 
 User-agent: CCBot
 Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /api/
 
 Sitemap: https://www.openmind.in/sitemap.xml

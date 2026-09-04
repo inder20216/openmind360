@@ -1,4 +1,4 @@
-import automationVideo from '../assets/3d-automation-workflow.mp4'
+import workflowImg from '../assets/workflow.png'
 import callcenterVideo from '../assets/Callcenter.mp4'
 import voicebotsVideo from '../assets/Voicebots.mp4'
 import chatVideo from '../assets/Chat.mp4'
@@ -37,6 +37,8 @@ export const services = [
       { q: 'What channels does the Omnichannel Support Hub cover?', a: 'Phone, email, live chat, and social, all routed into a single view for agents, so nothing falls through the cracks between channels.' },
       { q: 'Can this integrate with our existing CRM?', a: "Yes. The Support Hub is designed to sync with common CRM platforms. See Intelligent Automation for how that integration works." },
       { q: 'Do you provide dedicated agents or a shared pool?', a: 'Both models are available depending on your call volume and requirements.' },
+      { q: 'How quickly can you onboard our support team?', a: 'Typical onboarding takes 2 to 4 weeks depending on the complexity of your processes, tools, and training requirements.' },
+      { q: 'What are your support hours?', a: 'We offer 24/7 coverage across all channels. Shift scheduling is customised to match your peak hours and customer time zones.' },
     ],
   },
   {
@@ -68,8 +70,10 @@ export const services = [
     ],
     faqs: [
       { q: 'Does the IVR replace human agents?', a: 'No, it resolves routine queries automatically and hands off anything complex to a human agent, with full context carried over.' },
-      { q: 'How many languages are supported?', a: 'Multiple regional and international languages. Tell us your specific requirements and we’ll confirm coverage.' },
+      { q: 'How many languages are supported?', a: 'Multiple regional and international languages. Tell us your specific requirements and we will confirm coverage.' },
       { q: 'Can it detect customer frustration?', a: 'Yes, sentiment detection helps prioritize and route at-risk conversations faster.' },
+      { q: 'What happens when the IVR cannot understand a caller?', a: 'The call is seamlessly transferred to a human agent with the conversation history intact, so the customer never has to repeat themselves.' },
+      { q: 'How long does it take to deploy the AI IVR?', a: 'Deployment typically takes 1 to 3 weeks depending on the number of languages, call flows, and integrations required.' },
     ],
   },
   {
@@ -103,6 +107,8 @@ export const services = [
       { q: 'Which platforms can the chatbot run on?', a: 'WhatsApp, your website, and major social channels, all from one configuration.' },
       { q: "What happens when the bot can't answer a question?", a: 'It escalates seamlessly to a live agent, with the full conversation history carried over so the customer never has to repeat themselves.' },
       { q: 'Can it handle scheduling and bookings?', a: 'Yes, alongside sales and support queries.' },
+      { q: 'How does the chatbot learn over time?', a: 'Every conversation feeds back into the AI model. Common questions get resolved faster, and new topics are handled with improved accuracy each week.' },
+      { q: 'Can the chatbot be customised to match our brand voice?', a: 'Yes, tone, language, responses, and personality are fully configurable to match your brand guidelines.' },
     ],
   },
   {
@@ -115,7 +121,7 @@ export const services = [
     stat: 'Data-driven insights for smarter decisions',
     color: '#0d9488',
     accent: '#22c55e',
-    video: automationVideo,
+    image: workflowImg,
     pageTitle: 'The Busywork Behind\nEvery Good Support Team',
     pageIntro: "Behind every fast resolution is a pile of manual work: routing tickets, updating CRM records, chasing leads that went quiet. We don't leave that to your agents. Open Mind's Intelligent Automation handles that layer, permanently, so agents spend their time on conversations, not admin.",
     blurb: 'The busywork behind every fast resolution, automated permanently.',
@@ -136,6 +142,8 @@ export const services = [
       { q: 'Which CRMs does this integrate with?', a: 'Common platforms such as Salesforce, Zoho, HubSpot, and Freshdesk are supported. Get in touch about your specific stack.' },
       { q: 'Will this replace our support team?', a: 'No, it removes repetitive manual work so your team can focus on complex, high-value conversations.' },
       { q: 'Do we need technical staff to maintain it?', a: 'No, Open Mind manages the automation configuration as part of the engagement.' },
+      { q: 'How are automation rules customised?', a: 'We work with your team to map existing workflows, then build and test automation rules before going live. Rules can be adjusted anytime without downtime.' },
+      { q: 'Can automation handle multiple workflows at once?', a: 'Yes, the system runs multiple workflows in parallel across different teams, channels, and ticket types simultaneously.' },
     ],
   },
   {
@@ -167,8 +175,10 @@ export const services = [
     ],
     faqs: [
       { q: 'What does "Analytics & Reporting" actually track?', a: 'Support and automation activity connected to the retention, conversion, and cost metrics your business already cares about.' },
-      { q: 'Is this a separate tool we need to log into?', a: 'No, it’s built on the same underlying data as your other Open Mind services.' },
-      { q: 'How is data kept secure?', a: 'Open Mind’s processes are ISO certified and follow NASSCOM member standards.' },
+      { q: 'Is this a separate tool we need to log into?', a: "No, it's built on the same underlying data as your other Open Mind services." },
+      { q: 'How is data kept secure?', a: "Open Mind's processes are ISO certified and follow NASSCOM member standards." },
+      { q: 'Can we customise the dashboards?', a: 'Yes, dashboards are configured around the KPIs your leadership team cares about, not generic templates.' },
+      { q: 'How often is the data updated?', a: 'Dashboards update in real time. Reports can be scheduled daily, weekly, or monthly depending on your preference.' },
     ],
   },
   {
@@ -202,6 +212,8 @@ export const services = [
       { q: 'Why build a custom CRM instead of buying one off the shelf?', a: "Off-the-shelf CRMs fit their vendor's idea of your business. A custom CRM is shaped around your actual workflows, avoids paying for modules you'll never use, and you own the result." },
       { q: 'Can it integrate with our existing tools?', a: 'Yes, telephony, email, AI chatbots, payment gateways and third-party APIs connect via REST, so sales and support data stay in one place.' },
       { q: 'Do we own the data and the system?', a: 'Yes. Your data stays yours, built with role-based access and full control over hosting and security.' },
+      { q: 'How long does it take to build a custom CRM?', a: 'A typical custom CRM takes 6 to 12 weeks to build depending on the number of modules, integrations, and workflow complexity.' },
+      { q: 'Can we add new features after launch?', a: 'Yes, the system is built modularly so new modules, fields, and workflows can be added without rebuilding the core.' },
     ],
   },
 ]

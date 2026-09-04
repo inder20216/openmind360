@@ -70,7 +70,6 @@ const u0 = [
 export default function AutomationWorkflow() {
   const [flowing, setFlowing] = useState(true)
   const [hoverStep, setHoverStep] = useState(null)
-  const [flipped, setFlipped] = useState(null)
 
   return (
     <div className="relative overflow-hidden rounded-3xl shadow-3d">
@@ -84,7 +83,7 @@ export default function AutomationWorkflow() {
       <div className="absolute top-[38%] left-[48%] w-[28%] h-[26%] rounded-full blur-[80px] opacity-25"
         style={{ background: 'radial-gradient(60% 60% at 50% 50%, #fdba74 0%, #fed7aa 30%, transparent 70%)' }} />
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-10 lg:py-16">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 py-10 lg:py-16" style={{ direction: 'ltr' }}>
 
         {/* Branding */}
         <div className="entrance flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8 lg:mb-10" style={{ animationDelay: '0ms' }}>
@@ -218,41 +217,23 @@ export default function AutomationWorkflow() {
             <Settings size={12} />
           </div>
           <span className="text-[12px] font-extrabold tracking-[0.14em] text-slate-900">CORE AUTOMATION CAPABILITIES</span>
-          <span className="ml-auto text-[10px] font-bold tracking-wide text-slate-400 hidden sm:block">CLICK TO PREVIEW</span>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-3.5">
-          {r0.map((a, s) => {
-            const p = flipped === a.id
-            return (
-              <button
-                key={a.id}
-                onClick={() => setFlipped(p ? null : a.id)}
-                className="group relative h-[112px] sm:h-[120px] cursor-pointer"
-                style={{ animationDelay: `${s * 60}ms`, perspective: '900px' }}
-              >
-                <div className="absolute inset-0 transition-all duration-500" style={{ transformStyle: 'preserve-3d', transform: p ? 'rotateY(180deg)' : 'rotateY(0deg)' }}>
-                  <div className="absolute inset-0 rounded-[16px] glass shadow-3d flex flex-col items-start justify-center gap-1.5 p-3">
-                    <div className="h-9 w-9 rounded-[12px] grid place-items-center text-white"
-                      style={{ background: `linear-gradient(135deg, ${a.color}, ${a.color}BB)`, boxShadow: `0 8px 18px ${a.color}35` }}>
-                      <a.Icon size={18} />
-                    </div>
-                    <p className="text-[12px] font-extrabold text-slate-900 mt-1">{a.title}</p>
-                    <p className="text-[10px] text-slate-500">{a.desc}</p>
-                  </div>
-                  <div className="absolute inset-0 rounded-[16px] transition-all duration-500"
-                    style={{ transform: 'rotateY(180deg)', transformStyle: 'preserve-3d' }}>
-                    <div className="absolute inset-0 rounded-[16px] flex flex-col items-center justify-center gap-1 p-3 text-white"
-                      style={{ background: `linear-gradient(135deg, ${a.color} 0%, ${a.color}DD 55%, #0f172a 140%)`, boxShadow: `0 12px 30px ${a.color}35` }}>
-                      <Sparkles size={14} />
-                      <p className="text-[10px] font-bold tracking-wide">{a.title.toUpperCase()}</p>
-                      <p className="text-[9px] text-center opacity-90 leading-tight">{a.example}</p>
-                    </div>
-                  </div>
+          {r0.map((a) => (
+            <div key={a.id} className="group rounded-[16px] glass shadow-3d p-3.5 flex flex-col gap-1.5">
+              <div className="flex items-center gap-2.5">
+                <div className="h-9 w-9 rounded-[12px] grid place-items-center text-white shrink-0"
+                  style={{ background: `linear-gradient(135deg, ${a.color}, ${a.color}BB)`, boxShadow: `0 8px 18px ${a.color}35` }}>
+                  <a.Icon size={18} />
                 </div>
-                <span className="absolute top-2 right-2 h-1.5 w-1.5 rounded-full" style={{ background: a.color }} />
-              </button>
-            )
-          })}
+                <div>
+                  <p className="text-[12px] font-extrabold text-slate-900">{a.title}</p>
+                  <p className="text-[10px] text-slate-500">{a.desc}</p>
+                </div>
+              </div>
+              <p className="text-[10px] text-slate-500 leading-snug">{a.example}</p>
+            </div>
+          ))}
         </div>
 
         {/* Integrations + Real-time sync strip */}
