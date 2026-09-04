@@ -345,7 +345,9 @@ knowledge base. If it's not here, treat it as unverified.
 - **Real clients:** Apollo Hospitals (real quote from COO Neeraj Lal, Gujarat
   Region), Cloud Nine Hospitals, Jafron Biomedical, PSRI Hospitals, Rainbow
   Hospitals, Fortis Hospitals, Baxter Renal Care, Resmed India, Nimrit
-  Bharat / ONDC, Lots Wholesale, Vishal Megamart.
+  Bharat / ONDC, Lots Wholesale, Vishal Megamart, Walmart, Bharti Retail,
+  Vytals — the last three confirmed real by Inder on 2026-09-04 (a mix of
+  older and newer clients), added to the homepage logo marquee.
 - **Real stats (from the About page fact-check):** CSAT 4.8/5, FCR 89%,
   AHT 2m 14s, cost savings up to 60%.
 - **Social:** Facebook (facebook.com/openmindserviceslimited), LinkedIn
