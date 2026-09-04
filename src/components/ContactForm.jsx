@@ -65,6 +65,7 @@ function InfoTooltip({ text }) {
 export default function ContactForm() {
   const [status, setStatus] = useState('idle') // idle | sending | success | error
   const [selected, setSelected] = useState([])
+  const [notRobot, setNotRobot] = useState(false)
   const mountedAt = useRef(Date.now())
 
   function toggleRequirement(value) {
@@ -73,6 +74,7 @@ export default function ContactForm() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (!notRobot) return
     const form = e.currentTarget
     const data = new FormData(form)
     const elapsedMs = Date.now() - mountedAt.current
@@ -170,6 +172,29 @@ export default function ContactForm() {
       </div>
 
       <textarea name="comments" placeholder="Comments (any specific details you would like to add)" rows={4} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-ox/30 resize-none" />
+
+      <div className="flex items-start gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-white cursor-pointer select-none" onClick={() => setNotRobot(!notRobot)}>
+        <button
+          type="button"
+          role="checkbox"
+          aria-checked={notRobot}
+          aria-label="I'm not a robot"
+          className={`w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition-colors ${notRobot ? 'bg-ox border-ox' : 'bg-white border-slate-300'}`}
+        >
+          {notRobot && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 14 2 6 2 2 6 2 18 6 22 14 22 20 18" />
+            </svg>
+          )}
+        </button>
+        <div className="min-h-[2.25rem]">
+          <span className="text-sm text-slate-700 font-medium">I'm not a robot</span>
+          <img src="https://www.gstatic.com/recaptcha/api2/logo.svg" alt="" className="inline-block ml-1.5" width="22" height="22" />
+        </div>
+      </div>
+      {!notRobot && status === 'error' && (
+        <p className="text-xs text-red-500 text-center">Please tick the box to confirm you're not a robot.</p>
+      )}
 
       <button
         type="submit"

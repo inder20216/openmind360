@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import FadeInSection from '../components/FadeInSection'
 import FaqSchema from '../components/FaqSchema'
 import PlaceholderPage from './PlaceholderPage'
+import AutomationWorkflow from '../components/AutomationWorkflow'
 import { services } from '../data/services'
 
 function CheckIcon({ color }) {
@@ -32,69 +33,46 @@ export default function ServiceDetailPage() {
           className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full blur-[110px] opacity-30 pointer-events-none"
           style={{ background: `radial-gradient(circle, ${service.color}, transparent 70%)` }}
         />
-        <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-6">
-            <Link to="/services" className="hover:text-slate-600 transition-colors">Services</Link>
-            <span>/</span>
-            <span className="text-slate-500">{service.label}</span>
-          </div>
-
+        <div className="relative max-w-5xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: service.color }}>
               {service.label}
             </span>
-            <h1 className="mt-4 text-3xl md:text-5xl font-bold leading-tight text-slate-900 whitespace-pre-line max-w-3xl">
-              {service.pageTitle}
+            <h1 className="mt-4 text-3xl md:text-5xl font-bold leading-tight text-slate-900 whitespace-pre-line mx-auto">
+              {service.pageTitle.split('\n')[0]}
+              {service.pageTitle.includes('\n') && (
+                <span className="block bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">
+                  {service.pageTitle.slice(service.pageTitle.indexOf('\n') + 1)}
+                </span>
+              )}
             </h1>
-            <p className="mt-5 text-base md:text-lg text-slate-500 max-w-2xl leading-relaxed">
+            <p className="mt-5 text-base md:text-lg text-slate-500 max-w-3xl mx-auto leading-relaxed">
               {service.pageIntro}
             </p>
-            <div className="mt-6 flex items-center gap-3">
+            <div className="mt-6 flex items-center gap-3 justify-center">
               <span className="w-8 h-px" style={{ backgroundColor: service.color }} />
               <span className="text-sm font-medium" style={{ color: service.color }}>{service.stat}</span>
-            </div>
-            <div className="mt-8 flex gap-4 flex-wrap">
-              <a
-                href="mailto:connect@openmind.in"
-                className="px-7 py-3 text-white text-sm font-semibold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-                style={{ backgroundColor: service.color, boxShadow: `0 10px 30px -10px ${service.color}55` }}
-              >
-                Get Started
-              </a>
-              <Link
-                to="/services"
-                className="px-7 py-3 border border-slate-200 text-slate-500 text-sm font-medium rounded-full hover:border-slate-300 hover:text-slate-700 transition-all duration-300"
-              >
-                All Services
-              </Link>
+              <span className="w-8 h-px" style={{ backgroundColor: service.color }} />
             </div>
           </motion.div>
-
-          {(service.video || service.image) && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="mt-14 rounded-3xl overflow-hidden border border-slate-200 shadow-2xl shadow-slate-300/40 bg-white"
-            >
-              {service.video ? (
-                <video src={service.video} autoPlay loop muted playsInline className="w-full aspect-video object-cover" />
-              ) : (
-                <img src={service.image} alt="" className="w-full object-contain bg-white p-4" />
-              )}
-            </motion.div>
-          )}
         </div>
       </section>
 
+      {/* OMSL Automation Workflow (Intelligent Automation only) */}
+      {service.path === 'intelligent-automation' && (
+        <section className="py-16 md:py-24 px-6 md:px-16 bg-white overflow-hidden">
+          <AutomationWorkflow />
+        </section>
+      )}
+
       {/* Features */}
       <section className="py-20 md:py-28 px-6 md:px-16 bg-white">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto text-center">
           <FadeInSection>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-400">What's Included</span>
             <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">Built for real support teams</h2>
           </FadeInSection>
-          <div className="mt-10 grid sm:grid-cols-2 gap-5">
+          <div className="mt-10 grid sm:grid-cols-2 gap-5 text-left">
             {service.features.map((f, i) => (
               <FadeInSection key={f} delay={i * 0.05}>
                 <div className="flex items-start gap-3 p-5 rounded-2xl border border-slate-100 bg-slate-50/60">
@@ -109,12 +87,12 @@ export default function ServiceDetailPage() {
 
       {/* Where this fits — concrete use cases */}
       <section className="py-20 md:py-28 px-6 md:px-16 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto text-center">
           <FadeInSection>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: service.color }}>Where This Fits</span>
             <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">In practice</h2>
           </FadeInSection>
-          <div className="mt-10 space-y-4">
+          <div className="mt-10 space-y-4 text-left">
             {service.useCases.map((u, i) => (
               <FadeInSection key={u} delay={i * 0.07}>
                 <div className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-100">
@@ -163,12 +141,12 @@ export default function ServiceDetailPage() {
 
       {/* FAQs */}
       <section className="py-20 md:py-28 px-6 md:px-16 bg-white">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto text-center">
           <FadeInSection>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-400">FAQ</span>
             <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">Common questions</h2>
           </FadeInSection>
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 space-y-6 text-left">
             {service.faqs.map((f, i) => (
               <FadeInSection key={f.q} delay={i * 0.06}>
                 <div className="pb-6 border-b border-slate-100">
@@ -183,9 +161,9 @@ export default function ServiceDetailPage() {
 
       {/* Explore other services */}
       <section className="py-16 px-6 md:px-16 bg-slate-50">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto text-center">
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-400">Explore More</span>
-          <div className="mt-5 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-3 justify-center">
             {otherServices.map((s) => (
               <Link
                 key={s.path}

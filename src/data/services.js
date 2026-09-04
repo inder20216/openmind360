@@ -1,8 +1,9 @@
-import workflowImg from '../assets/workflow.png'
+import automationVideo from '../assets/3d-automation-workflow.mp4'
 import callcenterVideo from '../assets/Callcenter.mp4'
 import voicebotsVideo from '../assets/Voicebots.mp4'
 import chatVideo from '../assets/Chat.mp4'
 import growthVideo from '../assets/Business growth charts.mp4'
+import crmEcosystemVideo from '../assets/crm-ecosystem.mp4'
 
 export const services = [
   {
@@ -11,16 +12,16 @@ export const services = [
     num: '01',
     label: 'Omnichannel Support Hub',
     title: 'Every Customer\nStarts Here',
-    desc: 'From the first ring to the final resolution — our expert team handles inbound calls, emails, and chats with precision, empathy, and speed. The foundation of great customer experience.',
+    desc: 'From the first ring to the final resolution, our expert team handles inbound calls, emails, and chats with precision, empathy, and speed. The foundation of great customer experience.',
     stat: 'Trusted by Apollo Hospitals, Cloud Nine & Jafron Biomedical',
     color: '#f97316',
     accent: '#ec4899',
     video: callcenterVideo,
     pageTitle: 'One Team, Every Channel,\nNo Dropped Conversations',
-    pageIntro: "Customers don't think in channels — they call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. We don't hand you separate tools for separate channels. Open Mind's Omnichannel Support Hub keeps every conversation in one place, run by agents who pick up exactly where the last channel left off.",
+    pageIntro: "Customers don't think in channels. They call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. We don't hand you separate tools for separate channels. Open Mind's Omnichannel Support Hub keeps every conversation in one place, run by agents who pick up exactly where the last channel left off.",
     blurb: 'One team, every channel, nothing repeated twice.',
     useCases: [
-      'A patient calls a hospital helpline, then follows up over WhatsApp — the same case history is visible either way.',
+      'A patient calls a hospital helpline, then follows up over WhatsApp, and the same case history is visible either way.',
       'An e-commerce customer opens a chat about a delayed order after already emailing support twice.',
       'A complaint that starts on social media gets escalated into a tracked support ticket automatically.',
     ],
@@ -33,8 +34,8 @@ export const services = [
       'Multilingual support teams',
     ],
     faqs: [
-      { q: 'What channels does the Omnichannel Support Hub cover?', a: 'Phone, email, live chat, and social — all routed into a single view for agents, so nothing falls through the cracks between channels.' },
-      { q: 'Can this integrate with our existing CRM?', a: "Yes. The Support Hub is designed to sync with common CRM platforms — see Intelligent Automation for how that integration works." },
+      { q: 'What channels does the Omnichannel Support Hub cover?', a: 'Phone, email, live chat, and social, all routed into a single view for agents, so nothing falls through the cracks between channels.' },
+      { q: 'Can this integrate with our existing CRM?', a: "Yes. The Support Hub is designed to sync with common CRM platforms. See Intelligent Automation for how that integration works." },
       { q: 'Do you provide dedicated agents or a shared pool?', a: 'Both models are available depending on your call volume and requirements.' },
     ],
   },
@@ -44,13 +45,13 @@ export const services = [
     num: '02',
     label: 'Generative AI IVR',
     title: 'From Voice to\nIntelligent Response',
-    desc: 'No more endless menu trees. Our AI-powered IVR understands natural language, detects sentiment, and routes intelligently — resolving queries in seconds, in multiple languages.',
+    desc: 'No more endless menu trees. Our AI-powered IVR understands natural language, detects sentiment, and routes intelligently, resolving queries in seconds, in multiple languages.',
     stat: '24/7 multilingual, always-on IVR',
     color: '#2563eb',
     accent: '#06b6d4',
     video: voicebotsVideo,
-    pageTitle: 'Say What You Need —\nSkip the Menu',
-    pageIntro: "Traditional IVRs make customers punch through five menus to reach a human. We don't build more menus — Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.",
+    pageTitle: 'Say What You Need,\nSkip the Menu',
+    pageIntro: "Traditional IVRs make customers punch through five menus to reach a human. We don't build more menus. Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.",
     blurb: 'Say what you need. Skip the menu, every time.',
     useCases: [
       'A banking customer asks about a failed transaction in their own words instead of navigating "Press 3 for..." menus.',
@@ -58,7 +59,7 @@ export const services = [
       'A frustrated caller is detected by tone and prioritized for faster human escalation.',
     ],
     features: [
-      'Natural language understanding — no rigid menu trees',
+      'Natural language understanding with no rigid menu trees',
       'Real-time sentiment detection and intelligent call routing',
       'Multilingual voice support',
       'Seamless handoff to a human agent when needed',
@@ -66,9 +67,9 @@ export const services = [
       'Works alongside your existing telephony setup',
     ],
     faqs: [
-      { q: 'Does the IVR replace human agents?', a: 'No — it resolves routine queries automatically and hands off anything complex to a human agent, with full context carried over.' },
-      { q: 'How many languages are supported?', a: 'Multiple regional and international languages — tell us your specific requirements and we’ll confirm coverage.' },
-      { q: 'Can it detect customer frustration?', a: 'Yes — sentiment detection helps prioritize and route at-risk conversations faster.' },
+      { q: 'Does the IVR replace human agents?', a: 'No, it resolves routine queries automatically and hands off anything complex to a human agent, with full context carried over.' },
+      { q: 'How many languages are supported?', a: 'Multiple regional and international languages. Tell us your specific requirements and we’ll confirm coverage.' },
+      { q: 'Can it detect customer frustration?', a: 'Yes, sentiment detection helps prioritize and route at-risk conversations faster.' },
     ],
   },
   {
@@ -83,8 +84,8 @@ export const services = [
     accent: '#d946ef',
     video: chatVideo,
     pageTitle: 'The First Reply Is\nNever a Wait',
-    pageIntro: "Most customers give up before a human agent even sees their message. We don't make them wait for a reply — Open Mind's AI Chatbots respond instantly on WhatsApp, web, and social, remembering context across the conversation, so agents only step in for what actually needs a person.",
-    blurb: 'The first reply is never a wait — day or night.',
+    pageIntro: "Most customers give up before a human agent even sees their message. We don't make them wait for a reply. Open Mind's AI Chatbots respond instantly on WhatsApp, web, and social, remembering context across the conversation, so agents only step in for what actually needs a person.",
+    blurb: 'The first reply is never a wait, day or night.',
     useCases: [
       'A shopper asks about sizing and stock on WhatsApp at 11pm and gets an instant, accurate answer.',
       'A returning customer picks up a conversation from last week without repeating themselves.',
@@ -99,7 +100,7 @@ export const services = [
       "Built to reflect your brand's voice",
     ],
     faqs: [
-      { q: 'Which platforms can the chatbot run on?', a: 'WhatsApp, your website, and major social channels — all from one configuration.' },
+      { q: 'Which platforms can the chatbot run on?', a: 'WhatsApp, your website, and major social channels, all from one configuration.' },
       { q: "What happens when the bot can't answer a question?", a: 'It escalates seamlessly to a live agent, with the full conversation history carried over so the customer never has to repeat themselves.' },
       { q: 'Can it handle scheduling and bookings?', a: 'Yes, alongside sales and support queries.' },
     ],
@@ -114,10 +115,10 @@ export const services = [
     stat: 'Data-driven insights for smarter decisions',
     color: '#0d9488',
     accent: '#22c55e',
-    image: workflowImg,
+    video: automationVideo,
     pageTitle: 'The Busywork Behind\nEvery Good Support Team',
-    pageIntro: "Behind every fast resolution is a pile of manual work — routing tickets, updating CRM records, chasing leads that went quiet. We don't leave that to your agents. Open Mind's Intelligent Automation handles that layer, permanently, so agents spend their time on conversations, not admin.",
-    blurb: 'The busywork behind every fast resolution — automated, permanently.',
+    pageIntro: "Behind every fast resolution is a pile of manual work: routing tickets, updating CRM records, chasing leads that went quiet. We don't leave that to your agents. Open Mind's Intelligent Automation handles that layer, permanently, so agents spend their time on conversations, not admin.",
+    blurb: 'The busywork behind every fast resolution, automated permanently.',
     useCases: [
       'A support ticket is automatically prioritized and routed to the right team based on urgency.',
       "A lead that's gone quiet for a few days gets a timely automatic follow-up instead of falling through the cracks.",
@@ -132,9 +133,9 @@ export const services = [
       'Works alongside your existing tools, not in place of them',
     ],
     faqs: [
-      { q: 'Which CRMs does this integrate with?', a: 'Common platforms such as Salesforce, Zoho, HubSpot, and Freshdesk are supported — get in touch about your specific stack.' },
-      { q: 'Will this replace our support team?', a: 'No — it removes repetitive manual work so your team can focus on complex, high-value conversations.' },
-      { q: 'Do we need technical staff to maintain it?', a: 'No — Open Mind manages the automation configuration as part of the engagement.' },
+      { q: 'Which CRMs does this integrate with?', a: 'Common platforms such as Salesforce, Zoho, HubSpot, and Freshdesk are supported. Get in touch about your specific stack.' },
+      { q: 'Will this replace our support team?', a: 'No, it removes repetitive manual work so your team can focus on complex, high-value conversations.' },
+      { q: 'Do we need technical staff to maintain it?', a: 'No, Open Mind manages the automation configuration as part of the engagement.' },
     ],
   },
   {
@@ -143,13 +144,13 @@ export const services = [
     num: '05',
     label: 'Analytics & Reporting',
     title: 'Growth That\nCompounds',
-    desc: 'Every automation, every smart interaction, every routed lead — directly contributes to your bottom line. Real-time dashboards turn support activity into decisions you can act on.',
+    desc: 'Every automation, every smart interaction, every routed lead directly contributes to your bottom line. Real-time dashboards turn support activity into decisions you can act on.',
     stat: 'NASSCOM member · ISO certified',
     color: '#e11d48',
     accent: '#f59e0b',
     video: growthVideo,
     pageTitle: 'Support Data That Actually\nReaches Leadership',
-    pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Analytics & Reporting turns that activity into dashboards leadership can actually use — connecting day-to-day support work to retention, conversion, and cost.",
+    pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Analytics & Reporting turns that activity into dashboards leadership can actually use, connecting day-to-day support work to retention, conversion, and cost.",
     blurb: 'Support activity, turned into decisions leadership actually uses.',
     useCases: [
       'A leadership team sees which support issues are costing the most in agent hours this month.',
@@ -166,8 +167,41 @@ export const services = [
     ],
     faqs: [
       { q: 'What does "Analytics & Reporting" actually track?', a: 'Support and automation activity connected to the retention, conversion, and cost metrics your business already cares about.' },
-      { q: 'Is this a separate tool we need to log into?', a: 'No — it’s built on the same underlying data as your other Open Mind services.' },
+      { q: 'Is this a separate tool we need to log into?', a: 'No, it’s built on the same underlying data as your other Open Mind services.' },
       { q: 'How is data kept secure?', a: 'Open Mind’s processes are ISO certified and follow NASSCOM member standards.' },
+    ],
+  },
+  {
+    id: 'custom-crm',
+    path: 'custom-crms',
+    num: '06',
+    label: 'Custom CRMs',
+    title: 'Built Around\nYour Workflows',
+    desc: 'Off-the-shelf CRMs make you bend to a template. We build bespoke systems around your exact sales, support and field processes, with native automation, reporting and integrations.',
+    stat: 'Tailored to your processes · You own the data',
+    color: '#3b82f6',
+    accent: '#7c3aed',
+    video: crmEcosystemVideo,
+    pageTitle: 'A CRM That Fits\nYour Business, Not a Template',
+    pageIntro: "Off-the-shelf CRMs make you bend your workflow to fit their screens. Open Mind builds bespoke CRM systems around your exact sales, support and field processes, with native automation, reporting and integrations, so your team works the way your business actually runs.",
+    blurb: 'A CRM shaped around your workflows, not the other way around.',
+    useCases: [
+      'A sales team tracks deals, follow-ups and approvals in one pipeline instead of across spreadsheets and inboxes.',
+      'A support desk routes, prioritises and resolves tickets with history carried across channels automatically.',
+      'Field teams log visits and territory data that syncs straight into management dashboards.',
+    ],
+    features: [
+      'Custom sales pipelines and lead management',
+      'Ticketing & support desk in one system',
+      'Field force and territory tracking',
+      'Native workflows, approvals and notifications',
+      'Custom reports and MIS dashboards',
+      'API & third-party integrations, you own the data',
+    ],
+    faqs: [
+      { q: 'Why build a custom CRM instead of buying one off the shelf?', a: "Off-the-shelf CRMs fit their vendor's idea of your business. A custom CRM is shaped around your actual workflows, avoids paying for modules you'll never use, and you own the result." },
+      { q: 'Can it integrate with our existing tools?', a: 'Yes, telephony, email, AI chatbots, payment gateways and third-party APIs connect via REST, so sales and support data stay in one place.' },
+      { q: 'Do we own the data and the system?', a: 'Yes. Your data stays yours, built with role-based access and full control over hosting and security.' },
     ],
   },
 ]

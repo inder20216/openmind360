@@ -8,7 +8,6 @@ const links = [
   { label: 'Services', href: '#services', dropdown: true },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
-  { label: 'Impact', href: '#impact' },
   { label: 'Contact', href: '#contact' },
 ]
 
