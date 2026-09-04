@@ -19,6 +19,16 @@ import ContactForm from './components/ContactForm'
 import TrustStats from './components/TrustStats'
 import { services } from './data/services'
 import logo from './assets/Logo.png'
+import apolloLogo from './assets/apollo_logo-removebg-preview.png'
+import cloudNineLogo from './assets/cloude_nine_logo-removebg-preview.png'
+import fortisLogo from './assets/fortis_logo-removebg-preview.png'
+import resmedLogo from './assets/resmed_logo-removebg-preview.png'
+import vishalLogo from './assets/vishial_maga_mart_logo-removebg-preview.png'
+import bhartiLogo from './assets/bharti_retail_logo-removebg-preview.png'
+import rainbowLogo from './assets/rainbow_hospitals_logo-removebg-preview.png'
+import vytalsLogo from './assets/vytals_logo-removebg-preview.png'
+import walmartLogo from './assets/walmart_logo-removebg-preview.png'
+import nimritLogo from './assets/nimrit_bharat_logo-removebg-preview.png'
 
 /* ─── HERO ─── */
 function HeroSection() {
@@ -266,17 +276,30 @@ function TestimonialSection() {
             </div>
           </div>
         </FadeInSection>
-        {/* Client logos placeholder */}
-        <FadeInSection delay={0.2}>
-          <div className="mt-16 flex items-center justify-center gap-8 md:gap-16 flex-wrap opacity-30">
-            {['Apollo', 'Cloud Nine', 'Jafron'].map((name) => (
-              <div key={name} className="h-8 flex items-center text-sm font-semibold text-slate-300 tracking-widest uppercase">
-                {name}
-              </div>
-            ))}
-          </div>
-        </FadeInSection>
       </div>
+      {/* Client logos marquee — full width */}
+      <FadeInSection delay={0.2}>
+        <p className="mt-16 text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 text-center">Trusted by leading brands</p>
+        <div className="mt-10 -mx-6 md:-mx-16 overflow-hidden w-screen" aria-label="Client logos">
+          <div className="logo-track">
+            {(() => {
+              const clientLogos = [
+                apolloLogo, cloudNineLogo, fortisLogo, resmedLogo, vishalLogo,
+                bhartiLogo, rainbowLogo, vytalsLogo, walmartLogo, nimritLogo,
+              ]
+              const doubled = clientLogos.concat(clientLogos)
+              return doubled.map((src, i) => (
+                <img
+                  key={`logo-${i}`}
+                  src={src}
+                  alt="Client logo"
+                  className={`logo-item shrink-0 ${src === nimritLogo ? 'h-12 md:h-16' : 'h-18 md:h-24'}`}
+                />
+              ))
+            })()}
+          </div>
+        </div>
+      </FadeInSection>
     </section>
   )
 }
