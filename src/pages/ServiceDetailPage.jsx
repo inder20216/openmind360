@@ -2,6 +2,8 @@ import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import FadeInSection from '../components/FadeInSection'
 import FaqSchema from '../components/FaqSchema'
+import JsonLd from '../components/JsonLd'
+import SeoHead from '../components/SeoHead'
 import PlaceholderPage from './PlaceholderPage'
 import AutomationWorkflow from '../components/AutomationWorkflow'
 import { services } from '../data/services'
@@ -26,7 +28,26 @@ export default function ServiceDetailPage() {
 
   return (
     <>
+      <SeoHead
+        title={service.pageTitle.split('\n').join(' ')}
+        description={service.pageIntro}
+        canonical={`https://www.openmind.in/services/${service.path}`}
+      />
       <FaqSchema faqs={service.faqs} />
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: service.label,
+        serviceType: service.label,
+        description: service.pageIntro,
+        provider: {
+          '@type': 'Organization',
+          name: 'Open Mind Services Limited',
+          url: 'https://www.openmind.in',
+        },
+        areaServed: { '@type': 'Country', name: 'India' },
+        url: `https://www.openmind.in/services/${service.path}`,
+      }} />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white pt-28 pb-16 md:pt-32 md:pb-20 px-6 md:px-16">
         <div
@@ -111,6 +132,7 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Bots / automation / AI agent demo slot */}
+      {service.path !== 'omnichannel-support' && (
       <section className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-5xl mx-auto text-center">
           <FadeInSection>
@@ -138,6 +160,7 @@ export default function ServiceDetailPage() {
           </FadeInSection>
         </div>
       </section>
+      )}
 
       {/* FAQs */}
       <section className="py-20 md:py-28 px-6 md:px-16 bg-white">

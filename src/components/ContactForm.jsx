@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
+import robotLogo from '../assets/chatbot/robot-mascot.png'
 
 // TODO: replace with the real production webhook URL from n8n workflow
 // 07-contact-form-router.json once it's activated and n8n has a public URL.
@@ -59,6 +60,91 @@ function InfoTooltip({ text }) {
         </span>
       )}
     </span>
+  )
+}
+
+function MathCaptcha({ onValid }) {
+  const [answer, setAnswer] = useState('')
+  const [attempted, setAttempted] = useState(false)
+  const [checked, setChecked] = useState(false)
+
+  const { a, b, op, expected } = useMemo(() => {
+    const ops = ['+', '-']
+    const o = ops[Math.floor(Math.random() * ops.length)]
+    const x = Math.floor(Math.random() * 8) + 2
+    const y = Math.floor(Math.random() * 8) + 1
+    const res = o === '+' ? x + y : x - y
+    return { a: x, b: y, op: o, expected: res }
+  }, [])
+
+  const isCorrect = Number(answer) === expected
+
+  function handleCheck() {
+    setChecked(true)
+    if (isCorrect) onValid()
+  }
+
+  return (
+    <div className="space-y-2">
+      <div
+        className="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-white cursor-pointer select-none"
+        onClick={() => { if (!checked) handleCheck() }}
+      >
+        <div className={`w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition-colors ${checked && isCorrect ? 'bg-ox border-ox' : 'bg-white border-slate-300'}`}>
+          {checked && isCorrect && (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 14 2 6 2 2 6 2 18 6 22 14 22 20 18" />
+            </svg>
+          )}
+        </div>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="11" width="18" height="10" rx="2" />
+          <circle cx="9" cy="16" r="1" fill="#94a3b8" />
+          <circle cx="15" cy="16" r="1" fill="#94a3b8" />
+          <path d="M12 11V7" />
+          <path d="M8 7h8" />
+          <circle cx="12" cy="4" r="2" />
+        </svg>
+        <span className="text-sm text-slate-700 font-medium">I'm not a robot</span>
+        <img src={robotLogo} alt="" className="ml-auto" width="56" height="56" />
+      </div>
+      {checked && !isCorrect && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-white">
+          <span className="text-sm font-semibold text-slate-700">
+            What is {a} {op} {b}?
+          </span>
+          <input
+            type="text"
+            inputMode="numeric"
+            value={answer}
+            onChange={(e) => {
+              setAnswer(e.target.value)
+              setAttempted(false)
+              if (Number(e.target.value) === expected) onValid()
+            }}
+            onBlur={() => setAttempted(true)}
+            className={`w-16 px-3 py-1.5 rounded-lg border text-sm text-center text-slate-700 focus:outline-none focus:ring-2 focus:ring-ox/30 ${attempted && !isCorrect ? 'border-red-300' : 'border-slate-200'}`}
+            placeholder="?"
+            autoComplete="off"
+          />
+          {attempted && !isCorrect && answer && (
+            <span className="text-xs text-red-500 font-medium">Wrong answer</span>
+          )}
+          {isCorrect && (
+            <span className="text-xs text-emerald-600 font-medium flex items-center gap-1">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+              Verified
+            </span>
+          )}
+        </div>
+      )}
+      {checked && isCorrect && (
+        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-50 border border-emerald-100">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+          <span className="text-xs text-emerald-600 font-medium">Verified — you're not a robot</span>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -173,28 +259,11 @@ export default function ContactForm() {
 
       <textarea name="comments" placeholder="Comments (any specific details you would like to add)" rows={4} className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-ox/30 resize-none" />
 
-      <div className="flex items-start gap-3 px-4 py-3 rounded-xl border border-slate-200 bg-white cursor-pointer select-none" onClick={() => setNotRobot(!notRobot)}>
-        <button
-          type="button"
-          role="checkbox"
-          aria-checked={notRobot}
-          aria-label="I'm not a robot"
-          className={`w-6 h-6 shrink-0 rounded-md border-2 flex items-center justify-center transition-colors ${notRobot ? 'bg-ox border-ox' : 'bg-white border-slate-300'}`}
-        >
-          {notRobot && (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 6 14 2 6 2 2 6 2 18 6 22 14 22 20 18" />
-            </svg>
-          )}
-        </button>
-        <div className="min-h-[2.25rem]">
-          <span className="text-sm text-slate-700 font-medium">I'm not a robot</span>
-          <img src="https://www.gstatic.com/recaptcha/api2/logo.svg" alt="" className="inline-block ml-1.5" width="22" height="22" />
-        </div>
-      </div>
       {!notRobot && status === 'error' && (
-        <p className="text-xs text-red-500 text-center">Please tick the box to confirm you're not a robot.</p>
+        <p className="text-xs text-red-500 text-center">Please solve the math question to confirm you're not a robot.</p>
       )}
+
+      <MathCaptcha onValid={() => setNotRobot(true)} />
 
       <button
         type="submit"

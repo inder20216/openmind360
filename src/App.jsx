@@ -14,6 +14,9 @@ import ChatbotServicePage from './pages/ChatbotServicePage'
 import CustomCrmServicePage from './pages/CustomCrmServicePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsPage from './pages/TermsPage'
+import FAQPage from './pages/FAQPage'
+import JsonLd from './components/JsonLd'
+import SeoHead from './components/SeoHead'
 import FadeInSection from './components/FadeInSection'
 import ContactForm from './components/ContactForm'
 import TrustStats from './components/TrustStats'
@@ -178,26 +181,22 @@ function ServiceSection({ service, index }) {
             src={service.image}
             alt=""
             aria-hidden="true"
-            className="md:hidden relative w-full rounded-2xl object-contain bg-white mb-10 shadow-lg border border-slate-200/70 p-3"
+            className="md:hidden relative w-full aspect-video rounded-2xl object-cover mb-10 shadow-lg"
           />
-          {/* Desktop: a floating, tilted dashboard card that overlaps into the text side */}
-          <motion.div
-            style={{ y: mediaY }}
-            initial={{ opacity: 0, rotate: 0 }}
-            whileInView={{ opacity: 1, rotate: isReversed ? -4 : 4 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className={`hidden md:block pointer-events-none absolute top-1/2 -translate-y-1/2 w-[48vw] max-w-2xl ${
-              isReversed ? 'left-[2%]' : 'right-[2%]'
+          {/* Desktop: covers the whole section, fading out on the text side */}
+          <motion.img
+            src={service.image}
+            alt=""
+            aria-hidden="true"
+            style={{
+              y: mediaY,
+              WebkitMaskImage: maskGradient,
+              maskImage: maskGradient,
+            }}
+            className={`hidden md:block pointer-events-none absolute inset-y-0 w-1/2 h-full object-cover ${
+              isReversed ? 'left-0' : 'right-0'
             }`}
-          >
-            <img
-              src={service.image}
-              alt=""
-              aria-hidden="true"
-              className="w-full h-auto rounded-[1.75rem] object-contain bg-white shadow-2xl shadow-slate-300/60 border border-slate-200/70 p-4"
-            />
-          </motion.div>
+          />
         </>
       ) : (
         <div
@@ -433,8 +432,37 @@ function FooterSection() {
 
 /* ─── HOME PAGE ─── */
 function HomePage() {
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Open Mind Services Limited',
+    url: 'https://www.openmind.in',
+    logo: 'https://www.openmind.in/logo.png',
+    description: 'AI-powered customer experience outsourcing: omnichannel support, generative AI IVR, AI chatbots, intelligent automation, and analytics and reporting for enterprise clients.',
+    email: 'connect@openmind.in',
+    telephone: '+91-9811331600',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'B3-943, 9th Floor, Spaze IT-Tech Park',
+      addressLocality: 'Gurugram',
+      addressRegion: 'Haryana',
+      postalCode: '122002',
+      addressCountry: 'IN',
+    },
+    sameAs: [
+      'https://www.linkedin.com/company/open-mind-services-limited',
+      'https://www.facebook.com/openmindserviceslimited',
+    ],
+  }
+
   return (
     <>
+      <SeoHead
+        title="AI-Powered Customer Experience Solutions"
+        description="Open Mind Services Limited provides AI-powered customer experience outsourcing: omnichannel support, generative AI IVR, AI chatbots, intelligent automation, and analytics for enterprise clients in India."
+        canonical="https://www.openmind.in/"
+      />
+      <JsonLd data={organizationSchema} />
       <HeroSection />
       {services.map((service, i) => (
         <ServiceSection key={service.id} service={service} index={i} />
@@ -490,6 +518,7 @@ export default function App() {
         <Route path="/about" element={<Layout><AboutPage /></Layout>} />
         <Route path="/privacy-policy" element={<Layout><PrivacyPolicyPage /></Layout>} />
         <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
+        <Route path="/faq" element={<Layout><FAQPage /></Layout>} />
         <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
       </Routes>
     </>
