@@ -372,7 +372,7 @@ export default function OmnichannelServicePage() {
               </div>
             </div>
             <div className="flex gap-2 flex-wrap">
-              <Link to={`${import.meta.env.BASE_URL}#contact`} className="h-[40px] px-5 rounded-full bg-white text-[#0f172a] text-[13px] font-[700] inline-flex items-center gap-1.5">Call +91 9811331600</Link>
+              <a href={`${import.meta.env.BASE_URL}#contact`} className="h-[40px] px-5 rounded-full bg-white text-[#0f172a] text-[13px] font-[700] inline-flex items-center gap-1.5">Call +91 9811331600</a>
             </div>
           </div>
         </div>
