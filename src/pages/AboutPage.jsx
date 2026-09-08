@@ -94,7 +94,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-8 flex gap-4 flex-wrap justify-center">
               <a
-                href="mailto:connect@openmind.in"
+                href={`${import.meta.env.BASE_URL}#contact`}
                 className="px-7 py-3 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               >
                 Talk To Us

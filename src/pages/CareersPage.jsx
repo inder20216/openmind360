@@ -186,7 +186,7 @@ export default function CareersPage() {
           <FadeInSection delay={0.1}>
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="mailto:connect@openmind.in"
+                href={`${import.meta.env.BASE_URL}#contact`}
                 className="px-8 py-3.5 bg-ox text-white text-sm font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               >
                 Email connect@openmind.in

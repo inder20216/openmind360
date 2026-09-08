@@ -542,13 +542,7 @@ export default function CustomCrmServicePage() {
             ))}
           </div>
 
-          <div className="mt-8 rounded-[24px] bg-[#f8faff] border border-[#eef2f7] p-5 flex flex-wrap items-center justify-between gap-4">
-            <div className="text-[13px] text-[#334155] max-w-[720px]">
-              <strong>Healthcare client</strong> — admissions team closed 3 extra cases/week after auto-assign + WhatsApp reminders. <br />
-              <strong>Real estate client</strong> — site-visit-to-quote time cut from 4 days to 6 hours.
-            </div>
-            <a href="mailto:connect@openmind.in" className="px-5 py-2.5 rounded-full bg-[#0a0a0a] text-white text-[13px] font-semibold shrink-0 hover:bg-black transition">See a teardown →</a>
-          </div>
+          
         </section>
 
         {/* ───────────── WHY OPEN MIND + FAQ ───────────── */}
