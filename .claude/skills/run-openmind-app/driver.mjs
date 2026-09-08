@@ -63,7 +63,7 @@ async function smoke() {
     console.log('   Home loaded, screenshot saved')
 
     console.log('-> Open chatbot widget')
-    const launcher = page.locator('button[aria-label="Open chat"], button[aria-label*="chat" i]').first()
+    const launcher = page.locator('button[aria-label="Talk to us"]').first()
     if (await launcher.count()) {
       await launcher.click()
       await page.waitForTimeout(500)
