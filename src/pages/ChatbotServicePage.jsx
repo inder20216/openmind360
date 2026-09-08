@@ -66,6 +66,18 @@ const faqs = [
   { q: 'Can it access company documents and FAQs?', a: 'Yes, through secure knowledge base integration. RAG pipeline ingests PDFs, Notion, SharePoint, websites and databases with role-based access control.' },
 ]
 
+function LiveDemoEmbed() {
+  return (
+    <iframe
+      src="https://www.chatbotmarketplace.in"
+      title="Open Mind Chatbot Marketplace — live demo"
+      className="w-full border-0"
+      style={{ height: '100vh' }}
+      loading="lazy"
+    />
+  )
+}
+
 export default function ChatbotServicePage() {
   const [faqOpen, setFaqOpen] = useState(null)
 
@@ -149,15 +161,8 @@ export default function ChatbotServicePage() {
             This isn't a mockup — it's our actual chatbot product, live from chatbotmarketplace.in. Ask it something.
           </p>
         </div>
-        <div className="max-w-[1000px] mx-auto px-6 md:px-8 mt-8 md:mt-10">
-          <div className="rounded-[20px] overflow-hidden border border-white/60 bg-white shadow-[0_30px_60px_rgba(0,0,0,0.12)]">
-            <iframe
-              src="https://www.chatbotmarketplace.in"
-              title="Open Mind Chatbot Marketplace — live demo"
-              className="w-full h-[640px] border-0"
-              loading="lazy"
-            />
-          </div>
+        <div className="mt-8 md:mt-10 w-full">
+          <LiveDemoEmbed />
           <p className="mt-3 text-center text-[12px] text-[#9CA3AF]">
             Demo not loading?{' '}
             <a href="https://www.chatbotmarketplace.in" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#6B7280]">
