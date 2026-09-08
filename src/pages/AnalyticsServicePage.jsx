@@ -638,7 +638,6 @@ export default function AnalyticsServicePage() {
 
   function onPointerDown(e) {
     dragRef.current = { x: e.clientX, dragging: true }
-    e.currentTarget.setPointerCapture(e.pointerId)
     setPaused(true)
   }
   function onPointerUp(e) {
