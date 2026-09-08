@@ -80,110 +80,130 @@ export const caseStudies = [
     id: 'healthcare-multispeciality-hospital',
     industry: 'Healthcare',
     title: 'Healthcare — Multi Speciality Hospital',
-    subtitle: 'New Delhi, India',
-    summary:
-      'A renowned multispeciality hospital in New Delhi trusted Open Mind with its front-line patient communication — inbound and outbound support across thousands of appointments every year.',
-    facts: [
-      { label: 'Sector', value: 'Healthcare' },
-      { label: 'Location', value: 'New Delhi, India' },
-      { label: 'Volume', value: 'Lakhs of calls / year' },
-      { label: 'Engagement', value: 'Inbound + Outbound' },
-    ],
-    sections: [
+    subtitle: '',
+    summary: '',
+    facts: [],
+    sections: [],
+    cards: [
       {
-        heading: 'Client Overview',
-        body: 'A renowned multispecialty hospital located in New Delhi, this institution is widely recognized for its excellence in gastroenterology, hepatology, nephrology, and organ transplant services. Known for delivering ethical, high-quality, and patient-focused medical care, the hospital is considered a trusted name in India\u2019s healthcare sector.',
-      },
-      {
-        heading: "Open Mind's Engagement",
-        body: 'Open Mind Services Limited has been engaged to manage the hospital\u2019s front-line customer support functions. The partnership is focused on optimizing communication between the hospital and its patients, improving operational efficiency, and ensuring a seamless and responsive experience for all customer interactions.',
-      },
-      {
-        heading: 'Scope of Services',
-        groups: [
+        industry: 'Healthcare',
+        slug: 'healthcare-multispeciality-hospital',
+        title: 'Multi Speciality Hospital',
+        subtitle: 'New Delhi, India',
+        summary:
+          'A renowned multispeciality hospital in New Delhi trusted Open Mind with its front-line patient communication — inbound and outbound support across thousands of appointments every year.',
+        facts: [
+          { label: 'Sector', value: 'Healthcare' },
+          { label: 'Location', value: 'New Delhi, India' },
+          { label: 'Volume', value: 'Lakhs of calls / year' },
+          { label: 'Engagement', value: 'Inbound + Outbound' },
+        ],
+        sections: [
           {
-            label: 'Inbound Support Services',
-            body: 'Open Mind manages all inbound communication channels, providing responsive and professional assistance to patients and callers. This includes appointment booking and management, patient inquiries and general information, routing of clinical and admission queries, and follow-up scheduling.',
+            heading: 'Client Overview',
+            body: 'A renowned multispecialty hospital located in New Delhi, this institution is widely recognized for its excellence in gastroenterology, hepatology, nephrology, and organ transplant services. Known for delivering ethical, high-quality, and patient-focused medical care, the hospital is considered a trusted name in India\u2019s healthcare sector.',
           },
           {
-            label: 'Outbound Support Services',
-            body: 'The outbound services team handles proactive patient outreach — appointment confirmations and reminders, post-consultation and post-discharge follow-ups, lead nurturing across treatment paths, and patient feedback drives.',
+            heading: "Open Mind's Engagement",
+            body: 'Open Mind Services Limited has been engaged to manage the hospital\u2019s front-line customer support functions. The partnership is focused on optimizing communication between the hospital and its patients, improving operational efficiency, and ensuring a seamless and responsive experience for all customer interactions.',
+          },
+          {
+            heading: 'Scope of Services',
+            groups: [
+              {
+                label: 'Inbound Support Services',
+                body: 'Open Mind manages all inbound communication channels, providing responsive and professional assistance to patients and callers. This includes appointment booking and management, patient inquiries and general information, routing of clinical and admission queries, and follow-up scheduling.',
+              },
+              {
+                label: 'Outbound Support Services',
+                body: 'The outbound services team handles proactive patient outreach — appointment confirmations and reminders, post-consultation and post-discharge follow-ups, lead nurturing across treatment paths, and patient feedback drives.',
+              },
+            ],
+          },
+          {
+            heading: 'Why the Hospital Chose Open Mind',
+            bullets: [
+              'Proven experience in managing healthcare communication and patient engagement.',
+              'Scalable operational capacity tailored to high-volume, high-sensitivity environments.',
+              'Focus on delivering high-quality, empathetic communication that aligns with the hospital\u2019s service standards.',
+              'Ability to manage omnichannel interactions while maintaining consistency in service delivery.',
+              'Open Mind has proven to be a reliable and strategic partner, acting as an extension of the hospital\u2019s internal patient services team.',
+            ],
+          },
+          {
+            heading: 'Service Volume Highlights',
+            bullets: [
+              'Lakhs of patient calls managed annually across various communication channels.',
+              'Thousands of appointments booked each year across multiple specialties.',
+              'Thousands of leads nurtured and converted into treatment opportunities, supporting hospital revenue growth.',
+            ],
+          },
+          {
+            heading: 'Key Outcomes',
+            bullets: [
+              'Patients can now book appointments and get follow-ups more easily, making healthcare more accessible.',
+              'Clear and caring communication has improved patient satisfaction.',
+              'More people are using virtual consultations, especially in cities and nearby towns.',
+              'The team is able to identify and focus on important leads, helping to retain more patients.',
+              'Regular reports are shared to support better, data-based decisions.',
+            ],
           },
         ],
       },
       {
-        heading: 'Why the Hospital Chose Open Mind',
-        bullets: [
-          'Proven experience in managing healthcare communication and patient engagement.',
-          'Scalable operational capacity tailored to high-volume, high-sensitivity environments.',
-          'Focus on delivering high-quality, empathetic communication that aligns with the hospital\u2019s service standards.',
-          'Ability to manage omnichannel interactions while maintaining consistency in service delivery.',
-          'Open Mind has proven to be a reliable and strategic partner, acting as an extension of the hospital\u2019s internal patient services team.',
+        industry: 'Healthcare',
+        slug: 'healthcare-patient-care',
+        title: 'Patient Care',
+        subtitle: 'Data analysis and follow-up by tele calling',
+        summary:
+          'Since 2007, Open Mind has powered a home-based critical care program for a leading global healthcare provider — coordinating medication, therapy adherence, and multilingual patient support across India.',
+        facts: [
+          { label: 'Sector', value: 'Healthcare' },
+          { label: 'Partner Since', value: '2007' },
+          { label: 'Mode', value: 'Tele calling + data analysis' },
+          { label: 'Program', value: 'Home-based critical care' },
         ],
-      },
-      {
-        heading: 'Service Volume Highlights',
-        bullets: [
-          'Lakhs of patient calls managed annually across various communication channels.',
-          'Thousands of appointments booked each year across multiple specialties.',
-          'Thousands of leads nurtured and converted into treatment opportunities, supporting hospital revenue growth.',
-        ],
-      },
-      {
-        heading: 'Key Outcomes',
-        bullets: [
-          'Patients can now book appointments and get follow-ups more easily, making healthcare more accessible.',
-          'Clear and caring communication has improved patient satisfaction.',
-          'More people are using virtual consultations, especially in cities and nearby towns.',
-          'The team is able to identify and focus on important leads, helping to retain more patients.',
-          'Regular reports are shared to support better, data-based decisions.',
+        sections: [
+          {
+            heading: 'Client Profile',
+            body: 'A leading global healthcare provider has been supporting patients with chronic and life-impacting conditions across India for decades. One of their flagship programs focuses on home-based care for patients undergoing critical treatment, ensuring timely assistance, therapy coordination, education, and personalized support. To strengthen this initiative, the healthcare provider partnered with Open Mind Services Limited right from its inception in 2007.',
+          },
+          {
+            heading: 'The Project — Home-Based Critical Care Support Program',
+            body: 'This specialized care program supports patients undergoing long-term therapy at home. The goal is to ensure a smooth and stress-free journey by handling:',
+            bullets: [
+              'Medication & medical equipment/appliances coordination.',
+              'Therapy adherence and monitoring.',
+              'Patient and caregiver assistance.',
+              'Escalation of clinical issues.',
+              'Multi-lingual communication with patients and field staff.',
+            ],
+          },
+          {
+            heading: 'Challenges Before Open Mind\u2019s Involvement',
+            body: 'Before we came on board, the client\u2019s operations were heavily reliant on manual processes, which led to frequent errors and inefficiencies. There was no structured system in place for coordinating field activities or tracking service milestones, resulting in delays and inconsistent reporting. The absence of a mechanism to capture patient satisfaction, such as NPS, made it difficult to assess service quality. Additionally, limited access to patient therapy history and outdated tracking tools made monitoring progress and managing procedure updates nearly impossible.',
+          },
+          {
+            heading: 'Conclusion',
+            body: 'This partnership has transformed a traditional patient support initiative into a technology-powered, patient-centric service model. By blending care with intelligent systems and multilingual human support, Open Mind Services Limited has enabled patients across India to receive consistent, compassionate, and reliable assistance all from the comfort of their homes.',
+          },
         ],
       },
     ],
   },
   {
-    id: 'patient-care',
-    industry: 'Healthcare',
-    title: 'Patient Care',
-    subtitle: 'Data analysis and follow-up by tele calling',
-    summary:
-      'Since 2007, Open Mind has powered a home-based critical care program for a leading global healthcare provider — coordinating medication, therapy adherence, and multilingual patient support across India.',
-    facts: [
-      { label: 'Sector', value: 'Healthcare' },
-      { label: 'Partner Since', value: '2007' },
-      { label: 'Mode', value: 'Tele calling + data analysis' },
-      { label: 'Program', value: 'Home-based critical care' },
-    ],
-    sections: [
-      {
-        heading: 'Client Profile',
-        body: 'A leading global healthcare provider has been supporting patients with chronic and life-impacting conditions across India for decades. One of their flagship programs focuses on home-based care for patients undergoing critical treatment, ensuring timely assistance, therapy coordination, education, and personalized support. To strengthen this initiative, the healthcare provider partnered with Open Mind Services Limited right from its inception in 2007.',
-      },
-      {
-        heading: 'The Project — Home-Based Critical Care Support Program',
-        body: 'This specialized care program supports patients undergoing long-term therapy at home. The goal is to ensure a smooth and stress-free journey by handling:',
-        bullets: [
-          'Medication & medical equipment/appliances coordination.',
-          'Therapy adherence and monitoring.',
-          'Patient and caregiver assistance.',
-          'Escalation of clinical issues.',
-          'Multi-lingual communication with patients and field staff.',
-        ],
-      },
-      {
-        heading: 'Challenges Before Open Mind\u2019s Involvement',
-        body: 'Before we came on board, the client\u2019s operations were heavily reliant on manual processes, which led to frequent errors and inefficiencies. There was no structured system in place for coordinating field activities or tracking service milestones, resulting in delays and inconsistent reporting. The absence of a mechanism to capture patient satisfaction, such as NPS, made it difficult to assess service quality. Additionally, limited access to patient therapy history and outdated tracking tools made monitoring progress and managing procedure updates nearly impossible.',
-      },
-      {
-        heading: 'Conclusion',
-        body: 'This partnership has transformed a traditional patient support initiative into a technology-powered, patient-centric service model. By blending care with intelligent systems and multilingual human support, Open Mind Services Limited has enabled patients across India to receive consistent, compassionate, and reliable assistance all from the comfort of their homes.',
-      },
-    ],
+    id: 'retail-stores-helpdesk',
+    industry: 'Retail',
+    title: 'Retail Stores Helpdesk & Complaint Management',
+    subtitle: '',
+    summary: '',
+    facts: [],
+    sections: [],
   },
   {
     id: 'hr-segment',
     industry: 'Retail',
-    title: 'HR Segment',
+    title: 'E-Commerce Support & Complaint Management Helpdesk',
     subtitle: 'HR & call centre technology for better employee relations',
     summary:
       'For Bharti Retail — Walmart, Open Mind built MyHR, a voice-based HR helpline that connects a country-wide workforce to their HR policies, salary queries, and grievances on a single toll-free call.',

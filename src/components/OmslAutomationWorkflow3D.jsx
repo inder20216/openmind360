@@ -122,6 +122,10 @@ export default function OmslAutomationWorkflow3D() {
   const [inView, setInView] = useState(false)
   const engineRef = useRef(null)
   const impactRef = useRef(null)
+  const wrapRef = useRef(null)
+  const inputItemRefs = useRef([])
+  const outputItemRefs = useRef([])
+  const [geom, setGeom] = useState(null)
 
   useEffect(() => {
     const obs = new IntersectionObserver(([entry]) => {
@@ -129,6 +133,50 @@ export default function OmslAutomationWorkflow3D() {
     }, { threshold: 0.2 })
     if (impactRef.current) obs.observe(impactRef.current)
     return () => obs.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const rebuild = () => {
+      const wrap = wrapRef.current
+      const engine = engineRef.current
+      if (!wrap || !engine) return
+      const box = wrap.getBoundingClientRect()
+      const eb = engine.getBoundingClientRect()
+      if (!box.width || !box.height) return
+      const toSvg = (x, y) => [((x - box.left) / box.width) * 1440, ((y - box.top) / box.height) * 860]
+      const [exL, eyC] = toSvg(eb.left, (eb.top + eb.bottom) / 2)
+      const [exR] = toSvg(eb.right, (eb.top + eb.bottom) / 2)
+      const ins = n0
+        .map((a, i) => {
+          const el = inputItemRefs.current[i]
+          if (!el) return null
+          const r = el.getBoundingClientRect()
+          const [x1, y1] = toSvg(r.right - 4, (r.top + r.bottom) / 2)
+          return { id: a.id, x1, y1, x2: exL + 8, y2: eyC }
+        })
+        .filter(Boolean)
+      const outs = l0
+        .map((a, i) => {
+          const el = outputItemRefs.current[i]
+          if (!el) return null
+          const r = el.getBoundingClientRect()
+          const [x2, y2] = toSvg(r.left + 4, (r.top + r.bottom) / 2)
+          return { id: a.id, x1: exR - 8, y1: eyC, x2, y2 }
+        })
+        .filter(Boolean)
+      setGeom({ ins, outs })
+    }
+    const t = setTimeout(rebuild, 900)
+    window.addEventListener('resize', rebuild)
+    window.addEventListener('load', rebuild)
+    const ro = new ResizeObserver(() => rebuild())
+    if (wrapRef.current) ro.observe(wrapRef.current)
+    return () => {
+      clearTimeout(t)
+      window.removeEventListener('resize', rebuild)
+      window.removeEventListener('load', rebuild)
+      ro.disconnect()
+    }
   }, [])
 
   const onTilt = (e) => {
@@ -140,19 +188,17 @@ export default function OmslAutomationWorkflow3D() {
     setTilt({ rx, ry })
   }
 
-  const inputConnectors = [
-    { id: 'email', y: 108, grad: 'g-violet', col: '#8b5cf6' },
-    { id: 'chat', y: 208, grad: 'g-blue', col: '#3b82f6' },
-    { id: 'form', y: 308, grad: 'g-green', col: '#10b981' },
-    { id: 'api', y: 408, grad: 'g-orange', col: '#ff7a00' },
-    { id: 'internal', y: 508, grad: 'g-pink', col: '#ec4899' },
-  ]
-  const outputConnectors = [
-    { id: 'int', y: 118, grad: 'g-violet', col: '#8b5cf6' },
-    { id: 'rep', y: 222, grad: 'g-blue', col: '#3b82f6' },
-    { id: 'alert', y: 330, grad: 'g-orange', col: '#ff7a00' },
-    { id: 'dash', y: 432, grad: 'g-green', col: '#10b981' },
-  ]
+  const gradById = {
+    email: ['g-violet', '#8b5cf6'],
+    chat: ['g-blue', '#3b82f6'],
+    form: ['g-green', '#10b981'],
+    api: ['g-orange', '#ff7a00'],
+    internal: ['g-pink', '#ec4899'],
+    int: ['g-violet', '#8b5cf6'],
+    rep: ['g-blue', '#3b82f6'],
+    alert: ['g-orange', '#ff7a00'],
+    dash: ['g-green', '#10b981'],
+  }
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#fbfcff] text-[#0f172a] selection:bg-violet-200 antialiased">
@@ -183,15 +229,9 @@ export default function OmslAutomationWorkflow3D() {
         <div className="absolute top-[38%] left-[48%] w-[28%] h-[26%] rounded-full blur-[80px] opacity-25" style={{ background: 'radial-gradient(60% 60% at 50% 50%, #fdba74 0%, #fed7aa 30%, transparent 70%)' }} />
       </div>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pt-6 lg:pt-8 pb-10">
-        <header className="entrance flex flex-col lg:flex-row lg:items-start justify-between gap-4 mb-6 lg:mb-8" style={{ animationDelay: '0ms' }}>
-          <div>
-            <h2 className="mt-3 text-[28px] sm:text-[32px] lg:text-[40px] font-extrabold tracking-[-0.03em] leading-[0.95]">
-              AUTOMATION <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">WORKFLOW</span>
-            </h2>
-            <p className="mt-1.5 text-[13px] sm:text-[14px] font-semibold tracking-[0.18em] text-slate-500">Automate. Simplify. Accelerate.</p>
-          </div>
-          <div className="flex items-center gap-2 self-start">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pt-2 lg:pt-4 pb-10">
+        <header className="entrance flex justify-end mb-6 lg:mb-8" style={{ animationDelay: '0ms' }}>
+          <div className="flex items-center gap-2">
             <img src={referenceImg} alt="reference" className="hidden lg:block h-10 w-10 rounded-lg object-cover border border-slate-200 opacity-60" />
             <button
               onClick={() => setFlowing((a) => !a)}
@@ -206,8 +246,8 @@ export default function OmslAutomationWorkflow3D() {
           </div>
         </header>
 
-        <div className="relative">
-          <svg className="hidden lg:block pointer-events-none absolute inset-0 w-full h-[860px] -z-0" viewBox="0 0 1440 860" preserveAspectRatio="none">
+        <div ref={wrapRef} className="relative">
+          <svg className="hidden lg:block pointer-events-none absolute inset-0 w-full h-full -z-0" viewBox="0 0 1440 860" preserveAspectRatio="none">
             <defs>
               <linearGradient id="g-violet" x1="0" x2="1">
                 <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
@@ -237,17 +277,18 @@ export default function OmslAutomationWorkflow3D() {
                 </feMerge>
               </filter>
             </defs>
-            {inputConnectors.map((a) => {
-              const active = hoverInput === a.id || hoverInput === null
-              const path = `M 232 ${a.y} C 360 ${a.y}, 380 210, 492 210`
+            {geom?.ins.map((c) => {
+              const [grad, col] = gradById[c.id]
+              const active = hoverInput === c.id || hoverInput === null
+              const path = `M ${c.x1} ${c.y1} C ${c.x1 + 30} ${c.y1}, ${c.x2 - 24} ${c.y2}, ${c.x2} ${c.y2}`
               return (
-                <g key={a.id} opacity={active ? 1 : 0.18}>
-                  <path d={path} fill="none" stroke={`url(#${a.grad})`} strokeWidth={2.5} strokeLinecap="round" strokeDasharray={active ? '0' : '0'} style={{ filter: 'url(#glow)' }} />
-                  <path d={path} fill="none" stroke={a.col} strokeWidth={1} strokeLinecap="round" strokeDasharray="6 10" opacity={0.35} style={{ animation: flowing && active ? 'dashFlow 1s linear infinite' : undefined }} />
+                <g key={c.id} opacity={active ? 1 : 0.16}>
+                  <path d={path} fill="none" stroke={`url(#${grad})`} strokeWidth={2.5} strokeLinecap="round" strokeDasharray={active ? '0' : '0'} style={{ filter: 'url(#glow)' }} />
+                  <path d={path} fill="none" stroke={col} strokeWidth={1} strokeLinecap="round" strokeDasharray="6 10" opacity={0.35} style={{ animation: flowing && active ? 'dashFlow 1s linear infinite' : undefined }} />
                   {flowing &&
                     active && (
                       <>
-                        <circle r="5" fill={a.col} filter="url(#glow)">
+                        <circle r="5" fill={col} filter="url(#glow)">
                           <animateMotion dur={`${2.2 + Math.random()}s`} repeatCount="indefinite" path={path} />
                         </circle>
                         <circle r="2.2" fill="white" opacity={0.9}>
@@ -258,17 +299,18 @@ export default function OmslAutomationWorkflow3D() {
                 </g>
               )
             })}
-            {outputConnectors.map((a) => {
-              const active = hoverOutput === a.id || hoverOutput === null
-              const path = `M 980 210 C 1090 210, 1110 ${a.y}, 1220 ${a.y}`
+            {geom?.outs.map((c) => {
+              const [grad, col] = gradById[c.id]
+              const active = hoverOutput === c.id || hoverOutput === null
+              const path = `M ${c.x1} ${c.y1} C ${c.x1 + 24} ${c.y1}, ${c.x2 - 30} ${c.y2}, ${c.x2} ${c.y2}`
               return (
-                <g key={a.id} opacity={active ? 1 : 0.18}>
-                  <path d={path} fill="none" stroke={`url(#${a.grad})`} strokeWidth={2.5} strokeLinecap="round" style={{ filter: 'url(#glow)' }} />
-                  <path d={path} fill="none" stroke={a.col} strokeWidth={1} strokeDasharray="6 10" opacity={0.35} style={{ animation: flowing && active ? 'dashFlow 1s linear infinite reverse' : undefined }} />
+                <g key={c.id} opacity={active ? 1 : 0.16}>
+                  <path d={path} fill="none" stroke={`url(#${grad})`} strokeWidth={2.5} strokeLinecap="round" style={{ filter: 'url(#glow)' }} />
+                  <path d={path} fill="none" stroke={col} strokeWidth={1} strokeLinecap="round" strokeDasharray="6 10" opacity={0.35} style={{ animation: flowing && active ? 'dashFlow 1s linear infinite reverse' : undefined }} />
                   {flowing &&
                     active && (
                       <>
-                        <circle r="5" fill={a.col} filter="url(#glow)">
+                        <circle r="5" fill={col} filter="url(#glow)">
                           <animateMotion dur={`${2 + Math.random()}s`} repeatCount="indefinite" path={path} />
                         </circle>
                         <circle r="2.2" fill="white">
@@ -281,9 +323,9 @@ export default function OmslAutomationWorkflow3D() {
             })}
           </svg>
 
-          <div className="grid lg:grid-cols-[260px_1fr_260px] gap-5 lg:gap-6 items-start relative z-10">
+          <div className="grid lg:grid-cols-[260px_1fr_260px] gap-5 lg:gap-6 items-stretch relative z-10">
             {/* Input channels */}
-            <div className="entrance lg:sticky lg:top-6" style={{ animationDelay: '80ms' }}>
+            <div className="entrance" style={{ animationDelay: '80ms' }}>
               <div className="glass rounded-[20px] shadow-3d p-3 sm:p-4">
                 <div className="flex items-center gap-2 px-2 pt-1 pb-3">
                   <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 grid place-items-center text-white">
@@ -295,12 +337,12 @@ export default function OmslAutomationWorkflow3D() {
                   {n0.map((a, s) => (
                     <div
                       key={a.id}
+                      ref={(el) => { inputItemRefs.current[s] = el }}
                       onMouseEnter={() => setHoverInput(a.id)}
                       onMouseLeave={() => setHoverInput(null)}
                       className={`group relative rounded-[14px] glass-strong shadow-3d px-3 py-3 flex items-center gap-3 transition-all duration-300 cursor-pointer
                         ${hoverInput === a.id ? 'scale-[1.02] shadow-[0_14px_32px_rgba(99,102,241,0.18)] -translate-y-[1px]' : 'hover:translate-y-[-1px]'}
                       `}
-                      style={{ animation: `floatCard 4s ease-in-out ${s * 0.25}s infinite` }}
                     >
                       <div className={`h-11 w-11 rounded-[12px] icon-3d grid place-items-center bg-gradient-to-br ${a.bg} text-white shrink-0`}>
                         <a.Icon size={18} strokeWidth={2.2} />
@@ -321,12 +363,18 @@ export default function OmslAutomationWorkflow3D() {
             </div>
 
             {/* Engine + capabilities */}
-            <div className="space-y-5">
+            <div className="flex flex-col">
+              <div className="entrance text-center mb-5" style={{ animationDelay: '160ms' }}>
+                <h2 className="text-[34px] sm:text-[42px] lg:text-[46px] font-extrabold tracking-[-0.03em] leading-[0.95]">
+                  AUTOMATION <span className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">WORKFLOW</span>
+                </h2>
+                <p className="mt-2 text-[13px] sm:text-[14px] font-semibold tracking-[0.18em] text-slate-500">Automate. Simplify. Accelerate.</p>
+              </div>
               <div
                 ref={engineRef}
                 onMouseMove={onTilt}
                 onMouseLeave={() => setTilt({ rx: 0, ry: 0 })}
-                className="entrance glass-strong rounded-[22px] shadow-3d p-4 sm:p-5 lg:p-6 relative overflow-hidden"
+                className="entrance glass-strong rounded-[22px] shadow-3d p-4 sm:p-5 lg:p-6 relative overflow-hidden w-full max-w-[800px] mx-auto"
                 style={{
                   animationDelay: '160ms',
                   transform: `perspective(1200px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`,
@@ -409,7 +457,7 @@ export default function OmslAutomationWorkflow3D() {
             </div>
 
             {/* Outputs */}
-            <div className="entrance lg:sticky lg:top-6" style={{ animationDelay: '320ms' }}>
+            <div className="entrance" style={{ animationDelay: '320ms' }}>
               <div className="glass rounded-[20px] shadow-3d p-3 sm:p-4">
                 <div className="flex items-center gap-2 px-2 pt-1 pb-3">
                   <div className="h-7 w-7 rounded-lg bg-gradient-to-br from-emerald-600 to-teal-600 grid place-items-center text-white">
@@ -421,10 +469,10 @@ export default function OmslAutomationWorkflow3D() {
                   {l0.map((a, s) => (
                     <div
                       key={a.id}
+                      ref={(el) => { outputItemRefs.current[s] = el }}
                       onMouseEnter={() => setHoverOutput(a.id)}
                       onMouseLeave={() => setHoverOutput(null)}
                       className={`group relative rounded-[14px] glass-strong shadow-3d px-3 py-3.5 flex items-center gap-3 transition-all duration-300 cursor-pointer ${hoverOutput === a.id ? 'scale-[1.02] -translate-y-[1px] shadow-[0_14px_32px_rgba(16,185,129,0.18)]' : 'hover:-translate-y-[1px]'}`}
-                      style={{ animation: `floatCard 4s ease-in-out ${(s + 2) * 0.28}s infinite` }}
                     >
                       <div className={`h-11 w-11 rounded-[12px] icon-3d grid place-items-center bg-gradient-to-br ${a.bg} text-white shrink-0`}>
                         <a.Icon size={18} strokeWidth={2.2} />
