@@ -965,8 +965,7 @@ export default function AnalyticsServicePage() {
             <div className="text-white/60 text-[13px] mt-2 max-w-[440px]">Ship the full-bleed edge-to-edge coverflow with updated transform, auto-scroll 3500ms, pause on hover, orange-purple-blue glass, zero revenue data.</div>
           </div>
           <div className="relative flex gap-3">
-            <button onClick={() => showToast('Demo — preview mode')} className="h-11 px-6 rounded-full bg-white text-[#0F0F12] text-[13px] font-[700] hover:bg-white/90 transition">Book a Demo</button>
-            <button onClick={() => showToast('Code copied — full-bleed glass ready')} className="h-11 px-5 rounded-full bg-white/10 border border-white/15 text-white text-[13px] font-[600] backdrop-blur">View code</button>
+            <a href={`${import.meta.env.BASE_URL}#contact`} className="inline-flex items-center h-11 px-6 rounded-full bg-white text-[#0F0F12] text-[13px] font-[700] hover:bg-white/90 transition">Book a Demo</a>
           </div>
         </div>
         <div className="mt-4 text-center text-[11px] text-[#9CA3AF]">Built with 6 code dashboards • Tailwind • Inter • glass: bg-white/70 backdrop-blur-xl • perspective 2500px • auto-scroll 3500ms • no revenue</div>

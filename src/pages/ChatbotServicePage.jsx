@@ -342,8 +342,7 @@ export default function ChatbotServicePage() {
             <p className="mt-3 text-white/60 text-[13px] max-w-[480px]">Deploy in 2 weeks. Enterprise SLA. No-code knowledge updates.</p>
           </div>
           <div className="relative flex flex-col gap-3 shrink-0">
-            <a href="mailto:connect@openmind.in" className="bg-white text-black rounded-full px-7 py-3.5 text-[14px] font-semibold hover:bg-white/90 transition text-center">Book a Live Demo</a>
-            <a href="tel:+919811331600" className="bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full px-7 py-3.5 text-[14px] font-semibold hover:bg-white/15 transition text-center">Speak with AI Specialist</a>
+            <a href={`${import.meta.env.BASE_URL}#contact`} className="bg-white text-black rounded-full px-7 py-3.5 text-[14px] font-semibold hover:bg-white/90 transition text-center">Book a Live Demo</a>
           </div>
         </div>
         <div className="text-center text-[11px] text-[#9CA3AF] pt-4">© Open Mind Services • AI Chatbots • Enterprise Conversational AI</div>
