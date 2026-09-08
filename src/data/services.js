@@ -13,7 +13,7 @@ export const services = [
     label: 'Omnichannel Support Hub',
     title: 'Every Customer\nStarts Here',
     desc: 'From the first ring to the final resolution, our expert team handles inbound calls, emails, and chats with precision, empathy, and speed. The foundation of great customer experience.',
-    stat: 'Trusted by Apollo Hospitals, Cloud Nine & Jafron Biomedical',
+    stat: 'Trusted by Apollo Hospitals, Cloud Nine & Fortis Hospitals',
     color: '#f97316',
     accent: '#ec4899',
     video: callcenterVideo,

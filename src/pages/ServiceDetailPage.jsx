@@ -86,7 +86,7 @@ export default function ServiceDetailPage() {
 
       {/* OMSL Automation Workflow (Intelligent Automation only) */}
       {service.path === 'intelligent-automation' && (
-        <section className="pt-28 md:pt-32 px-0 md:px-0 bg-white overflow-hidden">
+        <section className="pt-16 md:pt-20 px-0 bg-white overflow-hidden">
           <OmslAutomationWorkflow3D />
         </section>
       )}
@@ -242,17 +242,19 @@ export default function ServiceDetailPage() {
         <section className="relative z-10 max-w-[1280px] mx-auto w-full px-6 md:px-10 pb-14 md:pb-16 bg-white">
           <div className="rounded-[24px] bg-[#0f172a] text-white p-7 md:p-10 relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-gradient-to-br from-[#f97316]/20 via-[#8b5cf6]/20 to-[#3b82f6]/20 blur-[60px]" />
-            <div className="relative flex flex-col items-center justify-center gap-6 text-center">
-              <div className="max-w-[560px] mx-auto">
+            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="max-w-[560px]">
                 <div className="text-[10px] font-[700] tracking-[0.18em] text-white/50">LET'S TALK</div>
                 <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">The busywork behind every fast resolution, automated. Permanently.</h2>
                 <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Get a live demo of ticket routing, zero-touch lead nurturing, real-time dashboards, and AI-driven insights. See your support stack run itself.</p>
-                <div className="mt-3 flex items-center justify-center gap-2 text-[11px] text-white/50">
+                <div className="mt-3 flex items-center gap-2 text-[11px] text-white/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   {'<'} 2h response
                 </div>
               </div>
-              <a href={`${import.meta.env.BASE_URL}#contact`} className="h-[40px] px-5 rounded-full bg-white text-[#0f172a] text-[13px] font-[700] inline-flex items-center justify-center gap-1.5">Contact Us <ArrowRight className="w-3.5 h-3.5" /></a>
+              <div className="flex gap-2 flex-wrap">
+                <a href={`${import.meta.env.BASE_URL}#contact`} className="h-[40px] px-5 rounded-full bg-white text-[#0f172a] text-[13px] font-[700] inline-flex items-center gap-1.5">Contact Us <ArrowRight className="w-3.5 h-3.5" /></a>
+              </div>
             </div>
           </div>
         </section>
