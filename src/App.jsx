@@ -6,6 +6,7 @@ import ChatVoiceWidget from './components/ChatVoiceWidget'
 import ServicesOrbit from './components/ServicesOrbit'
 import PlaceholderPage from './pages/PlaceholderPage'
 import CaseStudiesPage from './pages/CaseStudiesPage'
+import CareersPage from './pages/CareersPage'
 import ExploreServicesPage from './pages/ExploreServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import AboutPage from './pages/AboutPage'
@@ -404,6 +405,7 @@ function FooterSection() {
             <div className="space-y-3">
               <Link to="/about" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">About Us</Link>
               <Link to="/case-studies" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Case Studies</Link>
+              <Link to="/careers" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Careers</Link>
               <a href="https://www.facebook.com/openmindserviceslimited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Facebook</a>
               <a href="https://www.linkedin.com/company/open-mind-services-limited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">LinkedIn</a>
             </div>
@@ -512,6 +514,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout><HomePage /></Layout>} />
         <Route path="/case-studies" element={<Layout><CaseStudiesPage /></Layout>} />
+        <Route path="/careers" element={<Layout><CareersPage /></Layout>} />
         <Route path="/services" element={<Layout><ExploreServicesPage /></Layout>} />
         <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
         <Route path="/services/omnichannel-support" element={<Layout><OmnichannelServicePage /></Layout>} />

@@ -19,8 +19,8 @@ export const routes = [
   },
   {
     path: '/case-studies',
-    title: 'Case Studies · Real Partners, Real Results | Open Mind',
-    description: 'How organizations across healthcare, medtech, retail, and ecommerce actually work with Open Mind.',
+    title: 'Case Studies · Customer Support Outcomes | Open Mind',
+    description: 'Documented customer support engagements across healthcare, medtech, and retail — medical equipment support, hospital patient services, home-based patient care, and HR helpline technology.',
     changefreq: 'monthly',
     priority: '0.7',
   },
@@ -30,6 +30,13 @@ export const routes = [
     description: 'Five ways Open Mind handles customer experience, from the first ring to the dashboard leadership actually reads.',
     changefreq: 'monthly',
     priority: '0.8',
+  },
+  {
+    path: '/careers',
+    title: 'Careers · Join Open Mind | Open Mind',
+    description: 'We are hiring for different roles in Gurugram and Ahmedabad. Join Open Mind Services Limited and grow with a team that values hard work and fresh ideas.',
+    changefreq: 'monthly',
+    priority: '0.6',
   },
   {
     path: '/services/omnichannel-support',
