@@ -78,7 +78,8 @@ npm run preview  # preview the production build
 |---|---|---|
 | `/` | `src/App.jsx` (`HomePage`) | Live |
 | `/about` | `src/pages/AboutPage.jsx` | Live, built from a real fact-checked pass (see Verified facts) |
-| `/case-studies` | `src/pages/CaseStudiesPage.jsx` | Live, but all 4 industry tabs are **empty placeholders** — no fabricated case studies, waiting on real client names |
+| `/case-studies` | `src/pages/CaseStudiesPage.jsx` + `src/data/caseStudies.js` | Live, filled with real case studies (2026-09-08) — client names anonymized (e.g. "Global Medical Device Brand") but the stats are confirmed real, not fabricated |
+| `/careers` | `src/pages/CareersPage.jsx` | Live (2026-09-08), no fabricated stats |
 | `/services` | `src/pages/ExploreServicesPage.jsx` | Live |
 | `/services/omnichannel-support` | `src/pages/ServiceDetailPage.jsx` + `src/data/services.js` | Live, generic template |
 | `/services/generative-ai-ivr` | same generic template | Live |
@@ -157,11 +158,17 @@ below), which turned into most of the rest of this session's work.
 - [x] No real contact form → built (`ContactForm.jsx`), routes through n8n
       (see Part 2).
 - [x] No analytics installed → GA4 wired in.
-- [ ] 3 service pages still show a literal "Demo Slot — coming soon"
-      section (Omnichannel Support, Generative AI IVR, Intelligent
-      Automation — the 3 on the generic template).
-- [ ] Case Studies' 4 industry tabs are still empty, waiting on real
-      client case study content.
+- [x] Omnichannel Support and Generative AI IVR now have their own
+      bespoke pages (`OmnichannelServicePage.jsx`, `GenerativeAiIvrPage.jsx`)
+      — no longer routed through the generic template.
+- [ ] Intelligent Automation is now the only service still on the generic
+      `ServiceDetailPage.jsx` template, and it's a known small
+      inconsistency: it has a real demo (`OmslAutomationWorkflow3D`, added
+      2026-09-08) but the template still shows a "Demo Slot — coming soon"
+      placeholder right below it too — flagged to Inder 2026-09-08,
+      intentionally left as-is for now.
+- [x] Case Studies' 4 industry tabs are filled with real content
+      (2026-09-08) — see Verified facts below.
 - [ ] `Automations.html` and `Voicebots.html` are sitting in
       `Page content/`, same pattern as the Analytics/Chatbot pages —
       presumably for Intelligent Automation and Generative AI IVR. Not
@@ -242,8 +249,10 @@ message, so it answers generatively without re-asking; there are **no
 fixed/scripted frontend replies for anything**, by explicit choice. One
 real consequence of that for "Job": the bot answers from whatever its own
 knowledge base already says (which we don't control, since it's the old
-bot's own n8n Cloud setup) — it may or may not correctly say there's no
-careers page live yet.
+bot's own n8n Cloud setup) — as of 2026-09-08 a real `/careers` page
+exists (see below), but the old bot's own knowledge base wasn't built
+with that page in mind, so it may still point people to HR by email
+instead of the real page until someone updates its source directly.
 
 Since the old bot's workflow was never built to expect any of this pre-chat
 data, it wouldn't otherwise go anywhere — so workflow **13 (Chatbot
@@ -313,11 +322,14 @@ Two things were deliberately ruled out, not overlooked:
 - [x] Workflow 13 (chatbot lead capture) is imported and live —
       `LEAD_CAPTURE_URL` in `ChatVoiceWidget.jsx` points at the real
       production webhook, tested and confirmed working.
-- [ ] Build the careers page (copying content from the old site). There's no
-      fixed frontend text to update once it's live (all replies are
-      generative now) — instead, make sure whatever answers "Job" queries
-      (the old bot's own knowledge base right now) gets pointed at the real
-      page once it exists.
+- [x] Careers page is live at `/careers` (`src/pages/CareersPage.jsx`,
+      built 2026-09-08). No fabricated stats — checked.
+- [ ] The old bot's own knowledge base still doesn't know `/careers`
+      exists — since we don't control its source, someone with access to
+      the n8n Cloud workflow needs to update its KB tool to reference the
+      real page instead of falling back to HR email. (The self-hosted
+      rebuild's local KB text already has a note about this — update
+      that too when this gets addressed, so both stay in sync.)
 - [ ] Decide whether to eventually switch the widget over to the
       self-hosted rebuild (workflows 9–11) — if so: import them in order,
       connect OpenAI + Gmail credentials, re-point the Agent's 2 tool nodes
@@ -350,6 +362,10 @@ knowledge base. If it's not here, treat it as unverified.
   older and newer clients), added to the homepage logo marquee.
 - **Real stats (from the About page fact-check):** CSAT 4.8/5, FCR 89%,
   AHT 2m 14s, cost savings up to 60%.
+- **Real stats (case studies, confirmed by Inder 2026-09-08):** ~35%
+  average resolution-time reduction, 95%+ first-call resolution — see
+  `src/data/caseStudies.js`. Client names there are intentionally
+  anonymized (e.g. "Global Medical Device Brand"), not fabricated.
 - **Social:** Facebook (facebook.com/openmindserviceslimited), LinkedIn
   (linkedin.com/company/open-mind-services-limited).
 
