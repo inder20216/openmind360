@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from './components/Navbar'
@@ -24,6 +24,7 @@ import FadeInSection from './components/FadeInSection'
 import ContactForm from './components/ContactForm'
 import TrustStats from './components/TrustStats'
 import { services } from './data/services'
+import { TESTIMONIALS } from './data/testimonials'
 import logo from './assets/Logo.png'
 import apolloLogo from './assets/apollo_logo-removebg-preview.png'
 import cloudNineLogo from './assets/cloude_nine_logo-removebg-preview.png'
@@ -256,29 +257,292 @@ function ServiceSection({ service, index }) {
 }
 
 /* ─── TESTIMONIAL ─── */
-function TestimonialSection() {
+function TestimonialCard({ t, open, onToggle }) {
+  const [needsBtn, setNeedsBtn] = useState(false)
+  const [vid, setVid] = useState(0)
+  const bodyRef = useRef(null)
+
+  useEffect(() => {
+    setNeedsBtn(false)
+    const el = bodyRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => {
+      if (el.scrollHeight > el.clientHeight + 8) {
+        setNeedsBtn(true)
+        ro.disconnect()
+      }
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [t])
+
   return (
-    <section id="case-studies" className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-3xl mx-auto text-center">
-        <FadeInSection>
-          <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Testimonial</span>
-        </FadeInSection>
-        <FadeInSection delay={0.1}>
-          <blockquote className="mt-8 text-xl md:text-2xl text-slate-600 leading-relaxed font-medium">
-            &ldquo;Open Mind has been an exceptional partner for Apollo Hospitals. Their AI-powered support desk improved our patient response time by 60% while maintaining the human touch our patients deserve.&rdquo;
-          </blockquote>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            {/* Placeholder avatar */}
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ox to-ob flex items-center justify-center text-white font-bold text-sm">
-              NL
+    <motion.div
+      key={t.name}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      className="grid md:grid-cols-[320px_1fr] w-full rounded-3xl border border-slate-100 bg-white shadow-xl shadow-slate-200/50 overflow-hidden"
+    >
+      {/* Photo — left */}
+      <div className="flex flex-col items-center justify-center gap-4 p-8 md:p-10 md:border-r border-slate-100 bg-slate-50/50">
+        <div className="relative w-44 h-52 md:w-52 md:h-60 rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-lg shadow-slate-300/40 shrink-0">
+          <img
+            src={t.image}
+            alt={t.name}
+            className={`absolute inset-0 w-full h-full ${t.videos ? 'object-contain p-6' : 'object-cover object-top saturate-105 contrast-105'}`}
+            loading={t === TESTIMONIALS[0] ? 'eager' : 'lazy'}
+          />
+        </div>
+        <div className="text-center">
+          <p className="font-bold text-lg leading-tight text-slate-900">{t.name}</p>
+          <p className="text-slate-500 text-sm mt-1 leading-snug max-w-[240px]">{t.role}</p>
+        </div>
+      </div>
+
+      {/* Quote / Video — right */}
+      <div className="relative p-6 md:p-8 lg:p-10 flex flex-col justify-center">
+        {t.videos ? (
+          <div className="flex flex-col gap-5">
+            <video
+              key={vid}
+              src={t.videos[vid]}
+              controls
+              playsInline
+              preload="metadata"
+              className="w-full aspect-video rounded-2xl bg-slate-900 shadow-lg shadow-slate-300/50"
+            />
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setVid(0)}
+                className={`h-10 px-5 rounded-full text-[13px] font-semibold transition ${vid === 0
+                  ? 'bg-ox text-white shadow-md shadow-ox/30'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:border-ox hover:text-ox'}`}
+              >
+                Video 1
+              </button>
+              <button
+                onClick={() => setVid(1)}
+                className={`h-10 px-5 rounded-full text-[13px] font-semibold transition ${vid === 1
+                  ? 'bg-ox text-white shadow-md shadow-ox/30'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:border-ox hover:text-ox'}`}
+              >
+                Video 2
+              </button>
             </div>
-            <div className="text-left">
-              <p className="font-semibold text-slate-800">Neeraj Lal</p>
-              <p className="text-sm text-slate-400">COO, Apollo Hospitals, Gujarat Region</p>
+          </div>
+        ) : (
+          <>
+            <div className="text-6xl leading-none text-ox/90 select-none" aria-hidden>&ldquo;</div>
+            <div ref={bodyRef} className={`relative text-[15px] md:text-[16px] leading-[1.75] text-slate-600 transition-[max-height,column-count] duration-700 ease-out ${open ? 'md:columns-2 md:gap-12 md:text-[17px]' : 'overflow-hidden max-h-[220px]'}`}>
+              {t.quote.split('\n').filter(Boolean).map((p, i) => (
+                <p key={i} className={i > 0 ? 'mt-3 break-inside-avoid' : 'break-inside-avoid'}>{p}</p>
+              ))}
+              {!open && needsBtn && (
+                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+              )}
+            </div>
+            {needsBtn && (
+              <button
+                onClick={onToggle}
+                className="mt-4 self-start inline-flex items-center gap-1.5 text-sm font-semibold text-ox hover:text-orange-600 transition-colors"
+              >
+                {open ? 'View Less' : 'View More'}
+                <span className={`text-xs transition-transform ${open ? 'rotate-180' : ''}`}>▼</span>
+              </button>
+            )}
+          </>
+        )}
+      </div>
+    </motion.div>
+  )
+}
+
+/* ─── TESTIMONIAL: Netflix-style coverflow ─── */
+function signedDiff(i, active, len) {
+  let d = i - active
+  if (d > len / 2) d -= len
+  if (d < -len / 2) d += len
+  return d
+}
+
+function SideMiniCard({ t }) {
+  return (
+    <div className="w-full rounded-2xl md:rounded-3xl border border-slate-100 bg-white p-3.5 md:p-5 shadow-xl shadow-slate-200/60">
+      <div className="flex items-center gap-2.5 md:gap-3">
+        <div className="w-9 h-9 md:w-11 md:h-11 rounded-full ring-2 ring-white shadow-md overflow-hidden shrink-0 ring-offset-1">
+          <img
+            src={t.image}
+            alt={t.name}
+            className="w-full h-full object-cover object-top"
+            loading="lazy"
+          />
+        </div>
+        <div className="min-w-0">
+          <p className="font-bold text-[12px] md:text-[13px] leading-tight text-slate-900 truncate">{t.name}</p>
+          <p className="hidden md:block text-[11px] text-slate-400 truncate leading-snug">{t.role}</p>
+        </div>
+      </div>
+      {t.quote && (
+        <div className="mt-2.5 md:mt-3 text-[11px] md:text-[12.5px] text-slate-500 leading-relaxed line-clamp-3">
+          &ldquo;{t.quote}&rdquo;
+        </div>
+      )}
+    </div>
+  )
+}
+
+function CoverCard({ t, diff, isMobile, hovered, open, innerRef, onHover, onLeave, onClick, onToggle }) {
+  const sideX = isMobile ? 150 : 500
+  const sideW = isMobile ? 120 : 240
+  const isSide = diff !== 0
+  const dir = diff === -1 ? -1 : 1
+
+  const pos = !isSide
+    ? { x: 0, y: '-54%', scale: 1, opacity: 1, rotateY: 0, zIndex: 30 }
+    : hovered
+      ? { x: dir * sideX * 0.8, y: '-50%', scale: 0.96, opacity: 1, rotateY: dir * 5, zIndex: 40 }
+      : { x: dir * sideX, y: '-50%', scale: 0.85, opacity: 0.65, rotateY: dir * 14, zIndex: 10 }
+
+  const w = !isSide ? (isMobile ? '100%' : open ? 1160 : 720) : sideW
+  const ml = !isSide ? (isMobile ? '-50%' : open ? -580 : -360) : -sideW / 2
+
+  return (
+    <motion.div
+      initial={false}
+      animate={{ x: pos.x, y: pos.y, rotateY: pos.rotateY, scale: pos.scale, opacity: pos.opacity, zIndex: pos.zIndex }}
+      transition={{ type: 'spring', stiffness: 130, damping: 22, mass: 1 }}
+      onHoverStart={isSide ? onHover : undefined}
+      onHoverEnd={isSide ? onLeave : undefined}
+      onClick={isSide ? onClick : undefined}
+      className={`absolute left-1/2 top-1/2 transition-[width,margin-left] duration-700 ease-out ${isSide ? 'cursor-pointer' : 'cursor-default'}`}
+      style={{ width: w, marginLeft: ml, transformStyle: 'preserve-3d' }}
+    >
+      {isSide ? (
+        <SideMiniCard t={t} />
+      ) : (
+        <div ref={innerRef} className="relative">
+          <div
+            className="absolute -inset-5 md:-inset-10 -z-10 rounded-[3rem] bg-gradient-to-br from-ox/20 via-purple-500/10 to-ob/20 blur-2xl"
+            aria-hidden
+          />
+          <TestimonialCard t={t} open={open} onToggle={onToggle} />
+        </div>
+      )}
+    </motion.div>
+  )
+}
+
+function TestimonialSection() {
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const [hi, setHi] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [cardH, setCardH] = useState(520)
+  const [open, setOpen] = useState(false)
+  const centerRef = useRef(null)
+
+  useEffect(() => {
+    setOpen(false)
+  }, [active])
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    const el = centerRef.current
+    if (!el) return
+    const setH = () => setCardH(el.offsetHeight + 8)
+    setH()
+    const ro = new ResizeObserver(setH)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [active])
+
+  useEffect(() => {
+    if (paused) return
+    const id = setInterval(() => setActive((a) => (a + 1) % TESTIMONIALS.length), 8000)
+    return () => clearInterval(id)
+  }, [paused])
+
+  const go = (i) => setActive((i + TESTIMONIALS.length) % TESTIMONIALS.length)
+
+  return (
+    <section className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+      <div className="max-w-[1280px] mx-auto">
+        <FadeInSection>
+          <div className="text-center">
+            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Testimonial</span>
+            <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">
+              What Our Clients Say
+            </h2>
+          </div>
+        </FadeInSection>
+
+        <FadeInSection delay={0.1}>
+          <div
+            className="relative mt-12 w-full"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            <div className="relative w-full" style={{ height: cardH, minHeight: isMobile ? 420 : 480, perspective: '1800px' }}>
+              {TESTIMONIALS.map((t, i) => {
+                const diff = signedDiff(i, active, TESTIMONIALS.length)
+                if (Math.abs(diff) > 1) return null
+                const side = diff === 0 ? null : diff === -1 ? 'left' : 'right'
+                return (
+                  <CoverCard
+                    key={t.name}
+                    t={t}
+                    diff={diff}
+                    isMobile={isMobile}
+                    hovered={side !== null && hi === side}
+                    innerRef={centerRef}
+                    open={open}
+                    onHover={() => side && setHi(side)}
+                    onLeave={() => setHi(null)}
+                    onClick={() => diff !== 0 && go(active + diff)}
+                    onToggle={() => setOpen(!open)}
+                  />
+                )
+              })}
+            </div>
+
+            {/* Controls */}
+            <div className="mt-8 flex items-center justify-center gap-6">
+              <button
+                onClick={() => go(active - 1)}
+                aria-label="Previous testimonial"
+                className="w-11 h-11 rounded-full border border-slate-200 bg-white text-slate-600 flex items-center justify-center shadow-sm hover:bg-slate-50 hover:text-slate-900 transition"
+              >
+                ‹
+              </button>
+              <div className="flex items-center gap-2">
+                {TESTIMONIALS.map((t, i) => (
+                  <button
+                    key={t.name}
+                    onClick={() => go(i)}
+                    aria-label={`Go to testimonial ${i + 1}`}
+                    className={`h-2 rounded-full transition-all duration-300 ${i === active ? 'w-7 bg-ox' : 'w-2 bg-slate-300 hover:bg-slate-400'}`}
+                  />
+                ))}
+              </div>
+              <button
+                onClick={() => go(active + 1)}
+                aria-label="Next testimonial"
+                className="w-11 h-11 rounded-full border border-slate-200 bg-white text-slate-600 flex items-center justify-center shadow-sm hover:bg-slate-50 hover:text-slate-900 transition"
+              >
+                ›
+              </button>
             </div>
           </div>
         </FadeInSection>
       </div>
+
       {/* Client logos marquee — full width */}
       <FadeInSection delay={0.2}>
         <p className="mt-16 text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 text-center">Trusted by leading brands</p>
