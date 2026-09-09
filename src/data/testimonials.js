@@ -11,11 +11,16 @@ import pantImg from '../assets/hemant-pant (regioanl manger (walmart).jpg'
 import bhattacharjiImg from '../assets/pulock-bhattacharji (indiacan).jpg'
 import sawhneyImg from '../assets/dr-girish-sawhney (baxter healthcare ).jpg'
 import sajeevImg from '../assets/M-sajeev (educomp solution ).jpg'
-import rainbowLogo from '../assets/rainbow_hospitals_logo-removebg-preview.png'
 import nishantVideo1 from '../assets/Testimonial Video Nishant Rainbow Part 1.mp4'
 import nishantVideo2 from '../assets/Testimonial Video Nishant Rainbow Part 2.mp4'
 
 export const TESTIMONIALS = [
+  {
+    name: 'Nishant Mishra',
+    role: 'VP Marketing, Rainbow Hospitals (at the time)',
+    captionQuote: 'We’re working with 30 seats — 5x what we had — and booking about a lakh appointments a month. Phenomenal.',
+    videos: [nishantVideo1, nishantVideo2],
+  },
   {
     name: 'Neeraj Lal',
     role: 'COO, Apollo Hospitals, Gujarat Region',
@@ -104,11 +109,5 @@ export const TESTIMONIALS = [
     role: 'Asst. Vice President \u2013 Human Resources | Educomp Solutions Ltd',
     image: sajeevImg,
     quote: '"Open Mind has a very dedicated and result oriented team. They have solutions for every problems !"',
-  },
-  {
-    name: 'Nishant',
-    role: 'Rainbow Hospitals',
-    image: rainbowLogo,
-    videos: [nishantVideo1, nishantVideo2],
   },
 ]

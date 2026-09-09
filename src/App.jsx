@@ -256,6 +256,10 @@ function ServiceSection({ service, index }) {
   )
 }
 
+function initials(name) {
+  return name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')
+}
+
 /* ─── TESTIMONIAL ─── */
 function TestimonialCard({ t, open, onToggle }) {
   const [needsBtn, setNeedsBtn] = useState(false)
@@ -287,12 +291,23 @@ function TestimonialCard({ t, open, onToggle }) {
       {/* Photo — left */}
       <div className="flex flex-col items-center justify-center gap-4 p-8 md:p-10 md:border-r border-slate-100 bg-slate-50/50">
         <div className="relative w-44 h-52 md:w-52 md:h-60 rounded-2xl overflow-hidden ring-1 ring-slate-200 shadow-lg shadow-slate-300/40 shrink-0">
-          <img
-            src={t.image}
-            alt={t.name}
-            className={`absolute inset-0 w-full h-full ${t.videos ? 'object-contain p-6' : 'object-cover object-top saturate-105 contrast-105'}`}
-            loading={t === TESTIMONIALS[0] ? 'eager' : 'lazy'}
-          />
+          {t.image ? (
+            <img
+              src={t.image}
+              alt={t.name}
+              className={`absolute inset-0 w-full h-full ${t.videos ? 'object-contain p-6' : 'object-cover object-top saturate-105 contrast-105'}`}
+              loading={t === TESTIMONIALS[0] ? 'eager' : 'lazy'}
+            />
+          ) : t.captionQuote ? (
+            <div className="absolute inset-0 w-full h-full flex flex-col justify-center p-5 bg-gradient-to-br from-ox/5 via-white to-ob/5">
+              <span className="text-3xl leading-none text-ox/60 select-none" aria-hidden>&ldquo;</span>
+              <p className="mt-1.5 text-[13px] leading-snug text-slate-700 font-medium">{t.captionQuote}</p>
+            </div>
+          ) : (
+            <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-gradient-to-br from-ox/10 via-purple-100 to-ob/10">
+              <span className="text-5xl font-bold text-ox/70">{initials(t.name)}</span>
+            </div>
+          )}
         </div>
         <div className="text-center">
           <p className="font-bold text-lg leading-tight text-slate-900">{t.name}</p>

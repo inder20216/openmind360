@@ -11,7 +11,6 @@ import {
   Plus,
   Puzzle,
   Radio,
-  ShieldCheck,
   Sparkles,
   UserCheck,
   Zap,
@@ -19,7 +18,8 @@ import {
 import SeoHead from '../components/SeoHead'
 import FaqSchema from '../components/FaqSchema'
 import JsonLd from '../components/JsonLd'
-import GenerativeAiIvrOrbit3D from '../components/GenerativeAiIvrOrbit3D'
+import GenerativeAiIvrCallFlow from '../components/GenerativeAiIvrCallFlow'
+import IndustryDemoDeck from '../components/IndustryDemoDeck'
 import { services } from '../data/services'
 
 const service = services.find((s) => s.path === 'generative-ai-ivr')
@@ -158,35 +158,26 @@ export default function GenerativeAiIvrPage() {
       </div>
 
       {/* HERO */}
-      <section id="hero" className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-14 md:pb-20">
-        <div className="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-6 lg:gap-10 items-center">
-          <div className="min-w-0 order-2 md:order-1">
-            <div className="inline-flex items-center gap-2 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#2563eb] animate-[giPulseDot_1.6s_ease-in-out_infinite]" />
-              <span className="text-[10px] font-[700] tracking-[0.20em] text-[#2563eb]">GENERATIVE AI IVR</span>
-            </div>
-            <h1 className="font-[800] text-[34px] md:text-[52px] lg:text-[56px] leading-[0.95] tracking-[-0.04em] text-[#0f172a]">
-              Say What You Need,
-              <br />
-              <span className="bg-gradient-to-r from-[#ec4899] via-[#a855f7] to-[#6366f1] bg-clip-text text-transparent">
-                Skip the Menu
-              </span>
-            </h1>
-            <p className="mt-4 text-[15px] md:text-[16px] leading-[1.6] text-[#475569] max-w-[460px] font-[500] min-w-0">
-              Traditional IVRs make customers punch through five menus to reach a human. Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.
-            </p>
-            <div className="mt-6 flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1.5 rounded-full bg-[#eff6ff] border border-[#dbeafe] text-[10px] font-[700] tracking-[0.10em] text-[#2563eb]">24/7 MULTILINGUAL</span>
-              <span className="px-3 py-1.5 rounded-full bg-[#fdf2f8] border border-[#fce7f3] text-[10px] font-[700] tracking-[0.10em] text-[#db2777]">ALWAYS ON IVR</span>
-              <span className="px-3 py-1.5 rounded-full bg-[#f5f3ff] border border-[#ede9fe] text-[10px] font-[700] tracking-[0.10em] text-[#7c3aed]">HUMAN HANDOFF</span>
-            </div>
-            <div className="mt-4 flex items-center gap-2 text-[12.5px] font-[600] text-[#64748b]">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-[giPulseDot_2s_ease-in-out_infinite]" />
-              Natural language · No DTMF menus · Human handoff with context
-            </div>
-          </div>
-          <div className="min-w-0 relative order-1 md:order-2">
-            <GenerativeAiIvrOrbit3D />
+      <section id="hero" className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pt-16 md:pt-20 pb-5 md:pb-6">
+        <div className="text-center">
+          <h1 className="font-[800] text-[26px] md:text-[38px] lg:text-[42px] leading-[1] tracking-[-0.03em] text-[#0f172a]">
+            Say What You Need,{' '}
+            <span className="bg-gradient-to-r from-[#ec4899] via-[#a855f7] to-[#6366f1] bg-clip-text text-transparent">
+              Skip the Menu
+            </span>
+          </h1>
+        </div>
+        <div className="mt-4 md:mt-5 w-full">
+          <GenerativeAiIvrCallFlow />
+        </div>
+        <div className="mt-4 md:mt-5 text-center max-w-[760px] mx-auto">
+          <p className="text-[13px] md:text-[14px] leading-[1.5] text-[#475569] max-w-[620px] mx-auto font-[500]">
+            Traditional IVRs make customers punch through five menus to reach a human. Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.
+          </p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-[#eff6ff] border border-[#dbeafe] text-[10px] font-[700] tracking-[0.10em] text-[#2563eb]">24/7 MULTILINGUAL</span>
+            <span className="px-3 py-1 rounded-full bg-[#fdf2f8] border border-[#fce7f3] text-[10px] font-[700] tracking-[0.10em] text-[#db2777]">ALWAYS ON IVR</span>
+            <span className="px-3 py-1 rounded-full bg-[#f5f3ff] border border-[#ede9fe] text-[10px] font-[700] tracking-[0.10em] text-[#7c3aed]">HUMAN HANDOFF</span>
           </div>
         </div>
       </section>
@@ -302,37 +293,11 @@ export default function GenerativeAiIvrPage() {
             <Sparkles className="w-3.5 h-3.5 text-[#2563eb]" />
             <span className="text-[10px] font-[700] tracking-[0.18em] text-[#2563eb]">SEE IT IN ACTION</span>
           </div>
-          <h2 className="text-[26px] md:text-[34px] font-[800] tracking-[-0.02em] text-[#0f172a]">Live demo coming soon</h2>
-          <p className="mt-3 text-[14px] leading-[1.6] text-[#475569]">We're building an interactive walkthrough so you can hear how the AI handles real calls, routes, and handoffs.</p>
+          <h2 className="text-[26px] md:text-[34px] font-[800] tracking-[-0.02em] text-[#0f172a]">Talk to it yourself</h2>
+          <p className="mt-3 text-[14px] leading-[1.6] text-[#475569]">Four real proof-of-concept voice bots, one per industry — share a few details once, then talk to any of them live.</p>
         </div>
-        <div className="mt-8 relative">
-          <div className="rounded-[24px] border-[1.5px] border-dashed border-[#cbd5e1] bg-white/70 backdrop-blur p-8 md:p-10 flex flex-col items-center text-center hover:border-[#94a3b8] transition-colors">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0f172a] text-white text-[11px] font-[700] tracking-[0.18em]">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              DEMO SLOT RESERVED
-            </div>
-            <div className="mt-6 w-full max-w-[420px] h-[168px] rounded-[18px] bg-gradient-to-br from-[#0f172a] to-[#1e293b] relative overflow-hidden shadow-[0_20px_60px_rgba(15,23,42,0.18)] flex items-center justify-center">
-              <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '18px 18px' }} />
-              <div className="relative flex flex-col items-center">
-                <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur border border-white/15 flex items-center justify-center">
-                  <Mic className="w-[22px] h-[22px] text-white" />
-                </div>
-                <div className="mt-3 text-white/70 text-[12px] tracking-[0.18em] font-[700]">INTERACTIVE PREVIEW</div>
-                <div className="mt-1.5 flex gap-1">
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="w-1 h-1 rounded-full bg-white/40 animate-[giBar_1s_ease-in-out_infinite]" style={{ animationDelay: `${i * 0.15}s` }} />
-                  ))}
-                </div>
-              </div>
-              <div className="absolute right-6 bottom-6 w-9 h-9 rounded-full bg-[#38bdf8] shadow-[0_8px_20px_rgba(56,189,248,0.5)] flex items-center justify-center animate-[giFloatCard_3s_ease-in-out_infinite]">
-                <PhoneCall className="w-[18px] h-[18px] text-white" />
-              </div>
-            </div>
-            <div className="mt-4 text-[13px] text-[#64748b] flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#10b981]" />
-              Reserved for your IVR demo preview
-            </div>
-          </div>
+        <div className="mt-8">
+          <IndustryDemoDeck />
         </div>
       </section>
 
@@ -412,8 +377,6 @@ export default function GenerativeAiIvrPage() {
 
       <style>{`
         @keyframes giPulseDot { 0%,100% { transform: scale(1); opacity:1 } 50% { transform: scale(1.5); opacity:0.6 } }
-        @keyframes giBar { 0%,100% { transform: scale(1); opacity:0.4 } 50% { transform: scale(1.4); opacity:1 } }
-        @keyframes giFloatCard { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
       `}</style>
     </>
   )

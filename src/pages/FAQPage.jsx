@@ -14,7 +14,7 @@ const companyFaqs = [
   },
   {
     question: 'Which industries does Open Mind serve?',
-    answer: 'Open Mind serves healthcare, hospitals, e-commerce, retail, and enterprise clients. Current clients include Apollo Hospitals, Cloud Nine Hospitals, Fortis Hospitals, Rainbow Hospitals, and Walmart-affiliated retail brands.',
+    answer: 'Open Mind serves healthcare, hospitals, e-commerce, retail, and enterprise clients. Current clients include Apollo Hospitals, Cloud Nine Hospitals, Rainbow Hospitals, Baxter/Vantive India, and Walmart-affiliated retail brands.',
   },
   {
     question: 'Does Open Mind provide dedicated or shared support teams?',
