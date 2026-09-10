@@ -487,7 +487,7 @@ function TestimonialSection() {
   const go = (i) => setActive((i + TESTIMONIALS.length) % TESTIMONIALS.length)
 
   return (
-    <section className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+    <section id="testimonials" className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       <div className="max-w-[1280px] mx-auto">
         <FadeInSection>
           <div className="text-center">
