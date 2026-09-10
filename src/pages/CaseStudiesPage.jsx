@@ -271,36 +271,6 @@ export default function CaseStudiesPage() {
         </div>
       </section>
 
-      {/* Partner quote */}
-      <section className="py-16 md:py-20 px-6 md:px-16 bg-slate-50">
-        <div className="max-w-4xl mx-auto">
-          <FadeInSection>
-            <span className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-400">
-              A Word From Our Partners
-            </span>
-            <div className="mt-6 rounded-3xl border border-slate-100 bg-white p-8 md:p-12 shadow-3d">
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">
-                Healthcare · Apollo Hospitals
-              </span>
-              <blockquote className="mt-6 text-xl md:text-2xl text-slate-700 leading-relaxed font-medium">
-                &ldquo;Open Mind has been an exceptional partner for Apollo Hospitals. Their AI-powered support
-                desk improved our patient response time by 60% while maintaining the human touch our patients
-                deserve.&rdquo;
-              </blockquote>
-              <div className="mt-8 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-ox to-ob flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                  NL
-                </div>
-                <div className="text-left">
-                  <p className="font-semibold text-slate-800">Neeraj Lal</p>
-                  <p className="text-sm text-slate-400">COO, Apollo Hospitals, Gujarat Region</p>
-                </div>
-              </div>
-            </div>
-          </FadeInSection>
-        </div>
-      </section>
-
       {/* CTA */}
       <section id="cta" className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pb-14">
         <div className="rounded-[24px] bg-[#0f172a] text-white p-7 md:p-10 relative overflow-hidden">
