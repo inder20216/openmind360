@@ -12,12 +12,10 @@ const CHAT_WEBHOOK_URL = 'https://inder20216.app.n8n.cloud/webhook/dbffbebc-7366
 // lead. See automation/n8n-workflows/13-chatbot-lead-capture.json.
 const LEAD_CAPTURE_URL = 'https://automation.openmindhelpline.com/webhook/openmind-chatbot-lead-capture'
 
-// The real-time voice agent ("OpenMind FAQ Bot") — a separate Express
-// server, not part of this app's own build. Points at the local dev
-// instance for now; TODO: update to the real deployed URL (e.g.
-// https://faq.openmind.in) once it's hosted per that project's own
-// README ("What's pending" #2/#3 — DNS + EC2/PM2/nginx, Inder's side).
-const VOICE_SERVER_URL = 'http://localhost:3010'
+// The real-time voice agent ("OpenMind FAQ Bot") — a separate Express server
+// on Open Mind's own EC2 training instance, not part of this app's own
+// build. CORS confirmed open for cross-origin calls from this site.
+const VOICE_SERVER_URL = 'https://training.openmindserviceslimited.in/faq'
 
 const countryCodes = ['+91', '+1', '+44', '+971', '+65', '+61', '+966', '+974', '+968', '+973', '+965', '+880', '+92', '+94', '+977']
 
@@ -651,7 +649,7 @@ const stepHeaders = {
   precapture: { title: 'Talk to us', subtitle: 'Usually replies instantly' },
   choose: { title: 'Talk to us', subtitle: 'Usually replies instantly' },
   chat: { title: 'Suhani · Open Mind Assistant', subtitle: 'Usually replies instantly' },
-  voice: { title: 'Open Mind Voice Agent', subtitle: 'Preview — not live yet' },
+  voice: { title: 'Open Mind Voice Agent', subtitle: 'Usually replies instantly' },
 }
 
 function WidgetPanel({ onClose }) {
