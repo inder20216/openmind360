@@ -7,7 +7,7 @@
       // GitHub Pages SPA redirect: https://github.com/rafgraph/spa-github-pages
       // Encodes the deep-linked path into a query string and redirects to the
       // app's index.html, which decodes it back before React Router mounts.
-      var pathSegmentsToKeep = 1 // keep "/openmind360" as the base
+      var pathSegmentsToKeep = 0 // serving from the domain root, no base folder
       var l = window.location
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
