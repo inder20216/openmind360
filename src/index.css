@@ -50,6 +50,24 @@ body {
   margin-left: 3.5rem;
 }
 
+@keyframes card-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.card-track {
+  display: inline-flex;
+  align-items: stretch;
+  white-space: nowrap;
+  width: max-content;
+  animation: card-marquee 38s linear infinite;
+  will-change: transform;
+}
+
+.card-track:hover {
+  animation-play-state: paused;
+}
+
 /* OMSL Automation Workflow component */
 @keyframes floatA {
   0%, 100% { transform: translateY(0) translateX(0); }

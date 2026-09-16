@@ -8,6 +8,7 @@ import JsonLd from '../components/JsonLd'
 import SeoHead from '../components/SeoHead'
 import PlaceholderPage from './PlaceholderPage'
 import OmslAutomationWorkflow3D from '../components/OmslAutomationWorkflow3D'
+import AutomationCardSlider from '../components/AutomationCardSlider'
 import { services } from '../data/services'
 
 function CheckIcon({ color }) {
@@ -137,7 +138,24 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Bots / automation / AI agent demo slot */}
-      {service.path !== 'omnichannel-support' && (
+      {service.path === 'intelligent-automation' ? (
+        <section className="py-20 md:py-28 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
+          <div className="max-w-5xl mx-auto text-center px-6 md:px-16">
+            <FadeInSection>
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: service.color }}>See It In Action</span>
+              <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">Automations we run every day</h2>
+              <p className="mt-4 text-slate-500 max-w-xl mx-auto leading-relaxed">
+                A few of the workflows running behind the scenes for our clients right now.
+              </p>
+            </FadeInSection>
+          </div>
+          <FadeInSection delay={0.1}>
+            <div className="mt-10">
+              <AutomationCardSlider />
+            </div>
+          </FadeInSection>
+        </section>
+      ) : service.path !== 'omnichannel-support' && (
       <section className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-5xl mx-auto text-center">
           <FadeInSection>

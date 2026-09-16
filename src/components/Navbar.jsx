@@ -14,12 +14,12 @@ const links = [
 ]
 
 const serviceLinks = [
-  { label: 'Omnichannel Support Hub', path: 'omnichannel-support' },
-  { label: 'Generative AI IVR', path: 'generative-ai-ivr' },
-  { label: 'AI Chatbots', path: 'ai-chatbots' },
-  { label: 'Intelligent Automation', path: 'intelligent-automation' },
-  { label: 'Analytics & Reporting', path: 'revenue-impact' },
-  { label: "Custom CRM's", path: 'custom-crms' },
+  { label: 'Hybrid Contact Center', path: 'omnichannel-support' },
+  { label: 'AI Voice Support', path: 'generative-ai-ivr' },
+  { label: 'AI Chat Support', path: 'ai-chatbots' },
+  { label: 'Business Automation', path: 'intelligent-automation' },
+  { label: 'Reports & Analytics', path: 'revenue-impact' },
+  { label: 'CRM Solutions', path: 'custom-crms' },
 ]
 
 function NavLink({ href, className, onClick, children }) {
