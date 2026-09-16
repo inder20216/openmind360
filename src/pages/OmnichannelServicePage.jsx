@@ -53,7 +53,7 @@ const flows = [
 ]
 
 const explore = [
-  { label: 'Intelligent Automation', to: '/services/intelligent-automation' },
+  { label: 'Business Automation', to: '/services/intelligent-automation' },
   { label: 'Voice Support', to: '/services/generative-ai-ivr' },
   { label: 'Chat & WhatsApp', to: '/services/ai-chatbots' },
   { label: 'Ticket Management', to: '/services/omnichannel-support' },

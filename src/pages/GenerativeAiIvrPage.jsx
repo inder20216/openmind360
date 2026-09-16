@@ -58,11 +58,11 @@ const practices = [
 ]
 
 const explore = [
-  { label: 'Omnichannel Support Hub', to: '/services/omnichannel-support' },
-  { label: 'AI Chatbots', to: '/services/ai-chatbots' },
-  { label: 'Intelligent Automation', to: '/services/intelligent-automation' },
-  { label: 'Analytics & Reporting', to: '/services/revenue-impact' },
-  { label: 'Custom CRMs', to: '/services/custom-crms' },
+  { label: 'Hybrid Contact Center', to: '/services/omnichannel-support' },
+  { label: 'AI Chat Support', to: '/services/ai-chatbots' },
+  { label: 'Business Automation', to: '/services/intelligent-automation' },
+  { label: 'Reports & Analytics', to: '/services/revenue-impact' },
+  { label: 'CRM Solutions', to: '/services/custom-crms' },
 ]
 
 function useInView(threshold = 0.12) {

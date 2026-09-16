@@ -1,12 +1,21 @@
 import { Users, Heart, Handshake, TrendingUp, Clock, BookOpen, ShieldCheck, Zap, ArrowRight } from 'lucide-react'
 import FadeInSection from '../components/FadeInSection'
 import SeoHead from '../components/SeoHead'
+import teamOutingImg from '../assets/careers/life-gallery/Media (14).jpg'
+import communityOutreachImg from '../assets/careers/life-gallery/Media (9).jpg'
+import officeCultureImg from '../assets/careers/life-gallery/Media (12).jpg'
+import birthdayCheerImg from '../assets/careers/life-gallery/Media (13).jpg'
+import teamSpiritImg from '../assets/careers/life-gallery/Media (16).jpg'
+import celebrationsImg from '../assets/careers/life-gallery/Media (10).jpg'
 
 const CAREERS_FORM_URL = 'https://forms.office.com/r/ANn1SdYadw?embed=true'
 
 // Design ported from the client-provided reference (Career-Open-Mind.html).
-// Life-at-Open-Mind and pillar photos are temporary Unsplash placeholders —
-// real team photos to be swapped in later (confirmed with Inder).
+// Pillar photos are still temporary Unsplash placeholders. The "Life at Open
+// Mind" gallery below now uses real photos from Inder — "Learning Session"
+// and "Strategy Meet" were swapped for captions that match what the photos
+// actually show (a community outreach visit and a candid team moment),
+// since none of the supplied photos were a literal meeting/training shot.
 const pillars = [
   {
     title: 'Employee Engagement',
@@ -43,12 +52,12 @@ const pillars = [
 ]
 
 const galleryPhotos = [
-  { label: 'Team Outing', image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=500&fit=crop&q=80', tall: true },
-  { label: 'Learning Session', image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=600&h=400&fit=crop&q=80', tall: false },
-  { label: 'Office Culture', image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=600&h=500&fit=crop&q=80', tall: true },
-  { label: 'Collaboration', image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop&q=80', tall: false },
-  { label: 'Strategy Meet', image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop&q=80', tall: false },
-  { label: 'Celebrations', image: 'https://images.unsplash.com/photo-1531973576160-7125cd663d86?w=600&h=600&fit=crop&q=80', tall: true },
+  { label: 'Team Outing', image: teamOutingImg, tall: true },
+  { label: 'Community Outreach', image: communityOutreachImg, tall: false },
+  { label: 'Office Culture', image: officeCultureImg, tall: true },
+  { label: 'Birthday Cheer', image: birthdayCheerImg, tall: false },
+  { label: 'Team Spirit', image: teamSpiritImg, tall: false },
+  { label: 'Celebrations', image: celebrationsImg, tall: true },
 ]
 
 const benefits = [
