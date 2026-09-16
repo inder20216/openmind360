@@ -19,7 +19,7 @@ import {
 import SeoHead from '../components/SeoHead'
 import FaqSchema from '../components/FaqSchema'
 import JsonLd from '../components/JsonLd'
-import OmnichannelOrbit3D from '../components/OmnichannelOrbit3D'
+import GlobalNetworkGlobe from '../components/GlobalNetworkGlobe'
 import OmnichannelImpact from '../components/OmnichannelImpact'
 import { services } from '../data/services'
 
@@ -179,7 +179,7 @@ export default function OmnichannelServicePage() {
             </div>
           </div>
           <div className="min-w-0 relative order-1 md:order-2">
-            <OmnichannelOrbit3D />
+            <GlobalNetworkGlobe />
           </div>
         </div>
       </section>
