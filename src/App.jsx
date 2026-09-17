@@ -23,7 +23,6 @@ import SeoHead from './components/SeoHead'
 import FadeInSection from './components/FadeInSection'
 import ContactForm from './components/ContactForm'
 import TrustStats from './components/TrustStats'
-import HolographicShowcase from './components/HolographicShowcase'
 import { services } from './data/services'
 import { TESTIMONIALS } from './data/testimonials'
 import logo from './assets/Logo.png'
@@ -748,7 +747,6 @@ function HomePage() {
       />
       <JsonLd data={organizationSchema} />
       <HeroSection />
-      <HolographicShowcase />
       {services.map((service, i) => (
         <ServiceSection key={service.id} service={service} index={i} />
       ))}
