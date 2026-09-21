@@ -3,7 +3,6 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Navbar from './components/Navbar'
 import ChatVoiceWidget from './components/ChatVoiceWidget'
-import HeroServiceCollage from './components/HeroServiceCollage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import CaseStudiesPage from './pages/CaseStudiesPage'
 import CareersPage from './pages/CareersPage'
@@ -23,6 +22,7 @@ import SeoHead from './components/SeoHead'
 import FadeInSection from './components/FadeInSection'
 import ContactForm from './components/ContactForm'
 import TrustStats from './components/TrustStats'
+import AiServicesFlipCards from './components/AiServicesFlipCards'
 import { services } from './data/services'
 import { TESTIMONIALS } from './data/testimonials'
 import logo from './assets/Logo.png'
@@ -60,7 +60,7 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="md:hidden mb-8"
         >
-          <HeroServiceCollage />
+          <AiServicesFlipCards />
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start">
@@ -120,7 +120,7 @@ function HeroSection() {
             transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="hidden md:flex items-start justify-center pt-4"
           >
-            <HeroServiceCollage />
+            <AiServicesFlipCards />
           </motion.div>
         </div>
       </div>
