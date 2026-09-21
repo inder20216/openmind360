@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ox: #ff7a00;
+  --color-ob: #3b82f6;
+  --color-ogrey: #f8fafc;
+  --color-odark: #0f172a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #ffffff;
+  color: #0f172a;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes logo-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.logo-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  width: max-content;
+  animation: logo-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.logo-track .logo-item + .logo-item {
+  margin-left: 3.5rem;
+}
+
+@keyframes card-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.card-track {
+  display: inline-flex;
+  align-items: stretch;
+  white-space: nowrap;
+  width: max-content;
+  animation: card-marquee 38s linear infinite;
+  will-change: transform;
+}
+
+.card-track:hover {
+  animation-play-state: paused;
+}
+
+/* OMSL Automation Workflow component */
+@keyframes floatA {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-18px) translateX(8px); }
+}
+@keyframes floatB {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(14px) translateX(-10px); }
+}
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes dashFlow {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.9; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.2); }
+}
+@keyframes entrance {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.entrance {
+  animation: entrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid #e8eef8;
+}
+.glass-strong {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 255, 0.9));
+  backdrop-filter: blur(22px);
+  border: 1px solid #e3e8f5;
+}
+.shadow-3d {
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.10), 0 4px 12px rgba(15, 23, 42, 0.06), 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 -1px 0 rgba(226, 232, 240, 0.6) inset;
+}
+.shadow-3d-hover:hover {
+  box-shadow: 0 20px 48px rgba(99, 102, 241, 0.18), 0 8px 20px rgba(15, 23, 42, 0.08), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+.icon-3d {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9), inset 0 -1px 1px rgba(0, 0, 0, 0.08);
+}
+.dot-grid {
+  background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
