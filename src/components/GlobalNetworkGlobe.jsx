@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Html, OrbitControls, Stars } from '@react-three/drei'
+import { Html, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 const CITIES = [
@@ -221,7 +221,6 @@ function GlobeScene() {
         minDistance={2.4}
         maxDistance={4.2}
       />
-      <Stars radius={50} depth={40} count={1400} factor={3} saturation={0} fade speed={0.6} />
     </Canvas>
   )
 }
@@ -235,7 +234,7 @@ export default function GlobalNetworkGlobe() {
   return (
     <>
       <div className="relative select-none">
-        <div className="relative mx-auto w-full max-w-[680px] aspect-[1.16/1] md:aspect-[1.2/1] rounded-[28px] bg-gradient-to-br from-[#0a1830] via-[#0d2244] to-[#081019] border border-white/10 shadow-[0_24px_80px_rgba(2,6,23,0.38),0_1px_0_0_rgba(255,255,255,0.08)_inset] overflow-visible">
+        <div className="relative mx-auto w-full max-w-[680px] aspect-[1.16/1] md:aspect-[1.2/1] rounded-[28px] overflow-visible">
           {/* Fallback shown during SSR / before mount */}
           {!ready && (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -265,13 +264,6 @@ export default function GlobalNetworkGlobe() {
             </div>
           </div>
 
-          {/* Top sheen */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/[0.06] to-transparent" />
-
-          {/* Badges */}
-          <div className="absolute top-3 left-4 right-4 flex justify-between items-center pointer-events-none z-[70]">
-            <span className="text-[9px] font-[700] tracking-[0.16em] text-slate-300">GLOBAL NETWORK · 3D</span>
-          </div>
         </div>
 
         {/* Floor shadow */}
