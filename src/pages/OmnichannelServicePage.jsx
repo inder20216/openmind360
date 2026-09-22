@@ -19,7 +19,7 @@ import {
 import SeoHead from '../components/SeoHead'
 import FaqSchema from '../components/FaqSchema'
 import JsonLd from '../components/JsonLd'
-import GlobalNetworkGlobe from '../components/GlobalNetworkGlobe'
+import HybridContactCenter from '../components/HybridContactCenter'
 import OmnichannelImpact from '../components/OmnichannelImpact'
 import { services } from '../data/services'
 
@@ -162,24 +162,24 @@ export default function OmnichannelServicePage() {
             </div>
             <h1 className="font-[800] text-[34px] md:text-[52px] lg:text-[56px] leading-[0.95] tracking-[-0.04em] text-[#0f172a]">
               One Team,<br />Every Channel,<br />
-              <span className="bg-gradient-to-r from-[#f97316] via-[#8b5cf6] to-[#3b82f6] bg-clip-text text-transparent">
+              <span className="block whitespace-nowrap text-[24px] md:text-[36px] lg:text-[40px] bg-gradient-to-r from-[#f97316] via-[#8b5cf6] to-[#3b82f6] bg-clip-text text-transparent">
                 No Dropped Conversations
               </span>
             </h1>
-            <p className="mt-4 text-[15px] md:text-[16px] leading-[1.6] text-[#475569] max-w-[460px] font-[500] min-w-0">
+            <p className="mt-4 text-[15px] md:text-[16px] leading-[1.6] text-[#475569] max-w-[560px] font-[500] min-w-0">
               Customers don't think in channels. They call, then email, then WhatsApp, expecting you to already know. Open Mind's Hub keeps every conversation in one place, with agents picking up where the last channel left off.
             </p>
             <div className="mt-6 flex items-center gap-3 flex-wrap">
               <span className="text-[10px] font-[700] tracking-[0.12em] text-[#94a3b8]">TRUSTED BY</span>
               <div className="flex items-center gap-1.5">
-                {['Apollo', 'CloudNine', 'Jafron'].map((p) => (
+                {['Apollo', 'CloudNine', 'Apollo Hospitals'].map((p) => (
                   <span key={p} className="px-2.5 py-1 rounded-full bg-white border border-[#eef2f6] text-[11px] font-[600] text-[#334155] shadow-[0_1px_2px_rgba(0,0,0,0.04)]">{p}</span>
                 ))}
               </div>
             </div>
           </div>
           <div className="min-w-0 relative order-1 md:order-2">
-            <GlobalNetworkGlobe />
+            <HybridContactCenter />
           </div>
         </div>
       </section>
