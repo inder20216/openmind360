@@ -10,7 +10,6 @@ import ExploreServicesPage from './pages/ExploreServicesPage'
 import ServiceDetailPage from './pages/ServiceDetailPage'
 import AboutPage from './pages/AboutPage'
 import AnalyticsServicePage from './pages/AnalyticsServicePage'
-import ChatbotServicePage from './pages/ChatbotServicePage'
 import OmnichannelServicePage from './pages/OmnichannelServicePage'
 import GenerativeAiIvrPage from './pages/GenerativeAiIvrPage'
 import CustomCrmServicePage from './pages/CustomCrmServicePage'
@@ -798,7 +797,6 @@ export default function App() {
         <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
         <Route path="/services/omnichannel-support" element={<Layout><OmnichannelServicePage /></Layout>} />
         <Route path="/services/generative-ai-ivr" element={<Layout><GenerativeAiIvrPage /></Layout>} />
-        <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
         <Route path="/services/custom-crms" element={<Layout><CustomCrmServicePage /></Layout>} />
         <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
         <Route path="/about" element={<Layout><AboutPage /></Layout>} />
