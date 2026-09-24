@@ -8,7 +8,8 @@ import { services } from '../data/services'
    so the badge text can differ from the site-wide service name. */
 const BADGES = {
   support: 'Hybrid Contact Center',
-  'gen-ai-chatbot': 'Gen AI & AI Chatbot',
+  ivr: 'AI Voice Support',
+  chatbots: 'AI Chat Support',
   automation: 'Business Automation',
   growth: 'Reports & Analytics',
   'custom-crm': 'CRM Solutions',
@@ -17,6 +18,7 @@ const BADGES = {
 import headsetImg from '../assets/headset.png'
 import slide1Img from '../assets/slide1.png'
 import robotImg from '../assets/chatbot/robot-mascot.png'
+import channelIcons from '../assets/chatbot/channel-icons.png'
 import slide5Icon1 from '../assets/slide5icon1.png'
 import slide5Icon2 from '../assets/slide5icon2.png'
 import suhaniPic from '../assets/suhanipic3.png.png'
@@ -30,11 +32,17 @@ const FLAIR = {
     issue: 'My support call just got disconnected!',
     reply: "I'll reconnect you instantly, no need to repeat yourself.",
   },
-  'gen-ai-chatbot': {
+  ivr: {
     name: 'Suhani',
     initials: 'VS',
-    issue: 'Can AI handle my billing query by voice or chat?',
-    reply: 'Yes! Let me pull up your account and check right away — voice or chat, same context.',
+    issue: 'Can your AI voice agent handle my billing query?',
+    reply: "Yes! Let me pull up your account and check right away.",
+  },
+  chatbots: {
+    name: 'Priya',
+    initials: 'CS',
+    issue: 'Can I get help over WhatsApp instead of calling?',
+    reply: "Of course! I can help right here — no need to call.",
   },
   automation: {
     name: 'Bharat',
@@ -72,7 +80,8 @@ const FLAIR = {
  */
 const STICKERS = {
   support: { src: slide1Img, side: 'center', top: '20%', width: 'w-[22.4rem] sm:w-[26.4rem]', bare: true, rotate: -2, caption: 'Complete Call Center Solution' },
-  'gen-ai-chatbot': { src: headsetImg, size: 'cover', position: 'center 38%', rotate: -6, bare: true, width: 'w-[7rem] sm:w-[9.5rem]', side: 'right', top: '15%', shift: '-mr-1 sm:-mr-2' },
+  ivr: { src: headsetImg, size: 'cover', position: 'center 38%', rotate: -6, bare: true, width: 'w-[7rem] sm:w-[9.5rem]', side: 'right', top: '15%', shift: '-mr-1 sm:-mr-2' },
+  chatbots: { src: channelIcons, side: 'right', top: '15%', width: 'w-[6rem] sm:w-[8rem]', bare: true, rotate: -6 },
   automation: { src: robotImg, side: 'right', top: '15%', width: 'w-[5.5rem] sm:w-[7.5rem]', bare: true, rotate: -8 },
   growth: [
     { src: slide5Icon1, side: 'left', top: '24%', width: 'w-[5rem] sm:w-[6.5rem]', bare: true, rotate: -10 },
@@ -149,9 +158,9 @@ function CardSticker({ service }) {
 /* Chat support script for the slide-3 chat viewframe. Messages play one by
    one; bot entries show a typing indicator before they land. */
 const CHAT_SCRIPT = {
-  'gen-ai-chatbot': [
-    { from: 'user', text: 'Hi! Can your AI handle billing queries by voice AND chat?' },
-    { from: 'bot', text: 'Absolutely! Whether you call or message, I have full context. What\'s your account email?' },
+  chatbots: [
+    { from: 'user', text: 'Hi! Can I get help with a billing issue over WhatsApp?' },
+    { from: 'bot', text: 'Of course! I can help right here — no need to call. What\'s your account email?' },
     { from: 'user', text: 'vihan@example.com — I was charged twice last month.' },
     { from: 'bot', text: 'Found it. That\'s a duplicate charge from the 15th. Refund initiated — 3-5 business days.' },
     { from: 'bot', text: 'Anything else I can help with today?' },
@@ -1048,7 +1057,7 @@ export default function AiServicesFlipCards() {
             style={{ transformStyle: 'preserve-3d' }}
           >
             <CardSticker service={service} />
-            {service.id === 'gen-ai-chatbot' ? (
+            {service.id === 'ivr' ? (
               <GenAIVoiceSupportView num={service.num} />
             ) : (
             <div className="absolute inset-0 rounded-[28px] overflow-hidden shadow-[0_30px_60px_-15px_rgba(15,23,42,0.35)]">
@@ -1116,6 +1125,9 @@ export default function AiServicesFlipCards() {
                   )}
                   {service.id === 'growth' && (
                     <ReportsAnalyticsView />
+                  )}
+                  {service.id === 'chatbots' && (
+                    <ChatSupportView service={service} />
                   )}
                   {isCrm && (
                     <CrmView />
