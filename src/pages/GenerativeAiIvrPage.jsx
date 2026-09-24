@@ -43,12 +43,6 @@ const capabilities = [
   { Icon: Puzzle, accent: '#10b981',
     detail: 'The IVR sits on top of your existing telephony stack and connects to your CRM, billing, and knowledge bases through APIs.',
     points: ['SIP and PSTN connectors for your current setup', 'CRM and billing data pulled into the conversation', 'Deployed as an overlay, not a rip and replace'] },
-  { Icon: Sparkles, accent: '#7c3aed',
-    detail: 'Voice calls and chat sessions share conversation history — start on a call, continue on WhatsApp, never repeat yourself.',
-    points: ['Unified context across voice and chat', 'Cross-channel conversation continuity', 'Single customer profile across all touchpoints'] },
-  { Icon: Zap, accent: '#f97316',
-    detail: 'Resolves routine queries automatically and hands off complex issues to the right specialist with full context.',
-    points: ['End-to-end resolution for common issues', 'Smart escalation to the right team', 'Reduces average handle time across channels'] },
 ]
 
 const practices = [
@@ -65,7 +59,7 @@ const practices = [
 
 const explore = [
   { label: 'Hybrid Contact Center', to: '/services/omnichannel-support' },
-  { label: 'Gen AI & AI Chatbot', to: '/services/generative-ai-ivr' },
+  { label: 'AI Chat Support', to: '/services/ai-chatbots' },
   { label: 'Business Automation', to: '/services/intelligent-automation' },
   { label: 'Reports & Analytics', to: '/services/revenue-impact' },
   { label: 'CRM Solutions', to: '/services/custom-crms' },
