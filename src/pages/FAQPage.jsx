@@ -34,7 +34,7 @@ const companyFaqs = [
   },
   {
     question: 'Where is Open Mind located?',
-    answer: 'Open Mind Services Limited is headquartered in Gurgaon, Haryana, India at B3-943, 9th Floor, Spaze IT-Tech Park, Sohna Road, with delivery capabilities across India.',
+    answer: 'Open Mind Services Limited is headquartered in Gurugram, Haryana, India at B3-943, 9th Floor, Spaze IT-Tech Park, Sohna Road, with delivery capabilities across India.',
   },
 ]
 

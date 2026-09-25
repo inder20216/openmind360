@@ -14,6 +14,33 @@ const BADGES = {
   'custom-crm': 'CRM Solutions',
 }
 
+/* data/services.js lists Generative AI IVR and AI Chatbots as two separate
+   services with two separate pages — but this homepage carousel still shows
+   them as a single combined "Gen AI & AI Chatbot" card (by design). Swap the
+   two real entries out for one synthetic card, keyed 'gen-ai-chatbot' so it
+   still matches the BADGES/FLAIR/STICKERS/CHAT_SCRIPT lookups below, and
+   send its "Explore" link to the Generative AI IVR page. */
+const GEN_AI_CARD = {
+  id: 'gen-ai-chatbot',
+  path: 'generative-ai-ivr',
+  num: '02',
+  label: 'Gen AI & AI Chatbot',
+  color: '#7c3aed',
+  accent: '#06b6d4',
+}
+const cardServices = (() => {
+  const rest = services
+    .filter((s) => s.id !== 'ivr' && s.id !== 'chatbots')
+    .map((s) => ({ ...s }))
+  const automationIdx = rest.findIndex((s) => s.id === 'automation')
+  rest.splice(automationIdx, 0, GEN_AI_CARD)
+  // Renumber the badges sequentially for this 5-card carousel only — the
+  // real per-service `num` (used on the full service pages/grid) skips 03
+  // here since two real services are collapsed into one card.
+  rest.forEach((s, i) => { s.num = String(i + 1).padStart(2, '0') })
+  return rest
+})()
+
 import headsetImg from '../assets/headset.png'
 import slide1Img from '../assets/slide1.png'
 import robotImg from '../assets/chatbot/robot-mascot.png'
@@ -803,7 +830,7 @@ export default function AiServicesFlipCards() {
   const totalDragDistRef = useRef(0)
   const SENSITIVITY = 0.55 // deg per px drag
 
-  const service = services[index]
+  const service = cardServices[index]
   const isAutomation = service.id === 'automation'
   const isCrm = service.id === 'custom-crm'
 
@@ -825,7 +852,7 @@ export default function AiServicesFlipCards() {
           if (angleRef.current >= FLIP) {
             angleRef.current = -FLIP
             phaseRef.current = 'back'
-            setIndex((i) => (i + 1) % services.length)
+            setIndex((i) => (i + 1) % cardServices.length)
           }
         } else if (angleRef.current >= 0) {
           angleRef.current = 0
@@ -870,8 +897,8 @@ export default function AiServicesFlipCards() {
     []
   )
 
-  const next = useCallback(() => goTo((indexRef.current + 1) % services.length, 1), [goTo])
-  const prev = useCallback(() => goTo((indexRef.current - 1 + services.length) % services.length, -1), [goTo])
+  const next = useCallback(() => goTo((indexRef.current + 1) % cardServices.length, 1), [goTo])
+  const prev = useCallback(() => goTo((indexRef.current - 1 + cardServices.length) % cardServices.length, -1), [goTo])
 
   const onPointerDown = useCallback((e) => {
     // Only primary left-click or phone touch (button === 0)
@@ -902,13 +929,13 @@ export default function AiServicesFlipCards() {
     while (angleRef.current >= FLIP) {
       angleRef.current -= 180
       phaseRef.current = 'back'
-      setIndex((i) => (i + 1) % services.length)
+      setIndex((i) => (i + 1) % cardServices.length)
     }
     // Wrap backward past -90deg -> previous slide and continue
     while (angleRef.current <= -FLIP) {
       angleRef.current += 180
       phaseRef.current = 'forward'
-      setIndex((i) => (i - 1 + services.length) % services.length)
+      setIndex((i) => (i - 1 + cardServices.length) % cardServices.length)
     }
 
     const el = cardElRef.current
@@ -1176,7 +1203,7 @@ export default function AiServicesFlipCards() {
       </div>
 
       <div className="mt-4 flex items-center justify-center gap-2">
-        {services.map((s, i) => (
+        {cardServices.map((s, i) => (
           <button
             key={s.id}
             type="button"

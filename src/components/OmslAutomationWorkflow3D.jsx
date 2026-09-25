@@ -38,7 +38,7 @@ const n0 = [
 const Sp = [
   { id: 'capture', title: 'CAPTURE', desc: 'Collect Data', Icon: Download, color: '#8b5cf6', detail: 'Ingests from all channels in real-time. Auto-parses attachments, threads & payloads.' },
   { id: 'understand', title: 'UNDERSTAND', desc: 'AI / Rules Engine', Icon: Brain, color: '#3b82f6', detail: 'NLP classification, intent detection, entity extraction with custom business rules.' },
-  { id: 'process', title: 'PROCESS', desc: 'Automate Tasks', Icon: Settings, color: '#ff7a00', detail: 'Orchestrates workflows, approvals, and decision trees without manual touch.' },
+  { id: 'process', title: 'PROCESS', desc: 'Automate Tasks', Icon: Settings, color: '#ff7a00', detail: 'Orchestrates approved workflows and decision trees, with human review and approval points included wherever required.' },
   { id: 'action', title: 'ACTION', desc: 'Execute & Integrate', Icon: CircleCheck, color: '#10b981', detail: 'Pushes to CRMs, ERPs, ticketing and triggers downstream actions.' },
   { id: 'learn', title: 'LEARN', desc: 'Improve Continuously', Icon: ChartColumn, color: '#ec4899', detail: 'Feedback loop trains models, reduces exceptions and improves accuracy.' },
 ]
@@ -51,37 +51,16 @@ const l0 = [
 ]
 
 const u0 = [
-  { id: 'time', label: 'Time Saved', value: '60-90%', num: 75, suffix: '%', Icon: Timer, color: '#8b5cf6' },
-  { id: 'effort', label: 'Manual Effort Reduced', value: '70-80%', num: 75, suffix: '%', Icon: Zap, color: '#3b82f6' },
-  { id: 'error', label: 'Error Reduction', value: '80-95%', num: 87, suffix: '%', Icon: ShieldCheck, color: '#10b981' },
+  { id: 'time', label: 'Time Saved', value: 'Reduced', Icon: Timer, color: '#8b5cf6' },
+  { id: 'effort', label: 'Manual Effort Reduced', value: 'Lowered', Icon: Zap, color: '#3b82f6' },
+  { id: 'error', label: 'Error Reduction', value: 'Fewer Errors', Icon: ShieldCheck, color: '#10b981' },
   { id: 'response', label: 'Faster Response Time', value: 'Faster', Icon: Timer, color: '#ff7a00' },
   { id: 'cx', label: 'Better Customer Experience', value: 'CX ↑', Icon: UsersRound, color: '#ec4899' },
   { id: 'cost', label: 'Lower Operational Costs', value: 'Costs ↓', Icon: BadgeDollarSign, color: '#6366f1' },
   { id: 'growth', label: 'Scalable Business Growth', value: 'Growth', Icon: TrendingUp, color: '#06b6d4' },
 ]
 
-function useCountUp(active, to, duration = 1200) {
-  const [value, setValue] = useState(0)
-  useEffect(() => {
-    if (!active) return
-    let raf = null
-    let start = null
-    const tick = (d) => {
-      if (start === null) start = d
-      const c = Math.min((d - start) / duration, 1)
-      const eased = 1 - Math.pow(1 - c, 3)
-      setValue(Math.round(eased * to))
-      if (c < 1) raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(raf)
-  }, [active, to, duration])
-  return value
-}
-
-function ImpactCard({ a, s, inView }) {
-  const isRange = a.id === 'time' || a.id === 'effort' || a.id === 'error'
-  const p = useCountUp(inView && typeof a.num === 'number', a.num ?? 0)
+function ImpactCard({ a, s }) {
   return (
     <div
       className="group relative rounded-[14px] bg-white border border-slate-200/70 shadow-[0_6px_20px_rgba(15,23,42,0.05),inset_0_1px_0_white] p-3 sm:p-3.5 hover:-translate-y-[2px] hover:shadow-[0_14px_30px_rgba(15,23,42,0.10)] transition-all duration-300"
@@ -97,14 +76,7 @@ function ImpactCard({ a, s, inView }) {
       </div>
       <div className="mt-3">
         <p className="mono text-[18px] sm:text-[20px] font-bold tracking-[-0.02em] leading-none" style={{ color: a.color }}>
-          {isRange ? (
-            <>
-              {inView ? `${p}-${p + 15}` : a.value}
-              <span className="text-[12px]">{a.suffix}</span>
-            </>
-          ) : (
-            a.value
-          )}
+          {a.value}
         </p>
         <p className="text-[11px] font-bold leading-[1.2] mt-1.5 text-slate-700">{a.label}</p>
       </div>
@@ -394,7 +366,7 @@ export default function OmslAutomationWorkflow3D() {
                     </div>
                     <div>
                       <h3 className="text-[13px] font-extrabold tracking-[0.14em]">OMSL AUTOMATION ENGINE</h3>
-                      <p className="text-[11px] font-bold text-slate-500 tracking-wide">5-step autonomous pipeline</p>
+                      <p className="text-[11px] font-bold text-slate-500 tracking-wide">Five-step automation workflow</p>
                     </div>
                   </div>
                   <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-[10px] font-bold tracking-wide text-emerald-700">
@@ -506,9 +478,9 @@ export default function OmslAutomationWorkflow3D() {
                 <div className="h-7 w-7 rounded-lg bg-slate-900 text-white grid place-items-center">
                   <TrendingUp size={14} />
                 </div>
-                <h3 className="text-[12px] font-extrabold tracking-[0.16em]">BUSINESS IMPACT</h3>
+                <h3 className="text-[12px] font-extrabold tracking-[0.16em]">POTENTIAL BUSINESS IMPACT</h3>
                 <div className="ml-auto hidden sm:flex items-center gap-2 text-[10px] font-bold tracking-wide text-slate-400">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> MEASURED ACROSS CLIENTS
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" /> ILLUSTRATIVE
                 </div>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5 sm:gap-3">

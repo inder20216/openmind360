@@ -12,6 +12,7 @@ import AboutPage from './pages/AboutPage'
 import AnalyticsServicePage from './pages/AnalyticsServicePage'
 import OmnichannelServicePage from './pages/OmnichannelServicePage'
 import GenerativeAiIvrPage from './pages/GenerativeAiIvrPage'
+import ChatbotServicePage from './pages/ChatbotServicePage'
 import CustomCrmServicePage from './pages/CustomCrmServicePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsPage from './pages/TermsPage'
@@ -684,6 +685,8 @@ function FooterSection() {
               <Link to="/about" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">About Us</Link>
               <Link to="/case-studies" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Case Studies</Link>
               <Link to="/careers" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Careers</Link>
+              <Link to="/privacy-policy" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Privacy Policy</Link>
+              <Link to="/terms-conditions" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Terms &amp; Conditions</Link>
               <a href="https://www.facebook.com/openmindserviceslimited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">Facebook</a>
               <a href="https://www.linkedin.com/company/open-mind-services-limited" target="_blank" rel="noopener noreferrer" className="block text-sm text-slate-400 hover:text-slate-700 transition-colors">LinkedIn</a>
             </div>
@@ -700,12 +703,8 @@ function FooterSection() {
             </div>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-300">
+        <div className="mt-12 pt-8 border-t border-slate-100 text-xs text-slate-300 text-center md:text-left">
           <p>&copy; 2026 Open Mind Services Limited. All rights reserved.</p>
-          <div className="flex gap-6">
-            <Link to="/privacy-policy" className="hover:text-slate-500 transition-colors">Privacy Policy</Link>
-            <Link to="/terms-conditions" className="hover:text-slate-500 transition-colors">Terms &amp; Conditions</Link>
-          </div>
         </div>
       </div>
     </footer>
@@ -797,6 +796,7 @@ export default function App() {
         <Route path="/services/revenue-impact" element={<Layout><AnalyticsServicePage /></Layout>} />
         <Route path="/services/omnichannel-support" element={<Layout><OmnichannelServicePage /></Layout>} />
         <Route path="/services/generative-ai-ivr" element={<Layout><GenerativeAiIvrPage /></Layout>} />
+        <Route path="/services/ai-chatbots" element={<Layout><ChatbotServicePage /></Layout>} />
         <Route path="/services/custom-crms" element={<Layout><CustomCrmServicePage /></Layout>} />
         <Route path="/services/:slug" element={<Layout><ServiceDetailPage /></Layout>} />
         <Route path="/about" element={<Layout><AboutPage /></Layout>} />

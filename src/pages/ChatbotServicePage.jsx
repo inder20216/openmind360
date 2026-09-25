@@ -101,8 +101,7 @@ export default function ChatbotServicePage() {
             Deliver instant, intelligent, and personalized customer interactions with Open Mind's AI Chatbots. Built using advanced Generative AI and enterprise integrations, our chatbots automate customer support, qualify leads, schedule appointments, answer FAQs, and assist employees across websites, WhatsApp, mobile apps, and business platforms—24×7.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href="mailto:connect@openmind.in" className="bg-[#0F0F12] text-white rounded-full px-6 py-3 text-[14px] font-semibold shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-1px] transition inline-block">Book a Live Demo</a>
-            <a href="tel:+919811331600" className="bg-white/70 backdrop-blur-xl border border-white/60 rounded-full px-6 py-3 text-[14px] font-semibold text-[#0F0F12] shadow-[0_8px_32px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] hover:bg-white transition inline-block">Speak with AI Specialist</a>
+            <a href={`${import.meta.env.BASE_URL}#contact`} className="bg-[#0F0F12] text-white rounded-full px-6 py-3 text-[14px] font-semibold shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:translate-y-[-1px] transition inline-block">Book a Live Demo</a>
           </div>
           <div className="mt-8 p-5 rounded-[16px] bg-white/60 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]">
             <div className="text-[13.5px] font-bold mb-1">Why Businesses Need AI Chatbots</div>

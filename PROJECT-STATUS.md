@@ -81,8 +81,8 @@ npm run preview  # preview the production build
 | `/case-studies` | `src/pages/CaseStudiesPage.jsx` + `src/data/caseStudies.js` | Live, filled with real case studies (2026-09-08) — client names anonymized (e.g. "Global Medical Device Brand") but the stats are confirmed real, not fabricated |
 | `/careers` | `src/pages/CareersPage.jsx` | Live (2026-09-08), no fabricated stats |
 | `/services` | `src/pages/ExploreServicesPage.jsx` | Live |
-| `/services/omnichannel-support` | `src/pages/ServiceDetailPage.jsx` + `src/data/services.js` | Live, generic template |
-| `/services/generative-ai-ivr` | same generic template | Live |
+| `/services/omnichannel-support` | `src/pages/OmnichannelServicePage.jsx` | Live, bespoke — hero uses `HybridContactCenter.jsx` (2026-09-22, see below) |
+| `/services/generative-ai-ivr` | `src/pages/GenerativeAiIvrPage.jsx` | Live, bespoke |
 | `/services/intelligent-automation` | same generic template | Live |
 | `/services/ai-chatbots` | `src/pages/ChatbotServicePage.jsx` | Live, bespoke — built from your `Chatbot-Page.html` file, with the fake scripted chat demo replaced by a real iframe of chatbotmarketplace.in |
 | `/services/revenue-impact` | `src/pages/AnalyticsServicePage.jsx` | Live, bespoke — built from `Analytics-Glass-From-File-V2.html`, real 3D coverflow dashboard carousel |
@@ -115,6 +115,36 @@ as bespoke) its own detail page.
   at a stale remote GitHub URL before).
 - `G-C9EKCGDXZN` — real GA4 Measurement ID, wired into `index.html`.
 - All flagged `npm audit` dependency vulnerabilities fixed (0 remaining).
+
+### Recent changes (2026-09-22)
+
+- **Omnichannel Support hero visual:** new `HybridContactCenter.jsx`
+  component (`src/components/HybridContactCenter.jsx`) replaces the
+  previous visual in that hero slot, using a supplied image
+  (`src/assets/hybrid-contact-center-new.png`). Went through two rounds
+  of image swaps before landing on this one — the two earlier stale image
+  files (`hybrid-contact-center.jpg`, `hybrid-contact-center-new2.png`)
+  are still sitting in `src/assets` locally, untracked, safe to delete.
+- **Trusted-by badges** on that same hero: "Jafron" → "Apollo Hospitals"
+  (both are real verified clients — see Verified facts — so the badge row
+  now reads Apollo, CloudNine, Apollo Hospitals; flagged to Inder that
+  "Apollo" and "Apollo Hospitals" both appearing looks redundant, not yet
+  resolved either way).
+- **Hero heading fix:** "No Dropped Conversations" now forced onto one
+  line (smaller font size than the two lines above it + `whitespace-nowrap`)
+  instead of wrapping/overflowing; the paragraph below it widened
+  (`max-w-460px` → `max-w-560px`) to fill more of the available space.
+  Verified with Playwright screenshots at 1280px and 390px widths.
+- **`GlobalNetworkGlobe.jsx` simplified:** removed the `<Stars>` field,
+  top sheen overlay, and "GLOBAL NETWORK · 3D" badge. Note: this component
+  currently isn't imported anywhere in `src/` — it's orphaned pending
+  reuse, the edit just landed alongside the other changes in the same
+  commit.
+- All of the above is committed on branch `hybrid-contact-center-updates`
+  and pushed to GitHub, but **not yet merged** — this repo's `main` branch
+  has a rule requiring changes via pull request (direct push was
+  rejected), so someone needs to open/merge the PR from:
+  https://github.com/inder20216/openmind360/pull/new/hybrid-contact-center-updates
 
 ### Known non-issues / things not to "fix" again
 

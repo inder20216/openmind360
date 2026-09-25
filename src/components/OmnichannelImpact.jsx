@@ -34,9 +34,9 @@ function useCountUp(target, start, duration = 1400) {
 }
 
 const cardDetails = [
-  'Issues resolved on the very first contact. With a unified view across channels, agents now close 75% of queries immediately, up from 42% when teams worked in silos. Fewer repeat contacts mean lower cost and happier customers.',
-  'How fast customers get a response and a resolution. With one shared queue and full thread context, agents pick up faster and average handling time drops by 58%.',
-  'Customer satisfaction over six months. Consistent handling across every channel and quicker resolution pushed CSAT up by 18 points from January to July.',
+  'Issues resolved on the very first contact. A unified view across channels helps agents close more queries without a repeat contact, instead of losing context between tools.',
+  'How fast customers get a response and a resolution. With one shared queue and full thread context, agents can pick up faster and shorten average handling time.',
+  'Customer satisfaction over time. Consistent handling across every channel and quicker resolution support a more consistent customer experience. Figures shown are illustrative — talk to us for case-study results relevant to your industry.',
 ]
 
 export default function OmnichannelImpact() {
@@ -54,7 +54,7 @@ export default function OmnichannelImpact() {
       <div ref={ref}>
         <div className="flex items-center gap-2 mb-6">
           <Sparkles className="w-3.5 h-3.5 text-[#f97316]" />
-          <span className="text-[10px] font-[700] tracking-[0.16em] text-[#f97316]">IMPACT • 3 VISUALS</span>
+          <span className="text-[10px] font-[700] tracking-[0.16em] text-[#f97316]">POTENTIAL IMPACT • ILLUSTRATIVE</span>
         </div>
 
         <div className="grid md:grid-cols-3 gap-4 md:gap-5">
@@ -92,7 +92,7 @@ export default function OmnichannelImpact() {
                 <div className="mt-1 text-[9px] font-[700] tracking-wide text-[#64748b]">FIRST CONTACT</div>
               </div>
             </div>
-            <div className="mt-4 text-center text-[11px] text-[#94a3b8]">vs 42% siloed</div>
+            <div className="mt-4 text-center text-[11px] text-[#94a3b8]">Illustrative example</div>
             <div className="flex justify-center">
               <button
                 type="button"

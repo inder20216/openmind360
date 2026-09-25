@@ -31,7 +31,7 @@ const pillars = [
     iconBg: 'bg-[#fff7ed]',
     iconColor: 'text-[#f97316]',
     image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600&h=400&fit=crop&q=80',
-    desc: 'A respectful, supportive workplace that values your time, not just your output. We believe a happy team is a productive team, and we protect your work-life balance fiercely.',
+    desc: 'A respectful and supportive workplace with role-based onboarding, regular feedback and a focus on sustainable working hours.',
   },
   {
     title: 'Support That Stays',
@@ -47,7 +47,7 @@ const pillars = [
     iconBg: 'bg-[#fff7ed]',
     iconColor: 'text-[#f97316]',
     image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop&q=80',
-    desc: 'Real opportunities to build new skills and take on more as you grow. From internal learning sessions to leadership paths, your career trajectory is in your hands with our support.',
+    desc: 'Real opportunities to build new skills and take on more as you grow, through internal learning sessions and defined leadership paths.',
   },
 ]
 
@@ -90,10 +90,10 @@ export default function CareersPage() {
               <span className="bg-gradient-to-r from-[#8b5cf6] to-[#f97316] bg-clip-text text-transparent">
                 Future
               </span>
-              , Not Just a Career
+              {' '}in Customer Experience
             </h1>
             <p className="mt-5 text-[18px] md:text-[20px] leading-[1.6] text-[#6b7280] max-w-[520px]">
-              Join a team where your voice gets heard, your time is valued, and your growth is real. From Gurugram to global impact.
+              Join a team where your ideas are heard, your contribution is valued and your skills can grow across customer service, operations and technology.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a
@@ -155,10 +155,10 @@ export default function CareersPage() {
             <div className="max-w-[640px] mb-10">
               <div className="text-[12px] font-bold tracking-[0.14em] uppercase text-[#8b5cf6]">Why Open Mind</div>
               <h2 className="mt-3 text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.05] text-[#1e1b4b]">
-                A culture built for humans, not just headcount.
+                A Workplace Built Around People and Performance
               </h2>
               <p className="mt-4 text-[16px] leading-[1.6] text-[#6b7280]">
-                We hired you for your mind. We keep you for how you use it. Four pillars that define everyday work here.
+                We value curiosity, responsibility and respectful teamwork. Our culture supports employees with clear expectations, practical guidance and opportunities to develop new skills.
               </p>
             </div>
           </FadeInSection>
@@ -216,7 +216,7 @@ export default function CareersPage() {
           <FadeInSection>
             <div className="flex flex-wrap items-end justify-between gap-6 mb-8">
               <h3 className="text-[26px] md:text-[30px] font-bold tracking-[-0.02em] text-[#1e1b4b]">Everything you need to do your best work</h3>
-              <p className="text-[14px] text-[#6b7280] max-w-[380px]">Benefits that actually matter — designed around deep work, learning, and wellbeing.</p>
+              <p className="text-[14px] text-[#6b7280] max-w-[380px]">We aim to provide a respectful and supportive workplace, with role-based onboarding, regular feedback and learning opportunities.</p>
             </div>
           </FadeInSection>
 
@@ -244,15 +244,19 @@ export default function CareersPage() {
           <FadeInSection>
             <div className="max-w-[640px]">
               <div className="text-[12px] font-bold tracking-[0.14em] uppercase text-[#8b5cf6]">Apply Now</div>
-              <h2 className="mt-3 text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.05] text-[#1e1b4b]">Fill out the form</h2>
+              <h2 className="mt-3 text-[32px] md:text-[40px] font-bold tracking-[-0.02em] leading-[1.05] text-[#1e1b4b]">Apply to Open Mind</h2>
               <p className="mt-4 text-[16px] leading-[1.6] text-[#6b7280]">
-                Tell us about yourself through the application form below, and our team will reach out if there is a match.
+                Complete the application form and tell us about your experience, skills and preferred role. Our recruitment team will contact shortlisted candidates whose profiles match current opportunities.
               </p>
             </div>
           </FadeInSection>
 
           <FadeInSection delay={0.1}>
-            <div className="mt-10 rounded-[24px] border border-[#e9d5ff] bg-white shadow-[0_4px_24px_rgba(30,27,75,0.06)] p-2 md:p-4 overflow-hidden">
+            <p className="mt-6 text-[12px] text-[#8b7fa8] max-w-[640px]">
+              By submitting this form, you agree to Open Mind processing your details for recruitment purposes, as described in our{' '}
+              <a href={`${import.meta.env.BASE_URL}privacy-policy`} className="underline hover:text-[#6b7280]">Privacy Policy</a>.
+            </p>
+            <div className="mt-4 rounded-[24px] border border-[#e9d5ff] bg-white shadow-[0_4px_24px_rgba(30,27,75,0.06)] p-2 md:p-4 overflow-hidden">
               <iframe
                 src={CAREERS_FORM_URL}
                 title="Open Mind careers application form"

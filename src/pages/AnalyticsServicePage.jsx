@@ -554,9 +554,9 @@ const summaryStats = [
 ]
 
 const faqs = [
-  { q: 'Does it include any revenue or financial data?', a: 'No. All 6 dashboards are rebuilt as pure HTML/CSS with zero rupee, dollar, or revenue numbers. Only operational counts, percentages and time metrics.' },
+  { q: 'Does it include any revenue or financial data?', a: 'No. Dashboards are limited to operational data — activity counts, service-level percentages and time metrics. Financial and revenue data are outside the standard scope; tell us if your reporting needs to include them.' },
   { q: 'How fresh is SLA data?', a: 'Sub-60 second freshness for SLA feeds. Breach risk computed on rolling 15-min windows.' },
-  { q: 'Can I embed the full-bleed coverflow?', a: 'Yes. Use w-screen left-1/2 right-1/2 -mx-[50vw] with perspective 2500px and the updated getTransform() logic. It covers left to right with center zoomed.' },
+  { q: 'Can dashboards be configured around our existing KPIs and reporting structure?', a: 'Yes. Dashboards are configured around the metrics and reporting structure your team already uses, rather than a fixed template.' },
 ]
 
 export default function AnalyticsServicePage() {
@@ -677,14 +677,14 @@ export default function AnalyticsServicePage() {
             <span className="text-[#FF7A00] text-[11px] font-[700] tracking-[0.2em] uppercase">Operational Intelligence</span>
           </div>
           <h1 className="font-[800] text-[34px] md:text-[44px] leading-[1.05] tracking-[-0.03em]">
-            Turn Operational Data into <br />
+            Turn Operational Data Into <br />
             <span className="relative inline-block">
               <span className="relative z-10">Actionable Business</span>
               <span className="absolute bottom-1 left-0 right-0 h-[10px] bg-[#FF7A00]/15 -rotate-1 rounded-full -z-0" />
-            </span> Intelligence
+            </span> Insights
           </h1>
           <p className="mt-5 text-[15px] md:text-[16px] leading-[1.6] text-[#6B7280] max-w-[520px]">
-            Make confident decisions with real-time operational dashboards. Track active users, session health, SLA compliance and automation efficiency — all in signature orange, purple &amp; blue glass.
+            Make informed decisions with dashboards that track customer-support activity, service levels, workflow performance and automation efficiency in one clear operational view.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <button
@@ -767,9 +767,9 @@ export default function AnalyticsServicePage() {
       <section className="relative z-10 max-w-[1200px] mx-auto px-6 md:px-8 -mt-2 pb-10">
         <div className="bg-white/60 backdrop-blur-xl rounded-[20px] p-8 md:p-10 max-w-[900px] mx-auto text-center border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.06)]">
           <div className="inline-flex px-3 py-1 rounded-full bg-[#0F0F12] text-white text-[10px] font-[700] tracking-[0.12em] uppercase mb-4">WHY IT MATTERS</div>
-          <h2 className="text-[22px] md:text-[26px] font-[700] leading-[1.2] tracking-[-0.01em]">Stop guessing. Start governing with live operational truth.</h2>
+          <h2 className="text-[22px] md:text-[26px] font-[700] leading-[1.2] tracking-[-0.01em]">Move From Delayed Reports to Timely Operational Visibility</h2>
           <p className="mt-3 text-[14px] leading-[1.6] text-[#6B7280] max-w-[640px] mx-auto">
-            73% of teams lose focus to delayed reporting. Our glass dashboards stitch user activity, ticket flow, SLA health and bot efficiency into one orange-purple-blue canvas — so ops and product see the same numbers instantly, with zero financial data.
+            Bring customer activity, ticket flow, service-level performance and automation metrics together so operations and leadership teams can work from consistent information.
           </p>
         </div>
       </section>
@@ -925,15 +925,15 @@ export default function AnalyticsServicePage() {
           </div>
         </div>
         <div className="bg-[#0F0F12] text-white rounded-[20px] p-6 md:p-8 shadow-[0_16px_40px_rgba(0,0,0,0.18)]">
-          <h4 className="font-[700] text-[16px]">Benefits — Operational only</h4>
+          <h4 className="font-[700] text-[16px]">Operational Reporting and Management Insights</h4>
           <div className="mt-5 grid grid-cols-3 gap-4">
-            <div><div className="text-[22px] font-[800]">73%</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">Faster decisions vs sheets</div></div>
-            <div><div className="text-[22px] font-[800]">42%</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">Faster response time</div></div>
-            <div><div className="text-[22px] font-[800]">4.9/5</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">G2 rating - ops teams</div></div>
+            <div><div className="text-[15px] font-[800] leading-tight">Faster Decisions</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">Than manual spreadsheets</div></div>
+            <div><div className="text-[15px] font-[800] leading-tight">Consistent Data</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">One view across teams</div></div>
+            <div><div className="text-[15px] font-[800] leading-tight">Configurable</div><div className="text-[11px] text-white/60 mt-1 leading-[1.3]">Around your own KPIs</div></div>
           </div>
           <div className="mt-6 h-[1px] bg-white/10" />
           <div className="mt-4 text-[12px] text-white/70 leading-[1.6]">
-            "We moved from delayed reports to live ops. The orange glass UI actually makes the team open it daily." — Ops Head, 340+ team org • Zero financial data, pure operations.
+            Operational data only — customer activity, tickets, service levels and automation metrics. Financial and revenue data are outside the standard scope; talk to us about what can be connected for your operation.
           </div>
         </div>
       </section>

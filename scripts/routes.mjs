@@ -13,7 +13,7 @@ export const routes = [
   {
     path: '/about',
     title: 'About Open Mind · Customer Experience Expertise',
-    description: "Open Mind's story, values, and delivery locations in Gurgaon, Delhi, and Gujarat — two decades of customer experience work.",
+    description: "Open Mind's story, values, and delivery locations in Gurugram, Delhi, and Gujarat — two decades of customer experience work.",
     changefreq: 'monthly',
     priority: '0.8',
   },

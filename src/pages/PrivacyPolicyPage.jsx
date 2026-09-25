@@ -4,7 +4,7 @@ import FadeInSection from '../components/FadeInSection'
 const sections = [
   {
     title: 'What Information We Collect',
-    body: "We collect your name, contact details like email or phone number, and details of your query or complaint. Device or location data is only collected with your consent. We do not collect any sensitive data like Aadhaar, PAN, or bank details.",
+    body: "Depending on your interaction, we may collect your name, business contact details, company information, enquiry or complaint details, recruitment information, communication records, and limited device or usage data. Service interactions handled on behalf of clients may separately contain sensitive information, governed by the relevant client agreement.",
   },
   {
     title: 'Why We Collect This Information',
@@ -12,11 +12,11 @@ const sections = [
   },
   {
     title: 'Your Permission (Consent)',
-    body: 'We only collect and use your data if you clearly agree to it. You can ask during a chat or email us at connect@openmind.in at any time to withdraw your consent.',
+    body: 'We process personal data for stated purposes and on an appropriate legal basis, which may include consent, providing a requested service, meeting contractual requirements, or complying with law. You can ask during a chat or email us at connect@openmind.in at any time to withdraw consent where consent is the basis for processing.',
   },
   {
     title: 'How Long We Keep Your Data',
-    body: 'Information is retained only as long as necessary to resolve your issue, and is then securely deleted.',
+    body: 'We retain personal data only for as long as required for the purpose for which it was collected, contractual obligations, security, dispute handling and applicable legal requirements.',
   },
   {
     title: 'Who Can See Your Data',
@@ -28,7 +28,7 @@ const sections = [
   },
   {
     title: 'Your Rights',
-    body: 'Under the Digital Personal Data Protection Act, 2023, you can request access to your data, ask for corrections or deletion, withdraw consent, or file a complaint.',
+    body: 'Under the Digital Personal Data Protection Act, 2023 and other applicable law, you can request access to your data, ask for corrections or deletion, withdraw consent, or file a complaint. Contact us using the details below to submit a request; we may ask for information to verify your identity before acting on it, and unresolved grievances can be escalated to the contact listed here.',
   },
 ]
 
@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Privacy Policy</span>
             <h1 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">How We Handle Your Data</h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-              We at Open Mind Services Limited value your privacy. This policy outlines how we collect, use, store, and protect your personal data when you interact with our chatbot, voicebot, or customer support services.
+              This policy explains how Open Mind Services Limited collects, uses, stores, shares and protects personal data when you visit our website, submit an enquiry, apply for a role, use a demonstration, or interact with services operated by us.
             </p>
           </motion.div>
         </div>

@@ -12,10 +12,10 @@ export default function ExploreServicesPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Explore Services</span>
             <h1 className="mt-4 text-3xl md:text-5xl font-bold text-slate-900">
-              Five Ways We Handle Customer Experience
+              Six Ways We Improve Customer Experience
             </h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
-              From the first ring to the dashboard leadership actually reads — pick a service below to see how it works, or talk to us about combining a few.
+              From managed customer support and AI-powered conversations to automation, analytics and custom CRM solutions, explore each service below or talk to us about a combination built around your business.
             </p>
           </motion.div>
         </div>
@@ -56,9 +56,9 @@ export default function ExploreServicesPage() {
       <section className="py-20 md:py-28 px-6 md:px-16 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-3xl mx-auto text-center">
           <FadeInSection>
-            <h2 className="text-2xl md:text-4xl font-bold text-slate-900">Not sure which fits your business?</h2>
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900">Not Sure Which Model Fits Your Business?</h2>
             <p className="mt-4 text-slate-500 max-w-lg mx-auto leading-relaxed">
-              Tell us what you're dealing with and we'll point you to the right combination.
+              Tell us about your channels, volumes, workflows and service goals. We will help you identify the right mix of people, process and AI.
             </p>
           </FadeInSection>
           <FadeInSection delay={0.1}>

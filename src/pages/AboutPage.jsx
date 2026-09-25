@@ -18,13 +18,13 @@ const timeline = [
 
 const pillars = [
   { title: 'People First', desc: 'We hire for empathy, train for excellence. Our culture of continuous learning creates specialists who genuinely care about every customer interaction.' },
-  { title: 'Performance Driven', desc: 'SLA is our floor, not ceiling. We obsess over FCR, CSAT, and AHT while balancing human judgment with data-driven decisions.' },
+  { title: 'Service Levels Are Our Starting Point', desc: 'We monitor first-contact resolution, customer satisfaction and handling time while balancing data-driven performance with human judgment, empathy and responsible escalation.' },
   { title: 'Partnership Mindset', desc: "We operate as an extension of your team — embedded in your tools, your tone, and your growth roadmap from day one." },
 ]
 
 const visionMission = [
   { k: 'Vision', title: 'A world where every brand interaction feels human.', desc: 'We imagine support not as a department but as a differentiator. Where customers feel heard in seconds, not tickets — and every conversation builds lifetime value.' },
-  { k: 'Mission', title: 'Turn customer support into your unfair advantage.', desc: 'We deliver elite people, battle-tested playbooks, and intelligent tooling to make your CX faster, warmer, and measurably more profitable. SLA is baseline, love is the metric.' },
+  { k: 'Mission', title: 'Turn Customer Support Into a Business Advantage', desc: 'We combine experienced people, proven operating practices and intelligent technology to make customer support faster, more consistent and easier to manage at scale.' },
 ]
 
 const capabilities = [
@@ -50,7 +50,7 @@ const approach = [
   { step: '05', title: 'Drive', desc: 'Continuous optimization and growth initiatives.' },
 ]
 
-const locations = ['Gurgaon, India', 'Delhi, India', 'Gujarat, India']
+const locations = ['Gurugram', 'Delhi', 'Gujarat']
 
 const clients = [
   { name: 'PSRI Hospitals', sector: 'Healthcare' },
@@ -86,10 +86,10 @@ export default function AboutPage() {
               <span className="bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">
                 Customer Experiences
               </span>{' '}
-              for More Than Two Decades
+              Since 2003
             </h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-              We started in 2003 with a simple belief — great support isn't a cost center, it's a growth engine. Today, our specialists power CX for brands across healthcare and retail who refuse to compromise on human connection.
+              For more than two decades, Open Mind has helped businesses strengthen customer experience through trained people, proven processes and intelligent technology. Today, we support brands across healthcare, retail and other service-led sectors with human, AI-powered and hybrid customer support solutions.
             </p>
             <div className="mt-8 flex gap-4 flex-wrap justify-center">
               <a
@@ -130,12 +130,12 @@ export default function AboutPage() {
             <FadeInSection>
               <span className="text-xs font-semibold tracking-[0.2em] uppercase text-slate-400">Our Story</span>
               <h2 className="mt-4 text-2xl md:text-4xl font-bold text-slate-900 leading-tight">
-                From one floor in India to a growing CX partner — built on obsession, not outsourcing.
+                From One Delivery Centre to a Trusted Customer Experience Partner
               </h2>
               <div className="mt-6 space-y-4 text-sm md:text-base leading-relaxed text-slate-500">
-                <p>In 2003, customer support was a checkbox. We saw it as leverage. Open Mind Services was founded to prove that empathetic, well-trained people with the right systems could turn every ticket into retention and every conversation into revenue.</p>
+                <p>Open Mind Services was founded in 2003 with the belief that empathetic, well-trained people, supported by the right systems, can turn every customer interaction into an opportunity to build trust, loyalty and long-term value.</p>
                 <p>For over two decades, we've partnered with ambitious brands who believe that how you support is how you grow. We've evolved from voice-only to AI-augmented omnichannel, but the principle remains: people, process, performance — in that order.</p>
-                <p>Today we power support for brands across healthcare and retail, maintain 4.8+ CSAT, and operate from our delivery centers in Gurgaon, Delhi, and Gujarat.</p>
+                <p>Today, we support brands across healthcare and retail from our delivery centres in Gurugram, Delhi and Gujarat.</p>
               </div>
             </FadeInSection>
           </div>
@@ -261,7 +261,6 @@ export default function AboutPage() {
                 </span>
               ))}
             </div>
-            <p className="mt-4 text-xs text-slate-400">Logos coming soon.</p>
           </FadeInSection>
         </div>
       </section>
