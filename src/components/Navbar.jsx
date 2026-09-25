@@ -79,7 +79,7 @@ export default function Navbar() {
         scrolled ? 'bg-white/80 backdrop-blur-2xl border-b border-slate-200/60' : 'bg-transparent'
       }`}
     >
-      <Link to="/" className="flex items-center gap-3">
+      <Link to="/" aria-label="Go to home page" onClick={() => setMenuOpen(false)} className="flex items-center gap-3">
         <img src={logo} alt="OpenMind Logo" className="h-12 w-auto -my-2" />
       </Link>
 
