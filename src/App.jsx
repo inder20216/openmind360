@@ -71,9 +71,9 @@ function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold leading-[1.15] tracking-tight text-slate-900"
           >
-            <span>AI-Powered Customer Experience Solutions</span><br />
+            <span>Nearly Two Decades of Customer Experience.</span><br />
             <span className="sm:whitespace-nowrap bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">
-              That Fits Your Business
+              Now Powered by AI.
             </span>
           </motion.h1>
 
@@ -94,9 +94,9 @@ function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-4 text-base md:text-lg text-slate-500 max-w-xl leading-relaxed"
           >
-            Whether you're looking to outsource your entire customer support operation, streamline workflows with intelligent AI-driven automation, or{' '}
-            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-ox to-ob">build a tailored hybrid model that blends both</span>,
-            {' '}Open Mind has the expertise, technology, and people to help you deliver seamless, exceptional customer experiences at every stage of the journey.
+            From fully managed customer support to AI powered voice and chat automation, Open Mind helps businesses choose the model that works for them:{' '}
+            <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-ox to-ob">human, AI, or a combination of both</span>.
+            {' '}Backed by nearly two decades of customer service experience, we bring together trained people, proven processes and intelligent technology to deliver better customer experiences at scale.
           </motion.p>
 
           <motion.div
@@ -493,7 +493,7 @@ function TestimonialSection() {
           <div className="text-center">
             <span className="text-xs font-semibold tracking-[0.2em] uppercase text-ox">Testimonial</span>
             <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">
-              What Our Clients Say
+              Trusted Partnerships. Measurable Outcomes.
             </h2>
           </div>
         </FadeInSection>
@@ -593,10 +593,10 @@ function CTASection() {
         <div className="text-center">
           <FadeInSection delay={0.1}>
             <h2 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900">
-              Ready to Transform Your Customer Experience?
+              Let's Find the Right Customer Support Model for Your Business
             </h2>
             <p className="mt-6 text-base md:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
-              Schedule a live demo with our team and see how Open Mind can help you scale support without compromising quality.
+              Whether you need a managed contact centre, AI automation, or a hybrid of both, talk to our team. We will understand your current customer support process and show you where people, AI and automation can deliver better results.
             </p>
           </FadeInSection>
           <FadeInSection delay={0.2}>
