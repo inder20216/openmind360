@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  AudioWaveform,
   Banknote,
   ChevronDown,
   Languages,
@@ -26,20 +25,20 @@ const service = services.find((s) => s.path === 'generative-ai-ivr')
 
 const capabilities = [
   { Icon: Mic, accent: '#3b82f6',
-    detail: 'Callers describe the problem in normal speech instead of punching through menu numbers. The IVR understands intent, asks clarifying questions, and never forces a "press three for billing" step.',
-    points: ['Open ended conversation instead of rigid menu trees', 'Handles accents, mumbling, and interrupted sentences', 'Confirms intent naturally before acting'] },
+    detail: 'The IVR is designed to understand natural speech, supported accents and configured languages, so callers describe the problem in their own words instead of punching through menu numbers.',
+    points: ['Open ended conversation instead of rigid menu trees', 'Built to handle supported accents and natural speech patterns', 'Confirms intent naturally before acting'] },
   { Icon: PhoneCall, accent: '#06b6d4',
-    detail: 'Every call is routed by what the caller actually means, matched to the right queue, team, or system in real time instead of a fixed number tree.',
-    points: ['Intent based routing to the right team instantly', 'Peak hour overflow balanced automatically', 'Priority lanes for repeating and high value callers'] },
-  { Icon: UserCheck, accent: '#f97316',
-    detail: 'The moment a caller needs a person, the call moves to a human agent without a reset. Transcript, intent, and frustration score ride along with the transfer.',
-    points: ['Handoff with full context carried over', 'No repetition and no lost history for the customer', 'Agents see intent and sentiment before they pick up'] },
-  { Icon: AudioWaveform, accent: '#ec4899',
-    detail: 'The AI reads tone, pace, and repeated attempts to spot frustration early, then escalates before the caller gives up or churns.',
-    points: ['Sentiment scored in real time on every call', 'Repeated attempts trigger faster routing', 'At risk callers reach senior agents first'] },
+    detail: 'Calls are routed by what the caller actually means, matched to the right queue, team, or system, while tone and repeated attempts are used to identify frustration and prioritize escalation.',
+    points: ['Intent based routing to the right team', 'Peak hour overflow balanced automatically', 'Frustration signals used to prioritize escalation to a senior agent'] },
   { Icon: Languages, accent: '#8b5cf6',
-    detail: 'Callers speak in their own language and still get the same fast, natural response, with no separate lines and no language menus.',
-    points: ['Hindi, Tamil, Telugu, Bengali, Marathi and English variants', 'Language detected from the first sentence', 'Consistent tone across every market served'] },
+    detail: 'Callers can be supported in Hindi, English and other configured languages, with accuracy depending on the language, audio quality and deployment configuration.',
+    points: ['Hindi, English and other configured languages', 'Language and accuracy depend on use case and audio quality', 'Consistent tone across every configured market'] },
+  { Icon: UserCheck, accent: '#f97316',
+    detail: 'The moment a caller needs a person, the call moves to a human agent without a reset. Transcript, intent and available context are carried along with the transfer.',
+    points: ['Handoff with full context carried over', 'No repetition and no lost history for the customer', 'Agents see intent and available context before they pick up'] },
+  { Icon: Zap, accent: '#f97316',
+    detail: 'Resolves routine queries automatically and hands off complex issues to the right specialist with full context, which can help reduce average call handling time.',
+    points: ['End-to-end resolution for common issues', 'Smart escalation to the right team', 'Designed to reduce average call handling time'] },
   { Icon: Puzzle, accent: '#10b981',
     detail: 'The IVR sits on top of your existing telephony stack and connects to your CRM, billing, and knowledge bases through APIs.',
     points: ['SIP and PSTN connectors for your current setup', 'CRM and billing data pulled into the conversation', 'Deployed as an overlay, not a rip and replace'] },
@@ -47,8 +46,8 @@ const capabilities = [
 
 const practices = [
   { n: '01', title: 'Banking and finance', Icon: Banknote, accent: 'from-[#dbeafe] to-[#eff6ff]', color: '#2563eb',
-    line: 'Handles balance checks, loan inquiries, and payment requests through natural conversation instead of rigid IVR menus.',
-    detail: 'A customer asks about a failed transaction in their own words. The IVR pulls the latest account status, resolves the query instantly, and only hands over to a human when authentication or a dispute file is required.' },
+    line: 'For approved banking use cases, connects with authorized systems to support enquiries such as transaction status or loan information.',
+    detail: 'A customer asks about a transaction or loan status in their own words, and the IVR can connect with authorized systems to answer directly. Authentication, payment activity and dispute handling follow the client\'s own security, consent and escalation requirements.' },
   { n: '02', title: 'Telecom and ISPs', Icon: Radio, accent: 'from-[#fef3c7] to-[#fffbeb]', color: '#d97706',
     line: 'Resolves billing questions, plan changes, and outage updates automatically, escalating only when technical diagnostics are needed.',
     detail: 'A subscriber reporting a service outage is routed straight to the right queue in their preferred language. Routine plan changes and billing questions are resolved without a transfer, and only real faults reach the technical desk.' },
@@ -172,7 +171,7 @@ export default function GenerativeAiIvrPage() {
         </div>
         <div className="mt-4 md:mt-5 text-center max-w-[760px] mx-auto">
           <p className="text-[13px] md:text-[14px] leading-[1.5] text-[#475569] max-w-[620px] mx-auto font-[500]">
-            Traditional IVRs make customers punch through five menus to reach a human. Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.
+            Open Mind's Generative AI IVR understands spoken requests in natural language, guides customers without rigid menu trees, and routes or escalates conversations according to defined business rules.
           </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="px-3 py-1 rounded-full bg-[#eff6ff] border border-[#dbeafe] text-[10px] font-[700] tracking-[0.10em] text-[#2563eb]">24/7 MULTILINGUAL</span>
@@ -293,8 +292,8 @@ export default function GenerativeAiIvrPage() {
             <Sparkles className="w-3.5 h-3.5 text-[#2563eb]" />
             <span className="text-[10px] font-[700] tracking-[0.18em] text-[#2563eb]">SEE IT IN ACTION</span>
           </div>
-          <h2 className="text-[26px] md:text-[34px] font-[800] tracking-[-0.02em] text-[#0f172a]">Talk to it yourself</h2>
-          <p className="mt-3 text-[14px] leading-[1.6] text-[#475569]">Four real proof-of-concept voice bots, one per industry — share a few details once, then talk to any of them live.</p>
+          <h2 className="text-[26px] md:text-[34px] font-[800] tracking-[-0.02em] text-[#0f172a]">Try an Industry-Specific Voice AI Demonstration</h2>
+          <p className="mt-3 text-[14px] leading-[1.6] text-[#475569]">Share a few details to access the available demonstration bots and see how natural-language routing, multilingual support and human handoff can work for your use case.</p>
         </div>
         <div className="mt-8">
           <IndustryDemoDeck />

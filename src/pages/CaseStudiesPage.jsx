@@ -139,7 +139,7 @@ export default function CaseStudiesPage() {
     <>
       <SeoHead
         title="Case Studies · Customer Support Outcomes | Open Mind"
-        description="Four documented engagements across healthcare, medtech, and retail — the challenge, the solution, and the results. Explore Open Mind's customer support case studies."
+        description="Documented customer-support engagements across healthcare, medtech, and retail — the challenge, the solution, and the results. Explore Open Mind's case studies."
         canonical="https://www.openmind.in/case-studies"
       />
 
@@ -153,11 +153,11 @@ export default function CaseStudiesPage() {
               Customer Support Case Studies
             </span>
             <h1 className="mt-3 text-3xl md:text-5xl font-bold bg-gradient-to-r from-ox via-purple-500 to-ob bg-clip-text text-transparent">
-              Real Work. Real Results.
+              Real Work. Measurable Outcomes.
             </h1>
             <p className="mt-5 text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">
-              Four engagements across healthcare, medtech, and retail — documented end to end, from the
-              challenge to the outcome.
+              Customer-support engagements across healthcare, medtech and retail, documented end to end,
+              from the challenge to the outcome.
             </p>
           </motion.div>
         </div>
@@ -278,8 +278,8 @@ export default function CaseStudiesPage() {
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="max-w-[560px]">
               <div className="text-[10px] font-[700] tracking-[0.18em] text-white/50">LET'S TALK</div>
-              <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">Want to be featured next?</h2>
-              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">If Open Mind has helped your business, we'd love to share your story here — from the first call to the final outcome.</p>
+              <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">Discuss a Similar Customer Experience Challenge</h2>
+              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Talk to our team about the service model, workflow and technology used in an engagement relevant to your business.</p>
               <div className="mt-3 flex items-center gap-2 text-[11px] text-white/50">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> {'<'} 2h response
               </div>

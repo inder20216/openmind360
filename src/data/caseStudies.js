@@ -5,7 +5,7 @@ export const caseStudies = [
     title: 'Medical Equipment Support',
     subtitle: 'Global Medical Device Brand',
     summary:
-      'A globally recognized Japanese medical device manufacturer deployed thousands of critical-care devices across India. Open Mind runs their centralized service support engine — complaint logging, field coordination, and escalations in one system.',
+      'A global medical-device manufacturer needed a coordinated support process for critical-care equipment deployed across India. Open Mind manages complaint logging, field-service coordination and escalation tracking through a centralized support operation.',
     facts: [
       { label: 'Sector', value: 'Medtech' },
       { label: 'Coverage', value: 'Pan-India' },
@@ -15,7 +15,7 @@ export const caseStudies = [
     sections: [
       {
         heading: 'Client Profile',
-        body: 'A globally recognized Japanese medical device manufacturer with a long-standing presence in the Indian healthcare market. The company provides critical care devices including patient monitors, EEG and ECG machines, defibrillators, and a wide range of diagnostic equipment. Their clientele includes leading private hospitals, government institutions, and diagnostic centers across the country.',
+        body: 'A global medical device manufacturer with a long-standing presence in the Indian healthcare market. The company provides critical care devices including patient monitors, EEG and ECG machines, defibrillators, and a wide range of diagnostic equipment. Their clientele includes leading private hospitals, government institutions, and diagnostic centers across the country.',
       },
       {
         heading: "Open Mind's Role",
@@ -91,7 +91,7 @@ export const caseStudies = [
         title: 'Multi Speciality Hospital',
         subtitle: 'New Delhi, India',
         summary:
-          'A renowned multispeciality hospital in New Delhi trusted Open Mind with its front-line patient communication — inbound and outbound support across thousands of appointments every year.',
+          'A multispeciality hospital in New Delhi engaged Open Mind to manage its front-line patient communication — inbound and outbound support across appointments handled every year.',
         facts: [
           { label: 'Sector', value: 'Healthcare' },
           { label: 'Location', value: 'New Delhi, India' },
@@ -101,7 +101,7 @@ export const caseStudies = [
         sections: [
           {
             heading: 'Client Overview',
-            body: 'A renowned multispecialty hospital located in New Delhi, this institution is widely recognized for its excellence in gastroenterology, hepatology, nephrology, and organ transplant services. Known for delivering ethical, high-quality, and patient-focused medical care, the hospital is considered a trusted name in India\u2019s healthcare sector.',
+            body: 'A multispecialty hospital located in New Delhi, this institution provides gastroenterology, hepatology, nephrology, and organ transplant services, and engaged Open Mind to manage its front-line patient communication.',
           },
           {
             heading: "Open Mind's Engagement",
@@ -156,7 +156,7 @@ export const caseStudies = [
         title: 'Patient Care',
         subtitle: 'Data analysis and follow-up by tele calling',
         summary:
-          'Since 2007, Open Mind has powered a home-based critical care program for a leading global healthcare provider — coordinating medication, therapy adherence, and multilingual patient support across India.',
+          'Since 2007, Open Mind has managed a home-based critical care support program for a global healthcare provider — coordinating medication, therapy adherence, and multilingual patient support across India.',
         facts: [
           { label: 'Sector', value: 'Healthcare' },
           { label: 'Partner Since', value: '2007' },
@@ -203,7 +203,7 @@ export const caseStudies = [
   {
     id: 'hr-segment',
     industry: 'Retail',
-    title: 'E-Commerce Support & Complaint Management Helpdesk',
+    title: 'HR Helpline & Employee Communication',
     subtitle: 'HR & call centre technology for better employee relations',
     summary:
       'For Bharti Retail — Walmart, Open Mind built MyHR, a voice-based HR helpline that connects a country-wide workforce to their HR policies, salary queries, and grievances on a single toll-free call.',

@@ -39,11 +39,11 @@ const capabilities = [
     detail: 'Every interaction becomes a tracked ticket with status, priority, and history your team can follow end to end.',
     points: ['Real time status and SLA counters on every ticket', 'Full resolution history attached to each customer record', 'Escalation paths and reporting dashboards included'] },
   { Icon: Clock3, accent: '#f59e0b',
-    detail: 'Around the clock staffing across time zones, with shifts tuned to your busiest hours.',
-    points: ['24/7 coverage every day of the year', 'Shift planning matched to your peak traffic windows', 'Overflow routing so no call ever rings out'] },
+    detail: '24/7 coverage can be configured according to your service requirements, with staffing shaped around your busiest hours.',
+    points: ['24/7 coverage configured to your service requirements', 'Shift planning aligned to peak traffic windows', 'Overflow routing designed to reduce unanswered calls'] },
   { Icon: Languages, accent: '#ec4899',
-    detail: 'Customers who don\'t speak English get the same fast, human response as everyone else.',
-    points: ['Multilingual agents and AI for transcripts and replies', 'Native level handling in Hindi and a growing list of languages', 'Consistent tone and quality across every market'] },
+    detail: 'Customers can receive support in English, Hindi and other agreed languages through trained agents and configured AI tools.',
+    points: ['Multilingual agents and AI for transcripts and replies', 'Support in English, Hindi and other agreed languages', 'Language coverage confirmed based on current delivery capacity'] },
 ]
 
 const flows = [
@@ -161,13 +161,13 @@ export default function OmnichannelServicePage() {
               <span className="text-[10px] font-[700] tracking-[0.20em] text-[#f97316]">OMNICHANNEL</span>
             </div>
             <h1 className="font-[800] text-[34px] md:text-[52px] lg:text-[56px] leading-[0.95] tracking-[-0.04em] text-[#0f172a]">
-              One Team,<br />Every Channel,<br />
+              One Team,<br />Across Every<br />
               <span className="block whitespace-nowrap text-[24px] md:text-[36px] lg:text-[40px] bg-gradient-to-r from-[#f97316] via-[#8b5cf6] to-[#3b82f6] bg-clip-text text-transparent">
-                No Dropped Conversations
+                Customer Channel
               </span>
             </h1>
             <p className="mt-4 text-[15px] md:text-[16px] leading-[1.6] text-[#475569] max-w-[560px] font-[500] min-w-0">
-              Customers don't think in channels. They call, then email, then WhatsApp, expecting you to already know. Open Mind's Hub keeps every conversation in one place, with agents picking up where the last channel left off.
+              Customers may call, email or message on WhatsApp and expect your team to know the full story. Open Mind brings these conversations into one coordinated support operation, so trained agents can continue with the right context.
             </p>
             <div className="mt-6 flex items-center gap-3 flex-wrap">
               <span className="text-[10px] font-[700] tracking-[0.12em] text-[#94a3b8]">TRUSTED BY</span>
@@ -365,8 +365,8 @@ export default function OmnichannelServicePage() {
           <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="max-w-[560px]">
               <div className="text-[10px] font-[700] tracking-[0.18em] text-white/50">LET'S TALK</div>
-              <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">One conversation across every channel. Let's set up your Omnichannel Hub</h2>
-              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Get a live demo of unified queue, AI ↔ human handoff, and 24/7 coverage. See how nothing falls through the cracks.</p>
+              <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">Bring Your Customer Channels Together</h2>
+              <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Schedule a demonstration of unified queues, AI-to-human handoffs, ticket visibility and coverage options for your operation.</p>
               <div className="mt-3 flex items-center gap-2 text-[11px] text-white/50">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> {'<'} 2h response
               </div>

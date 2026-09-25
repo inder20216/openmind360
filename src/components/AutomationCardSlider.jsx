@@ -42,7 +42,7 @@ const automations = [
     Icon: FileBarChart,
     industry: 'Cross-Industry',
     name: 'MIS & Reporting',
-    blurb: 'Live dashboards, no manual exports.',
+    blurb: 'Live dashboards with reduced manual reporting.',
     detail: 'Reports and dashboards pull straight from live data on a schedule you set, so decision-makers see current numbers instead of waiting on someone to compile a spreadsheet.',
   },
   {
@@ -128,7 +128,7 @@ const automations = [
     Icon: RotateCcw,
     industry: 'E-commerce',
     name: 'Returns & Refunds',
-    blurb: 'Return requests processed without a queue.',
+    blurb: 'Route and process eligible return requests automatically.',
     detail: 'Return and refund requests are validated and processed automatically against policy rules, so customers get a resolution in minutes instead of waiting in a support queue.',
   },
   {
@@ -150,7 +150,7 @@ const automations = [
     Icon: Store,
     industry: 'Retail',
     name: 'Omnichannel Inventory Sync',
-    blurb: 'Online and in-store stock, always matched.',
+    blurb: 'Synchronize online and in-store inventory at configured intervals.',
     detail: "Stock levels stay synced across your online store and physical locations automatically, so a customer never sees 'in stock' online for something that's actually sold out in-store.",
   },
   {

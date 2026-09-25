@@ -143,9 +143,9 @@ export default function ServiceDetailPage() {
           <div className="max-w-5xl mx-auto text-center px-6 md:px-16">
             <FadeInSection>
               <span className="text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: service.color }}>See It In Action</span>
-              <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">Automations we run every day</h2>
+              <h2 className="mt-3 text-2xl md:text-4xl font-bold text-slate-900">Examples of Workflows We Can Automate</h2>
               <p className="mt-4 text-slate-500 max-w-xl mx-auto leading-relaxed">
-                A few of the workflows running behind the scenes for our clients right now.
+                A sample of the workflows Open Mind can automate for a customer support or back-office operation.
               </p>
             </FadeInSection>
           </div>
@@ -263,8 +263,8 @@ export default function ServiceDetailPage() {
             <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="max-w-[560px]">
                 <div className="text-[10px] font-[700] tracking-[0.18em] text-white/50">LET'S TALK</div>
-                <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">The busywork behind every fast resolution, automated. Permanently.</h2>
-                <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Get a live demo of ticket routing, zero-touch lead nurturing, real-time dashboards, and AI-driven insights. See your support stack run itself.</p>
+                <h2 className="mt-2 text-[24px] md:text-[30px] font-[800] tracking-[-0.03em] leading-[1.1]">Automate the Repetitive Work Behind Customer Service</h2>
+                <p className="mt-3 text-[13px] md:text-[14px] leading-[1.5] text-white/60">Schedule a demonstration of ticket routing, lead follow-up, reporting and other workflows relevant to your operation.</p>
                 <div className="mt-3 flex items-center gap-2 text-[11px] text-white/50">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   {'<'} 2h response

@@ -1,18 +1,19 @@
-import imgUrl from '../assets/hybrid-contact-center-new.png'
+import imgUrl from '../assets/hellllllo.png omni.png'
 
 export default function HybridContactCenter() {
   return (
     <>
       <style>{`
         @keyframes hccGlow { 0%,100% { opacity: 0.45; } 50% { opacity: 0.85; } }
+        @keyframes hccFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
       `}</style>
 
       <div className="relative select-none">
-        <div className="relative mx-auto w-full max-w-[640px] aspect-[1.15/1] rounded-[26px] overflow-hidden">
+        <div className="relative mx-auto w-full max-w-[760px] md:max-w-[860px]">
           <img
             src={imgUrl}
             alt="Hybrid Contact Center agent surrounded by floating omnichannel platforms"
-            className="w-full h-full object-cover"
+            className="w-full h-auto object-contain animate-[hccFloat_5s_ease-in-out_infinite]"
             draggable="false"
           />
         </div>

@@ -19,7 +19,7 @@ export const services = [
     video: callcenterVideo,
     pageTitle: 'One Team, Every Channel,\nNo Dropped Conversations',
     pageIntro: "Customers don't think in channels. They call, then email, then message on WhatsApp, expecting whoever picks up to already know what happened. We don't hand you separate tools for separate channels. Open Mind's Omnichannel Support Hub keeps every conversation in one place, run by agents who pick up exactly where the last channel left off.",
-    blurb: 'One team, every channel, nothing repeated twice.',
+    blurb: 'Omnichannel Support: One trained team across voice, email, chat and WhatsApp, with shared context across every interaction.',
     useCases: [
       'A patient calls a hospital helpline, then follows up over WhatsApp, and the same case history is visible either way.',
       'An e-commerce customer opens a chat about a delayed order after already emailing support twice.',
@@ -53,7 +53,7 @@ export const services = [
     accent: '#06b6d4',
     video: voicebotsVideo,
     pageTitle: 'Say What You Need,\nSkip the Menu',
-    pageIntro: "Traditional IVRs make customers punch through five menus to reach a human. We don't build more menus. Open Mind's Generative AI IVR listens to what's actually being asked, in natural language, and routes the call immediately, detecting frustration early and escalating it before it becomes a bigger problem.",
+    pageIntro: "Open Mind's Generative AI IVR understands spoken requests in natural language, guides customers without rigid menu trees, and routes or escalates conversations according to defined business rules.",
     blurb: 'Say what you need. Skip the menu, every time.',
     useCases: [
       'A banking customer asks about a failed transaction in their own words instead of navigating "Press 3 for..." menus.',
@@ -124,7 +124,7 @@ export const services = [
     image: workflowImg,
     pageTitle: 'The Busywork Behind\nEvery Good Support Team',
     pageIntro: "Behind every fast resolution is a pile of manual work: routing tickets, updating CRM records, chasing leads that went quiet. We don't leave that to your agents. Open Mind's Intelligent Automation handles that layer, permanently, so agents spend their time on conversations, not admin.",
-    blurb: 'The busywork behind every fast resolution, automated permanently.',
+    blurb: 'Intelligent Automation: Repetitive support and back-office workflows automated with defined rules, integrations and human control points.',
     useCases: [
       'A support ticket is automatically prioritized and routed to the right team based on urgency.',
       "A lead that's gone quiet for a few days gets a timely automatic follow-up instead of falling through the cracks.",
@@ -159,7 +159,7 @@ export const services = [
     video: growthVideo,
     pageTitle: 'Support Data That Actually\nReaches Leadership',
     pageIntro: "Support activity generates a huge amount of data most businesses never look at. Open Mind's Analytics & Reporting turns that activity into dashboards leadership can actually use, connecting day-to-day support work to retention, conversion, and cost.",
-    blurb: 'Support activity, turned into decisions leadership actually uses.',
+    blurb: 'Analytics and Reporting: Turn customer-support activity into clear dashboards, service-level reporting and actionable management insights.',
     useCases: [
       'A leadership team sees which support issues are costing the most in agent hours this month.',
       'A spike in a specific complaint type is caught early, before it affects retention.',
@@ -194,7 +194,7 @@ export const services = [
     video: crmEcosystemVideo,
     pageTitle: 'A CRM That Fits\nYour Business, Not a Template',
     pageIntro: "Off-the-shelf CRMs make you bend your workflow to fit their screens. Open Mind builds bespoke CRM systems around your exact sales, support and field processes, with native automation, reporting and integrations, so your team works the way your business actually runs.",
-    blurb: 'A CRM shaped around your workflows, not the other way around.',
+    blurb: 'Custom CRM Solutions: Build or extend CRM workflows around your sales, support and field-service processes.',
     useCases: [
       'A sales team tracks deals, follow-ups and approvals in one pipeline instead of across spreadsheets and inboxes.',
       'A support desk routes, prioritises and resolves tickets with history carried across channels automatically.',
