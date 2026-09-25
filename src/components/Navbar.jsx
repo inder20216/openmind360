@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../assets/Logo.png'
 
 const links = [
+  { label: 'Home', href: '/' },
   { label: 'Services', href: '#services' },
   { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
@@ -42,7 +43,7 @@ export default function Navbar() {
         scrolled ? 'bg-white/80 backdrop-blur-2xl border-b border-slate-200/60' : 'bg-transparent'
       }`}
     >
-      <Link to="/" className="flex items-center gap-3">
+      <Link to="/" aria-label="Go to home page" onClick={() => setMenuOpen(false)} className="flex items-center gap-3">
         <img src={logo} alt="OpenMind Logo" className="h-12 w-auto -my-2" />
       </Link>
 
@@ -52,12 +53,6 @@ export default function Navbar() {
             {l.label}
           </NavLink>
         ))}
-        <a
-          href="#contact"
-          className="px-6 py-2.5 bg-ox text-white text-xs font-semibold rounded-full shadow-lg shadow-ox/20 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
-        >
-          Get a Demo
-        </a>
       </div>
 
       <button className="md:hidden text-slate-400" onClick={() => setMenuOpen(!menuOpen)}>
@@ -79,9 +74,6 @@ export default function Navbar() {
                 {l.label}
               </NavLink>
             ))}
-            <a href="#contact" onClick={() => setMenuOpen(false)} className="text-sm font-semibold text-ox">
-              Get a Demo →
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
