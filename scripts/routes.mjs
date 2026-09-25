@@ -27,7 +27,7 @@ export const routes = [
   {
     path: '/services',
     title: 'Explore Services · Open Mind',
-    description: 'Five ways Open Mind handles customer experience, from the first ring to the dashboard leadership actually reads.',
+    description: 'Six ways Open Mind handles customer experience, from the first ring to the dashboard leadership actually reads.',
     changefreq: 'monthly',
     priority: '0.8',
   },
@@ -70,6 +70,13 @@ export const routes = [
     path: '/services/revenue-impact',
     title: 'Analytics & Reporting · Open Mind',
     description: "Open Mind's Analytics & Reporting turns support activity into dashboards leadership can actually use.",
+    changefreq: 'monthly',
+    priority: '0.7',
+  },
+  {
+    path: '/services/custom-crms',
+    title: 'CRM Solutions · Open Mind',
+    description: 'Open Mind builds customized CRM modules, ticketing systems and workflow solutions around your sales, service and field operations.',
     changefreq: 'monthly',
     priority: '0.7',
   },
