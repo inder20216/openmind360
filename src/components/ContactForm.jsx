@@ -26,15 +26,11 @@ const countryCodes = [
 
 const requirements = [
   { value: 'hybrid-call-center', label: 'Hybrid Call Center', info: 'A blend of trained human agents and AI automation working together — not one replacing the other.' },
-  { value: 'inbound-call-center', label: 'Inbound Call Center', info: 'Trained agents handling inbound calls, emails, and chats in one connected queue — the first point of contact for your customers.' },
-  { value: 'lead-management-sales', label: 'Lead Management & Sales', info: 'Automatic lead routing, prioritization, and timely follow-ups synced with your CRM, so no lead goes quiet.' },
   { value: 'custom-crms', label: 'Custom CRMs', info: 'Bespoke CRM systems built and configured around your exact sales and support workflows — not a generic off-the-shelf setup.' },
   { value: 'voice-bots', label: 'Voice Bots (Automated Generative IVRs)', info: "AI-powered voice IVR that understands natural language instead of rigid menu trees. It detects sentiment, routes calls immediately, resolves queries in seconds across multiple languages, and hands off to a human agent with full context when something needs a person." },
   { value: 'chatbots', label: 'Chatbots', info: 'Context-aware AI chatbots deployed across WhatsApp, website, and social channels. They respond instantly, remember context across the conversation, and handle sales, support, and scheduling in one thread — available 24/7 without added headcount.' },
   { value: 'advanced-automations', label: 'Advanced Automations', info: 'CRM-integrated workflow automation — ticket routing, prioritization, and the repetitive admin work behind every fast resolution.' },
   { value: 'dashboard-mis-reporting', label: 'Dashboard & MIS Reporting', info: 'Automated MIS reporting with an interactive dashboard built for faster, right decisions.' },
-  { value: 'corporate-training-counselling', label: 'Corporate Training / Student Counselling', info: 'Delivered by experienced trainers, tailored to corporate teams or student groups.' },
-  { value: 'technical-consulting', label: 'Technical Consulting', info: 'Hands-on guidance on system integration, automation strategy, and technology choices for your support operations.' },
 ]
 
 function InfoTooltip({ text }) {
