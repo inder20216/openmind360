@@ -153,7 +153,7 @@ export default function OmnichannelServicePage() {
       </div>
 
       {/* HERO */}
-      <section id="hero" className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pt-28 md:pt-36 pb-14 md:pb-20">
+      <section id="hero" className="relative z-10 max-w-[1280px] mx-auto px-6 md:px-10 pt-24 md:pt-28 pb-10 md:pb-14">
         <div className="grid md:grid-cols-[0.92fr_1.08fr] gap-8 md:gap-6 lg:gap-10 items-center">
           <div className="min-w-0 order-2 md:order-1">
             <div className="inline-flex items-center gap-2 mb-4">
@@ -172,7 +172,7 @@ export default function OmnichannelServicePage() {
             <div className="mt-6 flex items-center gap-3 flex-wrap">
               <span className="text-[10px] font-[700] tracking-[0.12em] text-[#94a3b8]">TRUSTED BY</span>
               <div className="flex items-center gap-1.5">
-                {['Apollo', 'CloudNine', 'Apollo Hospitals'].map((p) => (
+                {['Apollo Hospitals', 'CloudNine', 'Rainbow Hospitals', 'Baxter/Vantive India', 'ResMed India & more'].map((p) => (
                   <span key={p} className="px-2.5 py-1 rounded-full bg-white border border-[#eef2f6] text-[11px] font-[600] text-[#334155] shadow-[0_1px_2px_rgba(0,0,0,0.04)]">{p}</span>
                 ))}
               </div>
