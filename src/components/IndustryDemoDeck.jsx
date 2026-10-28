@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Stethoscope, ShoppingBag, Shirt, Hotel, Mic, Phone, ArrowLeft, ShieldCheck } from 'lucide-react'
 
-// Same FAQ Bot server as the site's chat/voice widget (ChatVoiceWidget.jsx),
-// just the /demo-* routes — see OpenMind FAQ Bot/server/src/demoBots.js.
-// TODO: update to the real deployed URL once that server is hosted (same
-// pending item as VOICE_SERVER_URL in ChatVoiceWidget.jsx).
-const VOICE_SERVER_URL = 'http://localhost:3010'
+// A separate standalone server (not the same codebase as ChatVoiceWidget.jsx's
+// FAQ bot) — deployed on the same EC2 instance, proxied by nginx at /demos/.
+// Routes are /session-config, /api/tools/:name, /rtc-connect (no "demo-"
+// prefix, unlike this file's original assumption).
+const VOICE_SERVER_URL = 'https://training.openmindserviceslimited.in/demos'
 const LEAD_CAPTURE_URL = 'https://automation.openmindhelpline.com/webhook/openmind-chatbot-lead-capture'
 const MAX_CALL_MS = 2 * 60 * 1000 + 30 * 1000
 
@@ -173,7 +173,7 @@ function CallPanel({ bot, contact, onBack }) {
 
     let result
     try {
-      const res = await fetch(`${VOICE_SERVER_URL}/api/demo-tools/${encodeURIComponent(name)}`, {
+      const res = await fetch(`${VOICE_SERVER_URL}/api/tools/${encodeURIComponent(name)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(args),
@@ -227,7 +227,7 @@ function CallPanel({ bot, contact, onBack }) {
   async function onDataChannelOpen() {
     startTimer()
     try {
-      const configRes = await fetch(`${VOICE_SERVER_URL}/demo-session-config?bot=${bot.key}`)
+      const configRes = await fetch(`${VOICE_SERVER_URL}/session-config?bot=${bot.key}`)
       const sessionUpdateEvent = await configRes.json()
       dcRef.current.send(JSON.stringify(sessionUpdateEvent))
       dcRef.current.send(JSON.stringify({ type: 'response.create' }))
