@@ -17,6 +17,7 @@ import CustomCrmServicePage from './pages/CustomCrmServicePage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
 import TermsPage from './pages/TermsPage'
 import FAQPage from './pages/FAQPage'
+import HealthcareLandingPage from './pages/HealthcareLandingPage'
 import JsonLd from './components/JsonLd'
 import SeoHead from './components/SeoHead'
 import FadeInSection from './components/FadeInSection'
@@ -803,6 +804,7 @@ export default function App() {
         <Route path="/privacy-policy" element={<Layout><PrivacyPolicyPage /></Layout>} />
         <Route path="/terms-conditions" element={<Layout><TermsPage /></Layout>} />
         <Route path="/faq" element={<Layout><FAQPage /></Layout>} />
+        <Route path="/healthcare/:variant" element={<HealthcareLandingPage />} />
         <Route path="*" element={<Layout><PlaceholderPage eyebrow="404" title="Page Not Found" /></Layout>} />
       </Routes>
     </>
