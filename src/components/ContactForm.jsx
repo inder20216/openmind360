@@ -1,10 +1,9 @@
 import { useState, useRef, useMemo } from 'react'
 import robotLogo from '../assets/chatbot/robot-mascot.png'
 
-// TODO: replace with the real production webhook URL from n8n workflow
-// 07-contact-form-router.json once it's activated and n8n has a public URL.
-// See automation/n8n-workflows/README.md — "Going live" section.
-const WEBHOOK_URL = 'https://YOUR-N8N-DOMAIN/webhook/openmind-contact-form'
+// Production webhook for n8n workflow 07-contact-form-router.json — activated
+// and confirmed working 2026-10-29 (see automation/n8n-workflows/README.md).
+const WEBHOOK_URL = 'https://automation.openmindhelpline.com/webhook/openmind-contact-form'
 
 const countryCodes = [
   { code: '+91', label: 'India (+91)' },
