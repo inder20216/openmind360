@@ -16,36 +16,10 @@ export const TRUST = {
   credentials: 'ISO certified · NASSCOM member · nearly 20 years in customer service',
 }
 
+// 'voice-bots' is deliberately not here — it has its own bespoke, single-page
+// component (HealthcareVoiceBotsPage.jsx) that embeds the real live voice
+// demo as its only lead-capture form, unlike the generic template below.
 export const healthcareLandingPages = {
-  'voice-bots': {
-    id: 'voice-bots',
-    path: '/healthcare/voice-bots',
-    navLabel: 'AI Voice Bots',
-    pageTitle: 'AI Voice Bots for Hospitals, PAN India',
-    metaDescription: 'An AI voice agent that answers every patient call in seconds, day and night, and books the appointment on the spot. Already live at PSRI Hospital.',
-    color: '#2563eb',
-    accent: '#06b6d4',
-    eyebrow: 'For Hospitals · PAN India',
-    heroTitle: 'Never Miss a Patient Call Again',
-    heroSub: "Our AI voice agent answers every patient call in seconds, day and night, understands natural speech instead of Press-1 Press-2 menus, and books the appointment on the spot. Already live at PSRI Hospital.",
-    problem: "A patient calls your hospital at 9pm asking about a doctor or a test. If no one answers, or no one calls back in time, that patient books at another hospital, and you never find out it happened.",
-    solution: "Our AI voice agent picks up in seconds, 24/7. It books, reschedules or cancels the appointment on the call itself, detects an anxious or urgent caller, and hands off to a trained human agent with full context whenever a person is genuinely needed.",
-    trialLabel: 'Free 7-day trial on a real hospital phone line',
-    features: [
-      'Picks up every patient call in under 3 rings, 24/7',
-      'Understands Hindi, English and regional languages',
-      'Books, reschedules or cancels appointments directly on the call',
-      'Detects an anxious or urgent caller and prioritises escalation',
-      'Hands off to a human agent with full context, no repeating yourself',
-      'Works with your existing hospital phone number and systems',
-    ],
-    faqs: [
-      { q: 'Does the AI voice agent replace our front-desk staff?', a: 'No. It answers every call instantly so no enquiry is missed, and hands off anything that needs a person, with full context, to your team or ours.' },
-      { q: 'Is patient data safe?', a: 'Yes. Calls and patient details are handled under our standard data-protection process, the same one used for our current hospital clients, and we can share a written statement on request.' },
-      { q: 'How fast can this go live?', a: 'A free 7-day trial can run on a real hospital line within days, no change to your existing phone number required.' },
-      { q: 'What languages are supported?', a: 'Hindi, English and other regional languages can be configured. Tell us which ones your patients call in and we will confirm coverage.' },
-    ],
-  },
   chatbots: {
     id: 'chatbots',
     path: '/healthcare/chatbots',

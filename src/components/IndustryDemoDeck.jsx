@@ -26,7 +26,7 @@ const BOTS = [
   { key: 'hospitality', Icon: Hotel, displayName: 'The Grand Vista Hotel', tagline: 'Ask Meera about rooms & rates', accentColor: '#1d4ed8', description: 'Compares rooms and quotes a total price for a stay.' },
 ]
 
-function LeadGate({ onSubmit }) {
+function LeadGate({ onSubmit, gateCopy }) {
   const [name, setName] = useState('')
   const [countryCode, setCountryCode] = useState('+91')
   const [phone, setPhone] = useState('')
@@ -40,7 +40,7 @@ function LeadGate({ onSubmit }) {
         <span className="text-[11px] font-[700] tracking-[0.14em] text-[#2563eb]">QUICK DETAILS FIRST</span>
       </div>
       <p className="text-[13px] leading-[1.6] text-[#64748b] mb-5">
-        So we can follow up if you want a version of this built for your own business. Takes 10 seconds — then talk to any of the four demo bots below.
+        {gateCopy}
       </p>
       <form
         onSubmit={(e) => { e.preventDefault(); if (isValid) onSubmit({ name: name.trim(), countryCode, phone: phone.trim(), email: email.trim() }) }}
@@ -295,13 +295,15 @@ function CallPanel({ bot, contact, onBack }) {
   return (
     <div className="rounded-[24px] border border-[#eef2f6] bg-white overflow-hidden max-w-[560px] mx-auto">
       <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-[#eef2f6]" style={{ background: `${bot.accentColor}0d` }}>
-        <button
-          type="button"
-          onClick={() => { hangUp(); onBack() }}
-          className="inline-flex items-center gap-1.5 text-[11px] font-[700] text-[#64748b] hover:text-[#0f172a] transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" /> All demos
-        </button>
+        {onBack ? (
+          <button
+            type="button"
+            onClick={() => { hangUp(); onBack() }}
+            className="inline-flex items-center gap-1.5 text-[11px] font-[700] text-[#64748b] hover:text-[#0f172a] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" /> All demos
+          </button>
+        ) : <span />}
         <div className="text-right">
           <p className="text-[13px] font-[700] text-[#0f172a] leading-none">{bot.displayName}</p>
           <p className="text-[11px] mt-0.5" style={{ color: bot.accentColor }}>{bot.tagline}</p>
@@ -373,28 +375,33 @@ function CallPanel({ bot, contact, onBack }) {
   )
 }
 
-export default function IndustryDemoDeck() {
+export default function IndustryDemoDeck({
+  bots = BOTS,
+  requirementLabel = 'Generative AI IVR — live demo',
+  gateCopy = 'So we can follow up if you want a version of this built for your own business. Takes 10 seconds — then talk to any of the four demo bots below.',
+  autoSelectSingleBot = false,
+}) {
   const [contact, setContact] = useState(null)
-  const [selectedBot, setSelectedBot] = useState(null)
+  const [selectedBot, setSelectedBot] = useState(bots.length === 1 && autoSelectSingleBot ? bots[0] : null)
 
   function handleGateSubmit(info) {
     setContact(info)
     fetch(LEAD_CAPTURE_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: info.name, countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: 'Generative AI IVR — live demo' }),
+      body: JSON.stringify({ name: info.name, countryCode: info.countryCode, phone: info.phone, email: info.email, requirement: requirementLabel }),
     }).catch(() => {})
   }
 
-  if (!contact) return <LeadGate onSubmit={handleGateSubmit} />
+  if (!contact) return <LeadGate onSubmit={handleGateSubmit} gateCopy={gateCopy} />
 
   if (selectedBot) {
-    return <CallPanel bot={selectedBot} contact={contact} onBack={() => setSelectedBot(null)} />
+    return <CallPanel bot={selectedBot} contact={contact} onBack={bots.length === 1 ? undefined : () => setSelectedBot(null)} />
   }
 
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {BOTS.map((bot) => <BotCard key={bot.key} bot={bot} onSelect={setSelectedBot} />)}
+      {bots.map((bot) => <BotCard key={bot.key} bot={bot} onSelect={setSelectedBot} />)}
     </div>
   )
 }
